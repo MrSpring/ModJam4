@@ -1,0 +1,6 @@
+.gradle/*
+.setting/*
+bin/*
+build/*
+eclipse/*
+gradle/*
