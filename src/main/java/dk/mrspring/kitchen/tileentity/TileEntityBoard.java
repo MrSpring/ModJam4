@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.tileentity;
 
+import dk.mrspring.kitchen.item.ItemSandwichBread;
 import dk.mrspring.kitchen.item.ItemSandwichable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -16,15 +17,36 @@ public class TileEntityBoard extends TileEntity
 {
 	private ItemStack[] layers = new ItemStack[10];
 	private ItemStack lastRemoved;
-	private boolean isInitialized = false;
 	int layerIndex = 0;
+	
+	public void resetLayers()
+	{
+		this.layers = new ItemStack[10];
+		this.lastRemoved = null;
+		this.layerIndex = 0;
+	}
 	
 	public boolean addLayer(ItemSandwichable par1)
 	{
-		if (this.layerIndex + 1 <= 10)
+		if (this.layerIndex == 0)
+			if (par1 instanceof ItemSandwichBread)
+			{
+				this.layers[this.layerIndex] = new ItemStack(par1, 1, 0);
+				this.layerIndex++;
+				return true;
+			}
+			else
+				return false;
+		else if (this.layerIndex + 1 <= 10)
 		{
-			layers[layerIndex] = new ItemStack(par1, 1, 0); layerIndex++;
-			return true;
+			if (this.layers[this.layerIndex - 1].getItem() instanceof ItemSandwichBread)
+				return false;
+			else
+			{
+				this.layers[this.layerIndex] = new ItemStack(par1, 1, 0);
+				this.layerIndex++;
+				return true;
+			}
 		}
 		else return false;
 	}
@@ -45,6 +67,11 @@ public class TileEntityBoard extends TileEntity
 	public ItemStack getLastRemoved()
 	{
 		return this.lastRemoved;
+	}
+	
+	public boolean isAcceptableSandwich()
+	{
+		return false;
 	}
 	
 	@Override

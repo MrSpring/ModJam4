@@ -6,6 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
@@ -35,25 +36,42 @@ public class BlockBoard extends BlockContainer
 	{
 		TileEntityBoard entity = (TileEntityBoard) world.getTileEntity(x, y, z);
 		
-		if (activator.getCurrentEquippedItem() != null)
-			if (activator.getCurrentEquippedItem().getItem() instanceof ItemSandwichable)
-				if (entity.addLayer((ItemSandwichable) activator.getCurrentEquippedItem().getItem()))
+		if (!activator.isSneaking())
+		{
+			if (activator.getCurrentEquippedItem() != null)
+				if (activator.getCurrentEquippedItem().getItem() instanceof ItemSandwichable)
+					if (entity.addLayer((ItemSandwichable) activator.getCurrentEquippedItem().getItem()))
+					{
+						--activator.getCurrentEquippedItem().stackSize;
+						return true;
+					}
+					else
+						return false;
+				else
+					return false;
+			else
+				if (entity.removeTopLayer())
+					if (!world.isRemote)
+						{ world.spawnEntityInWorld(new EntityItem(world, (double) x, (double) y, (double) z, entity.getLastRemoved())); return true; }
+					else
+						return true;
+				else
+					return false;
+		}
+		else
+		{
+			if (activator.getCurrentEquippedItem() == null)
+				if (entity.isAcceptableSandwich())
 				{
-					--activator.getCurrentEquippedItem().stackSize;
+					world.spawnEntityInWorld(new EntityItem(world, x, y, z, new ItemStack(Items.apple, 1, 0)));
+					entity.resetLayers();
 					return true;
-				} // Yay! It works! :D
+				}
 				else
 					return false;
 			else
 				return false;
-		else
-			if (entity.removeTopLayer())
-				if (!world.isRemote)
-					{ world.spawnEntityInWorld(new EntityItem(world, (double) x, (double) y, (double) z, entity.getLastRemoved())); return true; }
-				else
-					return true;
-			else
-				return false;
+		}
 	}
 	
 	@Override
