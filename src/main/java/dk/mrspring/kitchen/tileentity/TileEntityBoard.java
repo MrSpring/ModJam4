@@ -1,10 +1,13 @@
 package dk.mrspring.kitchen.tileentity;
 
 import dk.mrspring.kitchen.item.ItemSandwichable;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityBoard extends TileEntity
@@ -113,5 +116,11 @@ public class TileEntityBoard extends TileEntity
 		}
 		
 		compound.setTag("Items", list);
+	}
+	
+	@Override
+	public Packet getDescriptionPacket()
+	{
+		NBTTagCompound compound = new NBTTagCompound();
 	}
 }
