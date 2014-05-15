@@ -43,7 +43,16 @@ public class TileEntityBoard extends TileEntity
 	public boolean addLayer(ItemSandwichable par1)
 	{
 		if (this.layerIndex + 1 <= 10)
-			{ layers[layerIndex] = new ItemStack(par1, 1, 0); layerIndex++; return true; }
+		{
+			layers[layerIndex] = new ItemStack(par1, 1, 0); layerIndex++;
+			
+			if (this.worldObj.isRemote)
+				System.out.println(" Adding layer: " + par1.getUnlocalizedName() + ", and the world is Remote!");
+			else
+				System.out.println(" Adding layer: " + par1.getUnlocalizedName() + ", and the world is NOT Remote!");
+			
+			return true;
+		}
 		else return false;
 	}
 	
@@ -85,6 +94,11 @@ public class TileEntityBoard extends TileEntity
 	public void writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
+		
+		if (this.worldObj.isRemote)
+			System.out.println(" Writing to NBT, and the world is Remote!");
+		else
+			System.out.println(" Writing to NBT, and the world is NOT Remote!");
 		
 		NBTTagList list = new NBTTagList();
 		
