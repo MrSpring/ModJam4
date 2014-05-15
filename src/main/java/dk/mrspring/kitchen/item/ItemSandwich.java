@@ -10,5 +10,23 @@ public class ItemSandwich extends ItemFood
 	public ItemSandwich(int healAmount, ItemStack[] layers)
 	{
 		super(healAmount, false);
+		
+		for (int i = 0; i < layers.length; ++i)
+		{
+			if (layers[i] != null)
+				this.layers[i] = (ItemSandwichable) layers[i].getItem();
+		}
+	}
+	
+	public int calculateHealAmount()
+	{
+		int totalHealAmount = 0;
+		
+		for (int i = 0; i < layers.length; ++i)
+		{
+			totalHealAmount += layers[i].getHealAmount();
+		}
+		
+		return totalHealAmount;
 	}
 }

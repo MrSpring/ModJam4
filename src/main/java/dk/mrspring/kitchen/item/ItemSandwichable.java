@@ -18,4 +18,9 @@ public class ItemSandwichable extends ItemBase
 	{
 		this(name, ModInfo.modid + ":" + name, useCreativeTab, healAmount);
 	}
+	
+	public int getHealAmount()
+	{
+		return this.healOnEaten;
+	}
 }
