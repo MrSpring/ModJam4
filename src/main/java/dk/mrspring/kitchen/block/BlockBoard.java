@@ -41,7 +41,7 @@ public class BlockBoard extends BlockContainer
 				{
 					--activator.getCurrentEquippedItem().stackSize;
 					return true;
-				}
+				} // Yay! It works! :D
 				else
 					return false;
 			else

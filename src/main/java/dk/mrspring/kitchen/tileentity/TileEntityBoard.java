@@ -7,7 +7,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityBoard extends TileEntity
@@ -17,43 +19,11 @@ public class TileEntityBoard extends TileEntity
 	private boolean isInitialized = false;
 	int layerIndex = 0;
 	
-	public TileEntityBoard()
-	{
-		
-	}
-	
-	@Override
-	public void updateEntity()
-	{
-		if (!this.isInitialized)
-		{
-			if (this.worldObj.isRemote)
-				System.out.println(" World is Remote!");
-			else
-				System.out.println(" World is NOT Remote!");
-			
-			for (int i = 0; i < this.layers.length; ++i)
-			{
-				if (this.layers[i] != null)
-					System.out.println(" Current layer in slot: " + i + " is: " + this.layers[i].getDisplayName());
-			}
-			
-			System.out.println(" Current LayerIndex: " + this.layerIndex);
-			this.isInitialized = true;
-		}
-	}
-	
 	public boolean addLayer(ItemSandwichable par1)
 	{
 		if (this.layerIndex + 1 <= 10)
 		{
 			layers[layerIndex] = new ItemStack(par1, 1, 0); layerIndex++;
-			
-			if (this.worldObj.isRemote)
-				System.out.println(" Adding layer: " + par1.getUnlocalizedName() + ", and the world is Remote!");
-			else
-				System.out.println(" Adding layer: " + par1.getUnlocalizedName() + ", and the world is NOT Remote!");
-			
 			return true;
 		}
 		else return false;
@@ -98,11 +68,6 @@ public class TileEntityBoard extends TileEntity
 	{
 		super.writeToNBT(compound);
 		
-		if (this.worldObj.isRemote)
-			System.out.println(" Writing to NBT, and the world is Remote!");
-		else
-			System.out.println(" Writing to NBT, and the world is NOT Remote!");
-		
 		NBTTagList list = new NBTTagList();
 		
 		for (int i = 0; i < this.layers.length; ++i)
@@ -122,5 +87,13 @@ public class TileEntityBoard extends TileEntity
 	public Packet getDescriptionPacket()
 	{
 		NBTTagCompound compound = new NBTTagCompound();
+		this.writeToNBT(compound);
+		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+	{
+		this.readFromNBT(pkt.func_148857_g());
 	}
 }
