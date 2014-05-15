@@ -16,7 +16,7 @@ public class ItemSandwich extends ItemFood
 		this.layers = layers;
 		
 		this.setUnlocalizedName("sandwich");
-		this.setTextureName(ModInfo.modid + ":sandwich");
+		this.setTextureName(ModInfo.modid + ":sandwich"); // Edit so that I can commit.
 	}
 	
 	public static int calculateHealAmount(ItemSandwichable[] layers)
