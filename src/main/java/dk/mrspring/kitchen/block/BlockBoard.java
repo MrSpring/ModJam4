@@ -11,6 +11,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import dk.mrspring.kitchen.Kitchen;
+import dk.mrspring.kitchen.item.ItemSandwichable;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 
 public class BlockBoard extends BlockContainer
@@ -32,6 +33,10 @@ public class BlockBoard extends BlockContainer
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer activator, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
 	{
 		TileEntityBoard entity = (TileEntityBoard) world.getTileEntity(x, y, z);
+		
+		if (activator.getCurrentEquippedItem() != null)
+			if (activator.getCurrentEquippedItem().getItem() instanceof ItemSandwichable)
+				
 	}
 	
 	@Override
