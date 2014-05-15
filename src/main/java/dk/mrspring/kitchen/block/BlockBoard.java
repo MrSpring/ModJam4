@@ -36,7 +36,7 @@ public class BlockBoard extends BlockContainer
 		
 		if (activator.getCurrentEquippedItem() != null)
 			if (activator.getCurrentEquippedItem().getItem() instanceof ItemSandwichable)
-				if (entity.addLayer(activator.getCurrentEquippedItem()))
+				if (entity.addLayer((ItemSandwichable) activator.getCurrentEquippedItem().getItem()))
 				{
 					--activator.getCurrentEquippedItem().stackSize;
 					return true;
