@@ -10,10 +10,34 @@ import net.minecraft.tileentity.TileEntity;
 public class TileEntityBoard extends TileEntity
 {
 	private ItemStack[] layers = new ItemStack[10];
+	private ItemStack lastRemoved;
+	private boolean isInitialized = false;
 	int layerIndex = 0;
 	
 	public TileEntityBoard()
 	{
+		
+	}
+	
+	@Override
+	public void updateEntity()
+	{
+		if (!this.isInitialized)
+		{
+			if (this.worldObj.isRemote)
+				System.out.println(" World is Remote!");
+			else
+				System.out.println(" World is NOT Remote!");
+			
+			for (int i = 0; i < this.layers.length; ++i)
+			{
+				if (this.layers[i] != null)
+					System.out.println(" Current layer in slot: " + i + " is: " + this.layers[i].getDisplayName());
+			}
+			
+			System.out.println(" Current LayerIndex: " + this.layerIndex);
+			this.isInitialized = true;
+		}
 	}
 	
 	public boolean addLayer(ItemSandwichable par1)
@@ -28,24 +52,33 @@ public class TileEntityBoard extends TileEntity
 		return this.layers;
 	}
 	
+	public boolean removeTopLayer()
+	{
+		if (layerIndex - 1 >= 0)
+			{ this.lastRemoved = this.layers[layerIndex - 1]; this.layers[layerIndex - 1] = null; --this.layerIndex; return true; }
+		else
+			return false;
+	}
+	
+	public ItemStack getLastRemoved()
+	{
+		return this.lastRemoved;
+	}
+	
 	@Override
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
 		
-		NBTTagList list = compound.getTagList("Layers", 10);
+		NBTTagList list = compound.getTagList("Items", 10);
 		this.layers = new ItemStack[10];
 		
 		for (int i = 0; i < list.tagCount(); ++i)
 		{
 			NBTTagCompound layerCompound = list.getCompoundTagAt(i);
-			int index = layerCompound.getInteger("Layer");
 			
-			if (index >= 0 && index < this.layers.length)
-				{ this.layers[index] = ItemStack.loadItemStackFromNBT(layerCompound); }
+			this.addLayer((ItemSandwichable) ItemStack.loadItemStackFromNBT(layerCompound).getItem());
 		}
-		
-		this.layerIndex = (int) compound.getByte("LayerIndex");
 	}
 	
 	@Override
@@ -60,13 +93,11 @@ public class TileEntityBoard extends TileEntity
 			if (this.layers[i] != null)
 			{
 				NBTTagCompound layerCompound = new NBTTagCompound();
-				layerCompound.setInteger("Layer", i);
 				this.layers[i].writeToNBT(layerCompound);
 				list.appendTag(layerCompound);
 			}
 		}
 		
-		compound.setTag("Layers", list);
-		compound.setByte("LayerIndex", (byte) this.layerIndex);
+		compound.setTag("Items", list);
 	}
 }

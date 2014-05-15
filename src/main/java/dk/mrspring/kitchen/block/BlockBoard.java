@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -43,8 +44,16 @@ public class BlockBoard extends BlockContainer
 				}
 				else
 					return false;
-			else return false;
-		else return false;
+			else
+				return false;
+		else
+			if (entity.removeTopLayer())
+				if (!world.isRemote)
+					{ world.spawnEntityInWorld(new EntityItem(world, (double) x, (double) y, (double) z, entity.getLastRemoved())); return true; }
+				else
+					return true;
+			else
+				return false;
 	}
 	
 	@Override
