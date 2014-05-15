@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.item;
 
+import dk.mrspring.kitchen.ModInfo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -13,6 +14,9 @@ public class ItemSandwich extends ItemFood
 	{
 		super(healAmount, false);
 		this.layers = layers;
+		
+		this.setUnlocalizedName("sandwich");
+		this.setTextureName(ModInfo.modid + ":sandwich");
 	}
 	
 	public static int calculateHealAmount(ItemSandwichable[] layers)

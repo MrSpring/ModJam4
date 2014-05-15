@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
@@ -68,11 +69,19 @@ public class BlockBoard extends BlockContainer
 				{
 					if (!world.isRemote)
 					{
-						ArrayList<ItemStack> layers;
+						ItemStack[] itemsFromEntity = entity.getLayers();
+						ArrayList<ItemSandwichable> layers = new ArrayList<ItemSandwichable>();
 						
-						ItemSandwich sandwich = new ItemSandwich();
+						for (int i = 0; i < itemsFromEntity.length && itemsFromEntity[i] != null; ++i)
+						{
+							layers.add((ItemSandwichable) itemsFromEntity[i].getItem());
+						}
 						
-						world.spawnEntityInWorld(new EntityItem(world, x, y, z, new ItemStack(Items.apple, 1, 0)));
+						int healAmount = ItemSandwich.calculateHealAmount((ItemSandwichable[]) layers.toArray(new ItemSandwichable[1]));
+						
+						Item sandwich = new ItemSandwich(healAmount, (ItemSandwichable[]) layers.toArray(new ItemSandwichable[1]));
+						
+						world.spawnEntityInWorld(new EntityItem(world, x, y, z, new ItemStack(sandwich, 1, 0)));
 						entity.resetLayers();
 						return true;
 					}
