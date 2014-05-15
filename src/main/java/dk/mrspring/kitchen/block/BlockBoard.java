@@ -1,17 +1,37 @@
-package dk.mrspring.sandwiches.block;
+package dk.mrspring.kitchen.block;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import dk.mrspring.kitchen.Kitchen;
+import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 
-public class BlockBoard extends BlockBase
+public class BlockBoard extends BlockContainer
 {
 	public BlockBoard()
 	{
-		super(Material.wood, "board", "minecraft:planks_oak", true);
+		super(Material.wood);
+		
+		this.setBlockName("board");
+		this.setBlockTextureName("minecraft:planks_oak");
+		
+		this.setCreativeTab(Kitchen.instance.tab);
+		
+		this.setStepSound(Block.soundTypeWood);
+		this.setHardness(2.0F);
+	}
+	
+	@Override
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer activator, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+	{
+		TileEntityBoard entity = (TileEntityBoard) world.getTileEntity(x, y, z);
 	}
 	
 	@Override
@@ -50,4 +70,10 @@ public class BlockBoard extends BlockBase
 	@Override
 	public boolean renderAsNormalBlock()
 		{ return false; }
+
+	@Override
+	public TileEntity createNewTileEntity(World var1, int var2)
+	{
+		return new TileEntityBoard();
+	}
 }

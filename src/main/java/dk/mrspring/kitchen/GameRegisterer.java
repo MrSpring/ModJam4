@@ -1,4 +1,4 @@
-package dk.mrspring.sandwiches;
+package dk.mrspring.kitchen;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

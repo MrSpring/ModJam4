@@ -1,8 +1,8 @@
-package dk.mrspring.sandwiches.block;
+package dk.mrspring.kitchen.block;
 
-import static dk.mrspring.sandwiches.GameRegisterer.registerBlock;
-import dk.mrspring.sandwiches.ModInfo;
-import dk.mrspring.sandwiches.SandwichesMod;
+import static dk.mrspring.kitchen.GameRegisterer.registerBlock;
+import dk.mrspring.kitchen.Kitchen;
+import dk.mrspring.kitchen.ModInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
@@ -16,7 +16,7 @@ public class BlockBase extends Block
 		this.setBlockTextureName(textureName);
 		
 		if (useCreativeTab)
-			this.setCreativeTab(SandwichesMod.instance.tab);
+			this.setCreativeTab(Kitchen.instance.tab);
 	}
 	
 	protected BlockBase(Material mat, String name, boolean useCreativeTab)

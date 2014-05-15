@@ -1,6 +1,6 @@
-package dk.mrspring.sandwiches;
+package dk.mrspring.kitchen;
 
-import static dk.mrspring.sandwiches.GameRegisterer.findBlock;
+import static dk.mrspring.kitchen.GameRegisterer.findBlock;
 import net.minecraft.block.Block;
 
 public class Blocks

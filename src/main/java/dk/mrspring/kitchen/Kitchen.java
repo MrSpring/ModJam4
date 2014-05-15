@@ -1,34 +1,46 @@
-package dk.mrspring.sandwiches;
+package dk.mrspring.kitchen;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import dk.mrspring.sandwiches.block.BlockBase;
+import cpw.mods.fml.common.registry.GameRegistry;
+import dk.mrspring.kitchen.block.BlockBase;
+import dk.mrspring.kitchen.item.ItemBase;
+import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 
 @Mod(modid = ModInfo.modid, name = ModInfo.name, version = ModInfo.version)
-public class SandwichesMod
+public class Kitchen
 {
 	@Instance(ModInfo.modid)
-	public static SandwichesMod instance;
+	public static Kitchen instance;
+	
+	@SidedProxy(serverSide = "dk.mrspring.kitchen.CommonProxy", clientSide = "dk.mrspring.kitchen.ClientProxy")
+	public static CommonProxy proxy;
 	
 	public static CreativeTabs tab;
 	
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event)
 	{
-		tab = new CreativeTabs("tabSandwiches")
+		tab = new CreativeTabs("tabKitchen")
 		{
 			@Override
 			public Item getTabIconItem()
 				{ return Items.bread; }
 		};
 		
+		GameRegistry.registerTileEntity(TileEntityBoard.class, "tileEntityBoard");
+		
 		BlockBase.load();
+		ItemBase.load();
+		
+		instance.proxy.registerRenderers();
 	}
 	
 	@EventHandler
