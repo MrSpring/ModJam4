@@ -28,27 +28,14 @@ public class TileEntityBoard extends TileEntity
 	
 	public boolean addLayer(ItemSandwichable par1)
 	{
-		if (this.layerIndex == 0)
-			if (par1 instanceof ItemSandwichBread)
-			{
-				this.layers[this.layerIndex] = new ItemStack(par1, 1, 0);
-				this.layerIndex++;
-				return true;
-			}
-			else
-				return false;
-		else if (this.layerIndex + 1 <= 10)
+		if (this.layerIndex + 1 <= 10)
 		{
-			if (this.layers[this.layerIndex - 1].getItem() instanceof ItemSandwichBread)
-				return false;
-			else
-			{
-				this.layers[this.layerIndex] = new ItemStack(par1, 1, 0);
-				this.layerIndex++;
-				return true;
-			}
+			this.layers[this.layerIndex] = new ItemStack(par1, 1, 0);
+			this.layerIndex++;
+			return true;
 		}
-		else return false;
+		else
+			return false;
 	}
 	
 	public ItemStack[] getLayers()
@@ -59,7 +46,12 @@ public class TileEntityBoard extends TileEntity
 	public boolean removeTopLayer()
 	{
 		if (layerIndex - 1 >= 0)
-			{ this.lastRemoved = this.layers[layerIndex - 1]; this.layers[layerIndex - 1] = null; --this.layerIndex; return true; }
+		{
+			this.lastRemoved = this.layers[this.layerIndex - 1];
+			this.layers[this.layerIndex - 1] = null;
+			--this.layerIndex;
+			return true;
+		}
 		else
 			return false;
 	}
@@ -71,7 +63,10 @@ public class TileEntityBoard extends TileEntity
 	
 	public boolean isAcceptableSandwich()
 	{
-		return false;
+		if (this.layers[0].getItem() instanceof ItemSandwichBread && this.layers[this.layerIndex - 1].getItem() instanceof ItemSandwichBread)
+			return true;
+		else
+			return false;
 	}
 	
 	@Override

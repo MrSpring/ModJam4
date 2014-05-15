@@ -63,9 +63,14 @@ public class BlockBoard extends BlockContainer
 			if (activator.getCurrentEquippedItem() == null)
 				if (entity.isAcceptableSandwich())
 				{
-					world.spawnEntityInWorld(new EntityItem(world, x, y, z, new ItemStack(Items.apple, 1, 0)));
-					entity.resetLayers();
-					return true;
+					if (!world.isRemote)
+					{
+						world.spawnEntityInWorld(new EntityItem(world, x, y, z, new ItemStack(Items.apple, 1, 0)));
+						entity.resetLayers();
+						return true;
+					}
+					else
+						return false;
 				}
 				else
 					return false;
