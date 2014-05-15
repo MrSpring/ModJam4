@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.block;
 
+import java.util.ArrayList;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -13,6 +15,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import dk.mrspring.kitchen.Kitchen;
+import dk.mrspring.kitchen.item.ItemSandwich;
 import dk.mrspring.kitchen.item.ItemSandwichable;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 
@@ -65,6 +68,10 @@ public class BlockBoard extends BlockContainer
 				{
 					if (!world.isRemote)
 					{
+						ArrayList<ItemStack> layers;
+						
+						ItemSandwich sandwich = new ItemSandwich();
+						
 						world.spawnEntityInWorld(new EntityItem(world, x, y, z, new ItemStack(Items.apple, 1, 0)));
 						entity.resetLayers();
 						return true;
