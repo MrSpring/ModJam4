@@ -30,7 +30,8 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 		
 		for (int i = 0; i < this.layers.length; ++i)
 		{
-			renderItem(layers[i], 0.5D, 0.145D + (i * 0.031D), 0.33D);
+			if (this.layers[i] != null)
+				renderItem(this.layers[i], 0.5D, 0.145D + (i * 0.031D), 0.33D);
 		}
 	}
 	

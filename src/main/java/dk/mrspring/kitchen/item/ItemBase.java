@@ -26,5 +26,6 @@ public class ItemBase extends Item
 	public static void load()
 	{
 		registerItem(new ItemBase("knife", true));
+		registerItem(new ItemSandwichable("bacon_raw", true, 2));
 	}
 }

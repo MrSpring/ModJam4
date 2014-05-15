@@ -11,14 +11,12 @@ public class TileEntityBoard extends TileEntity
 	
 	public TileEntityBoard()
 	{
-		this.layers = new ItemStack[] { new ItemStack(Items.apple), new ItemStack(Items.arrow), new ItemStack(Items.baked_potato), new ItemStack(Items.bed) };
+		this.layers = new ItemStack[10];
 	}
 	
 	public boolean addLayer(ItemStack toAdd)
 	{
-		// Sorry, I don't have a microphone. :(
-		// My mod allows you to make sandwiches. XD
-		// My stream might not be very interesting.
+		toAdd.stackSize = 1;
 		
 		if (this.layerIndex + 1 <= 10)
 			{ layers[layerIndex] = toAdd; layerIndex++; return true; }
