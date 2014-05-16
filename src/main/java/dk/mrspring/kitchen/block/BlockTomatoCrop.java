@@ -35,6 +35,20 @@ public class BlockTomatoCrop extends BlockBush implements IGrowable
 	}
 	
 	@Override
+	public void breakBlock(World world, int x, int y, int z, Block p_149749_5_, int p_149749_6_)
+	{
+		int metadata = world.getBlockMetadata(x, y, z);
+		
+		super.breakBlock(world, x, y, z, p_149749_5_, p_149749_6_);
+		
+		if (metadata == 7)
+		{
+			world.setBlock(x, y, z, this);
+			world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+		}
+	}
+	
+	@Override
 	public void updateTick(World world, int x, int y, int z, Random random)
 	{
 		super.updateTick(world, x, y, z, random);
