@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.item;
 
 import static dk.mrspring.kitchen.GameRegisterer.registerItem;
+import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
@@ -32,7 +33,9 @@ public class ItemBase extends Item
 		registerItem(new ItemSandwichable("bacon_raw", true, 2));
 		registerItem(new ItemSandwichBread("bread_slice", true));
 		// registerItem(new ItemSandwich().setFull3D(), "sandwich");
-		registerItem(new ItemBase("sandwich", true));
+		
+		GameRegistry.registerCustomItemStack("sandwich_itemstack", KitchenItems.basic_sandwich);
+		
 		registerItem(new ItemTomato());
 		registerItem(new ItemLettuce());
 		registerItem(new ItemSandwichable("tomato_slice", true, 1));
