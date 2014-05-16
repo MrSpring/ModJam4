@@ -3,16 +3,21 @@ package dk.mrspring.kitchen.item;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.combo.SandwichCombo;
 
 public class ItemSandwich extends ItemFood
 {
+	private SandwichCombo combo;
+	
 	public ItemSandwich()
 	{
 		super(0, false);
@@ -20,6 +25,26 @@ public class ItemSandwich extends ItemFood
 		
 		this.setUnlocalizedName("sandwich");
 		this.setTextureName("minecraft:bread");
+	}
+	
+	@Override
+	public EnumRarity getRarity(ItemStack par1ItemStack)
+	{
+		par1ItemStack.getTagCompound().getCompoundTag("Combo");
+		
+		/*if (this.combo != null)
+			return combo.getRarity();
+		else
+			return EnumRarity.common;*/
+	}
+	
+	@Override
+	protected void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+	{
+		if (this.combo != null)
+			this.combo.onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
+		else
+			super.onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
 	}
 	
 	@Override
@@ -48,6 +73,9 @@ public class ItemSandwich extends ItemFood
 			NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
 			par3List.add(StatCollector.translateToLocal(ItemStack.loadItemStackFromNBT(layerCompound).getDisplayName()));
 		}
+		
+		if (this.combo != null)
+			this.combo.addCustomItemInformation(par3List);
 	}
 	
 	public static int calculateHealAmount(ItemSandwichable[] layers)
