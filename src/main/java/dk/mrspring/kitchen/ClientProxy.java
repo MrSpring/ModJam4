@@ -13,6 +13,6 @@ public class ClientProxy extends CommonProxy
 	public void registerRenderers()
 	{
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBoard.class, new TileEntityBoardSpecialRenderer());
-		MinecraftForgeClient.registerItemRenderer(KitchenItems.basic_sandwich, (IItemRenderer) new ItemRenderSandwich());
+		MinecraftForgeClient.registerItemRenderer(KitchenItems.sandwich, (IItemRenderer) new ItemRenderSandwich());
 	}
 }

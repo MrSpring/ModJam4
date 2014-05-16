@@ -86,9 +86,9 @@ public class BlockBoard extends BlockContainer
 							layers.add(itemsFromEntity[i]);
 						}
 						
-						ItemStack item = new ItemStack(KitchenItems.basic_sandwich, 1, 0);
+						ItemStack item = new ItemStack(KitchenItems.sandwich, 1, 0);
 						
-						System.out.println(StatCollector.translateToLocal(KitchenItems.basic_sandwich.getUnlocalizedName()));
+						System.out.println(StatCollector.translateToLocal(KitchenItems.sandwich.getUnlocalizedName()));
 						
 						NBTTagList layersList = new NBTTagList();
 						
