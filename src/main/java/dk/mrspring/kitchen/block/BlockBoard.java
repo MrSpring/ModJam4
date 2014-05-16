@@ -11,6 +11,8 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
@@ -76,24 +78,32 @@ public class BlockBoard extends BlockContainer
 					if (!world.isRemote)
 					{
 						ItemStack[] itemsFromEntity = entity.getLayers();
-						ArrayList<ItemSandwichable> layers = new ArrayList<ItemSandwichable>();
+						ArrayList<ItemStack> layers = new ArrayList<ItemStack>();
 						
 						for (int i = 0; i < itemsFromEntity.length && itemsFromEntity[i] != null; ++i)
 						{
-							layers.add((ItemSandwichable) itemsFromEntity[i].getItem());
+							layers.add(itemsFromEntity[i]);
 						}
 						
-						int healAmount = ItemSandwich.calculateHealAmount((ItemSandwichable[]) layers.toArray(new ItemSandwichable[1]));
+						ItemStack item = new ItemStack(KitchenItems.basic_sandwich, 1, 0);
 						
-						ItemSandwich sandwich = new ItemSandwich(healAmount, (ItemSandwichable[]) layers.toArray(new ItemSandwichable[1]));
-						GameRegisterer.registerItem(sandwich);
+						NBTTagList layersList = new NBTTagList();
 						
-						world.spawnEntityInWorld(new EntityItem(world, x, y, z, new ItemStack((Item) sandwich, 1, 0)));
+						for (int i = 0; i < layers.size(); ++i)
+						{
+							NBTTagCompound layerCompound = new NBTTagCompound();
+							layers.get(i).writeToNBT(layerCompound);
+							layersList.appendTag(layerCompound);
+						}
+						
+						item.setTagInfo("SandwichLayers", layersList);
+						
+						world.spawnEntityInWorld(new EntityItem(world, x, y, z, item));
 						entity.resetLayers();
 						return true;
 					}
 					else
-						return false;
+						{ entity.resetLayers(); return false; }
 				}
 				else
 					return false;
