@@ -37,4 +37,9 @@ public class SandwichCombo
 		else
 			return false;
 	}
+	
+	public String getUnlocalizedName()
+	{
+		return "sandwich.combo.default";
+	}
 }

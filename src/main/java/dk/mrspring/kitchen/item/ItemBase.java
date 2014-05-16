@@ -30,5 +30,6 @@ public class ItemBase extends Item
 		registerItem(new ItemSandwichable("bacon_raw", true, 2));
 		registerItem(new ItemSandwichBread("bread_slice", true));
 		registerItem(new ItemSandwich().setFull3D(), "sandwich");
+		registerItem(new ItemTomato(maxDamage, maxDamage, null, null));
 	}
 }
