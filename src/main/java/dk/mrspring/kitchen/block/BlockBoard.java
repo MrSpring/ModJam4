@@ -5,23 +5,29 @@ import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import dk.mrspring.kitchen.GameRegisterer;
 import dk.mrspring.kitchen.Kitchen;
+import dk.mrspring.kitchen.KitchenItems;
+import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.item.ItemSandwich;
 import dk.mrspring.kitchen.item.ItemSandwichable;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 
 public class BlockBoard extends BlockContainer
 {
+	private IIcon iconForSandwich;
+	
 	public BlockBoard()
 	{
 		super(Material.wood);
@@ -79,9 +85,10 @@ public class BlockBoard extends BlockContainer
 						
 						int healAmount = ItemSandwich.calculateHealAmount((ItemSandwichable[]) layers.toArray(new ItemSandwichable[1]));
 						
-						Item sandwich = new ItemSandwich(healAmount, (ItemSandwichable[]) layers.toArray(new ItemSandwichable[1]));
+						ItemSandwich sandwich = new ItemSandwich(healAmount, (ItemSandwichable[]) layers.toArray(new ItemSandwichable[1]));
+						GameRegisterer.registerItem(sandwich);
 						
-						world.spawnEntityInWorld(new EntityItem(world, x, y, z, new ItemStack(sandwich, 1, 0)));
+						world.spawnEntityInWorld(new EntityItem(world, x, y, z, new ItemStack((Item) sandwich, 1, 0)));
 						entity.resetLayers();
 						return true;
 					}
@@ -94,6 +101,7 @@ public class BlockBoard extends BlockContainer
 				return false;
 		}
 	}
+	
 	
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)

@@ -63,8 +63,11 @@ public class TileEntityBoard extends TileEntity
 	
 	public boolean isAcceptableSandwich()
 	{
-		if (this.layers[0].getItem() instanceof ItemSandwichBread && this.layers[this.layerIndex - 1].getItem() instanceof ItemSandwichBread)
-			return true;
+		if (this.layers[0] != null)
+			if (this.layers[0].getItem() instanceof ItemSandwichBread && this.layers[this.layerIndex - 1].getItem() instanceof ItemSandwichBread)
+				return true;
+			else
+				return false;
 		else
 			return false;
 	}

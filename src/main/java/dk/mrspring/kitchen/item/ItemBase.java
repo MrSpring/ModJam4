@@ -2,6 +2,7 @@ package dk.mrspring.kitchen.item;
 
 import static dk.mrspring.kitchen.GameRegisterer.registerItem;
 import dk.mrspring.kitchen.Kitchen;
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
 import net.minecraft.item.Item;
 
@@ -28,5 +29,6 @@ public class ItemBase extends Item
 		registerItem(new ItemBase("knife", true));
 		registerItem(new ItemSandwichable("bacon_raw", true, 2));
 		registerItem(new ItemSandwichBread("bread_slice", true));
+		registerItem(new ItemSandwich(6, new ItemSandwichable[] { KitchenItems.bread_slice, KitchenItems.bacon_raw, KitchenItems.bacon_raw, KitchenItems.bacon_raw, KitchenItems.bread_slice } ), "sandwich");
 	}
 }
