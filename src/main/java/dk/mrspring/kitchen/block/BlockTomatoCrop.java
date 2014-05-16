@@ -24,6 +24,8 @@ public class BlockTomatoCrop extends BlockBush implements IGrowable
 	{
 		super();
 		
+		this.setBlockName("tomato_crop");
+		
 		this.setTickRandomly(true);
 		this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 1.0F - 0.0625F, 1.0F, 1.0F - 0.0625F);
 		this.setCreativeTab(null);

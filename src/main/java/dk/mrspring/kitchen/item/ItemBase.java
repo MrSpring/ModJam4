@@ -2,8 +2,10 @@ package dk.mrspring.kitchen.item;
 
 import static dk.mrspring.kitchen.GameRegisterer.registerItem;
 import dk.mrspring.kitchen.Kitchen;
+import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 
 public class ItemBase extends Item
@@ -30,6 +32,6 @@ public class ItemBase extends Item
 		registerItem(new ItemSandwichable("bacon_raw", true, 2));
 		registerItem(new ItemSandwichBread("bread_slice", true));
 		registerItem(new ItemSandwich().setFull3D(), "sandwich");
-		registerItem(new ItemTomato(maxDamage, maxDamage, null, null));
+		registerItem(new ItemTomato());
 	}
 }

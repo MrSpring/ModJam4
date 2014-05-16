@@ -7,4 +7,5 @@ public class KitchenBlocks
 {
 	public static final Block tiles = findBlock("tiles");
 	public static final Block board = findBlock("board");
+	public static final Block tomato_crop = findBlock("tomato_crop");
 }
