@@ -32,7 +32,7 @@ public class ItemBase extends Item
 		
 		registerItem(new ItemSandwichable("bacon_raw", true, 2));
 		registerItem(new ItemSandwichable("tomato_slice", true, 1));
-		registerItem(new ItemSandwichable("lettice_leaf", true, 2));
+		registerItem(new ItemSandwichable("lettuce_leaf", true, 2));
 		
 		registerItem(new ItemSandwichBread("bread_slice", true));
 		

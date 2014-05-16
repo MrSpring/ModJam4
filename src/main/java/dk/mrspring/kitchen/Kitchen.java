@@ -50,5 +50,10 @@ public class Kitchen
 	{
 		GameRegistry.addRecipe(new ShapedOreRecipe(KitchenBlocks.board, new Object[] { "SPS", Character.valueOf('S'), "slabWood", Character.valueOf('P'), Blocks.wooden_pressure_plate }));
 		GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, new Object[] { "I ", " S", Character.valueOf('S'), "stickWood", Character.valueOf('I'), Items.iron_ingot }));
+		
+		if (KitchenItems.basic_sandwich != null)
+			System.out.println(" Sandwich is not null!");
+		else
+			System.out.println(" Sandwich is null!");
 	}
 }

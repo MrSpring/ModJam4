@@ -16,6 +16,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import dk.mrspring.kitchen.GameRegisterer;
@@ -87,6 +88,8 @@ public class BlockBoard extends BlockContainer
 						
 						ItemStack item = new ItemStack(KitchenItems.basic_sandwich, 1, 0);
 						
+						System.out.println(StatCollector.translateToLocal(KitchenItems.basic_sandwich.getUnlocalizedName()));
+						
 						NBTTagList layersList = new NBTTagList();
 						
 						for (int i = 0; i < layers.size(); ++i)
@@ -98,7 +101,7 @@ public class BlockBoard extends BlockContainer
 						
 						item.setTagInfo("SandwichLayers", layersList);
 						
-						world.spawnEntityInWorld(new EntityItem(world, x, y, z, item));
+						world.spawnEntityInWorld(new EntityItem(world, (double)  x, (double)  y, (double)  z, item));
 						entity.resetLayers();
 						return true;
 					}
