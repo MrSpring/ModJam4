@@ -2,19 +2,20 @@ package dk.mrspring.kitchen.block;
 
 import java.util.Random;
 
-import dk.mrspring.kitchen.KitchenItems;
-import dk.mrspring.kitchen.ModInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.init.Items;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import dk.mrspring.kitchen.KitchenItems;
+import dk.mrspring.kitchen.ModInfo;
 
 public class BlockTomatoCrop extends BlockBush implements IGrowable
 {
@@ -32,20 +33,6 @@ public class BlockTomatoCrop extends BlockBush implements IGrowable
 		this.setHardness(0.0F);
 		this.setStepSound(Block.soundTypeGlass);
 		this.disableStats();
-	}
-	
-	@Override
-	public void breakBlock(World world, int x, int y, int z, Block p_149749_5_, int p_149749_6_)
-	{
-		int metadata = world.getBlockMetadata(x, y, z);
-		
-		super.breakBlock(world, x, y, z, p_149749_5_, p_149749_6_);
-		
-		if (metadata == 7)
-		{
-			world.setBlock(x, y, z, this);
-			world.setBlockMetadataWithNotify(x, y, z, 3, 2);
-		}
 	}
 	
 	@Override

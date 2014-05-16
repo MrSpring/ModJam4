@@ -29,5 +29,6 @@ public class BlockBase extends Block
 		registerBlock(new BlockBase(Material.iron, "tiles", true));
 		registerBlock(new BlockBoard());
 		registerBlock(new BlockTomatoCrop());
+		registerBlock(new BlockLettuceCrop());
 	}
 }

@@ -33,5 +33,6 @@ public class ItemBase extends Item
 		registerItem(new ItemSandwichBread("bread_slice", true));
 		registerItem(new ItemSandwich().setFull3D(), "sandwich");
 		registerItem(new ItemTomato());
+		registerItem(new ItemLettuce());
 	}
 }
