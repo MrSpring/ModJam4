@@ -29,6 +29,6 @@ public class ItemBase extends Item
 		registerItem(new ItemBase("knife", true));
 		registerItem(new ItemSandwichable("bacon_raw", true, 2));
 		registerItem(new ItemSandwichBread("bread_slice", true));
-		registerItem(new ItemSandwich(), "sandwich");
+		registerItem(new ItemSandwich().setFull3D(), "sandwich");
 	}
 }

@@ -103,7 +103,7 @@ public class BlockBoard extends BlockContainer
 						return true;
 					}
 					else
-						{ entity.resetLayers(); return false; }
+						{ entity.resetLayers(); return true; }
 				}
 				else
 					return false;

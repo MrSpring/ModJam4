@@ -7,6 +7,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.StatCollector;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
 
@@ -19,8 +20,6 @@ public class ItemSandwich extends ItemFood
 		
 		this.setUnlocalizedName("sandwich");
 		this.setTextureName(ModInfo.modid + ":sandwich");
-		
-		this.setCreativeTab(Kitchen.instance.tab);
 	}
 	
 	@Override
@@ -42,8 +41,13 @@ public class ItemSandwich extends ItemFood
 	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
 	{
-		par3List.add("Line 1");
-		par3List.add("Line 2. Hello!");
+		NBTTagList layersList = par1ItemStack.stackTagCompound.getTagList("SandwichLayers", 10);
+		
+		for (int i = 0; i < layersList.tagCount(); ++i)
+		{
+			NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
+			par3List.add(StatCollector.translateToLocal(ItemStack.loadItemStackFromNBT(layerCompound).getDisplayName()));
+		}
 	}
 	
 	public static int calculateHealAmount(ItemSandwichable[] layers)
