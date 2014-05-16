@@ -4,5 +4,6 @@ tile.tiles.name=Tiles
 tile.board.name=Cutting Board
 
 item.knife.name=Knife
-item.bacon_raw=Raw Bacon
-item.bread_slice=Slice of Bread
+item.bacon_raw.name=Raw Bacon
+item.bread_slice.name=Slice of Bread
+item.sandwich.name=Sandwich
