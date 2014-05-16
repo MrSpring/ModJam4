@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -23,6 +24,7 @@ public class ItemRenderSandwich implements IItemRenderer
 		switch(type)
 		{
 		case EQUIPPED: return true;
+		case EQUIPPED_FIRST_PERSON: return true;
 		default: return false;
 		}
 	}
@@ -40,25 +42,49 @@ public class ItemRenderSandwich implements IItemRenderer
 		{
 		case EQUIPPED:
 		{
-			if (!this.acquiredItems)
+			NBTTagList layersList = item.stackTagCompound.getTagList("SandwichLayers", 10);
+			
+			this.items = new ItemStack[layersList.tagCount()];
+			
+			for (int i = 0; i < layersList.tagCount(); ++i)
 			{
-				NBTTagList layersList = item.stackTagCompound.getTagList("SandwichLayers", 10);
-				
-				this.items = new ItemStack[layersList.tagCount()];
-				
-				for (int i = 0; i < layersList.tagCount(); ++i)
-				{
-					NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
-					items[i] = ItemStack.loadItemStackFromNBT(layerCompound);
-				}
-				
-				this.acquiredItems = true;
+				NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
+				items[i] = ItemStack.loadItemStackFromNBT(layerCompound);
 			}
+				
 			GL11.glPushMatrix();
+				
+				GL11.glRotatef(180, 0.5F, 1.0F, 0.0F);
+				GL11.glTranslatef(0.0F, 0.7F, -0.2F);
 				
 				for (int i = 0; i < this.items.length; ++i)
 				{
 					this.renderItemEntity(this.items[i], 0.0D, (i * 0.031D), 0.0D);
+				}
+				
+			GL11.glPopMatrix();
+		}
+		case EQUIPPED_FIRST_PERSON:
+		{
+			NBTTagList layersList = item.stackTagCompound.getTagList("SandwichLayers", 10);
+			
+			this.items = new ItemStack[layersList.tagCount()];
+			
+			for (int i = 0; i < layersList.tagCount(); ++i)
+			{
+				NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
+				items[i] = ItemStack.loadItemStackFromNBT(layerCompound);
+			}
+			
+			GL11.glPushMatrix();
+				
+				GL11.glRotatef(180, 0.5F, 0.15F, 0.0F);
+				GL11.glTranslatef(0.35F, -0.5F, 0.4F);
+				GL11.glScalef(0.6F, 0.6F, 0.6F);
+				
+				for (int i = 0; i < this.items.length; ++i)
+				{
+					this.renderItemEntity(this.items[i], 0.0D, (i * 0.0311D), 0.0D);
 				}
 				
 			GL11.glPopMatrix();
@@ -71,7 +97,7 @@ public class ItemRenderSandwich implements IItemRenderer
 	{
 		GL11.glPushMatrix();
 		
-			GL11.glTranslated(this.x + xOffset, this.y + yOffset, this.z + zOffset);
+			GL11.glTranslated(xOffset, yOffset, zOffset);
 			
 			EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
 			itemEntity.hoverStart = 0.0F;
