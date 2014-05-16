@@ -1,9 +1,8 @@
 package dk.mrspring.kitchen.item.render;
 
-import org.lwjgl.opengl.GL11;
-
-import dk.mrspring.kitchen.item.ItemSandwichable;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiContainerCreative;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.item.EntityItem;
@@ -12,6 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.client.IItemRenderer;
+
+import org.lwjgl.opengl.GL11;
 
 public class ItemRenderSandwich implements IItemRenderer
 {
@@ -51,32 +52,51 @@ public class ItemRenderSandwich implements IItemRenderer
 				NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
 				items[i] = ItemStack.loadItemStackFromNBT(layerCompound);
 			}
-				
+			
 			GL11.glPushMatrix();
-				
+			
+			if (data[1] != null && data[1]  instanceof EntityPlayer)
+			{
+				if(!((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && !((Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative) && RenderManager.instance.playerViewY == 180.0F)))
+				{
+					GL11.glRotatef(180, 0.5F, 1.0F, 0.0F);
+					GL11.glTranslatef(0.0F, 0.7F, -0.2F);
+				}
+				else
+				{
+					GL11.glRotatef(180, 0.5F, 0.15F, 0.0F);
+					GL11.glTranslatef(1.0F, -1.0F, 1.0F);
+					GL11.glScalef(0.6F, 0.6F, 0.6F);
+				}
+			}
+			else
+			{
 				GL11.glRotatef(180, 0.5F, 1.0F, 0.0F);
 				GL11.glTranslatef(0.0F, 0.7F, -0.2F);
-				
-				for (int i = 0; i < this.items.length; ++i)
-				{
-					this.renderItemEntity(this.items[i], 0.0D, (i * 0.031D), 0.0D);
-				}
+			}
+			
+			for (int i = 0; i < this.items.length; ++i)
+			{
+				this.renderItemEntity(this.items[i], 0.0D, (i * 0.031D), 0.0D);
+			}
 				
 			GL11.glPopMatrix();
 		}
 		case EQUIPPED_FIRST_PERSON:
 		{
-			NBTTagList layersList = item.stackTagCompound.getTagList("SandwichLayers", 10);
-			
-			this.items = new ItemStack[layersList.tagCount()];
-			
-			for (int i = 0; i < layersList.tagCount(); ++i)
+			if (((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && !((Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative) && RenderManager.instance.playerViewY == 180.0F)))
 			{
-				NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
-				items[i] = ItemStack.loadItemStackFromNBT(layerCompound);
-			}
-			
-			GL11.glPushMatrix();
+				NBTTagList layersList = item.stackTagCompound.getTagList("SandwichLayers", 10);
+				
+				this.items = new ItemStack[layersList.tagCount()];
+				
+				for (int i = 0; i < layersList.tagCount(); ++i)
+				{
+					NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
+					items[i] = ItemStack.loadItemStackFromNBT(layerCompound);
+				}
+				
+				GL11.glPushMatrix();
 				
 				GL11.glRotatef(180, 0.5F, 0.15F, 0.0F);
 				GL11.glTranslatef(0.35F, -0.5F, 0.4F);
@@ -86,8 +106,9 @@ public class ItemRenderSandwich implements IItemRenderer
 				{
 					this.renderItemEntity(this.items[i], 0.0D, (i * 0.0311D), 0.0D);
 				}
-				
-			GL11.glPopMatrix();
+					
+				GL11.glPopMatrix();
+			}
 		}
 		default: break;
 		}
