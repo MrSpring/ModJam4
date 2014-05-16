@@ -14,4 +14,6 @@ public class KitchenItems
 	public static final ItemSandwich basic_sandwich = (ItemSandwich) findItem("sandwich");
 	public static final Item tomato = findItem("tomato");
 	public static final Item lettuce = findItem("lettuce");
+	public static final Item tomato_slice = findItem("tomato_slice");
+	public static final Item lettuce_leaf = findItem("lettuce_leaf");
 }

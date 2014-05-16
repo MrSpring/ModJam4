@@ -2,8 +2,12 @@ itemGroup.tabKitchen=Kitchen
 
 tile.tiles.name=Tiles
 tile.board.name=Cutting Board
+tile.tomato_crop.name=Tomato Plant
+tile.lettuce_crop.name=Lettuce Crop
 
 item.knife.name=Knife
 item.bacon_raw.name=Raw Bacon
 item.bread_slice.name=Slice of Bread
 item.sandwich.name=Sandwich
+item.tomato.name=Tomato
+item.lettuce=Lettuce
