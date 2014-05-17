@@ -103,13 +103,13 @@ public class ItemRenderSandwich implements IItemRenderer
 				
 				GL11.glPushMatrix();
 				
-				GL11.glRotatef(180, 0.5F, 0.15F, 0.0F);
-				GL11.glTranslatef(0.35F, -0.5F, 0.4F);
-				GL11.glScalef(0.6F, 0.6F, 0.6F);
+				GL11.glRotatef(180, 0.65F, 0.1F, 0.6F);
+				GL11.glTranslatef(-0.3F, -0.6F, 0.3F);
+				GL11.glScalef(0.8F, 0.8F, 0.8F);
 				
 				for (int i = 0; i < this.items.length; ++i)
 				{
-					this.renderItemEntity(this.items[i], 0.0D, (i * 0.0311D), 0.0D, i);
+					this.renderItemEntity(this.items[i], 0.0D, (i * 0.0311D + yItemOffset), 0.0D, i);
 				}
 					
 				GL11.glPopMatrix();
@@ -126,9 +126,12 @@ public class ItemRenderSandwich implements IItemRenderer
 			GL11.glTranslated(xOffset, yOffset, zOffset);
 			
 			if (((ItemSandwichable) this.items[i].getItem()).hasCustomModel)
-				if (this.items[i + 1] != null)
-					{ ((ItemSandwichable) this.items[i].getItem()).getBottomModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) this.items[i].getItem()).modelBottomHeight * 0.033D); }
-				else
+				if (i + 1 < this.items.length)
+					if (this.items[i + 1] != null)
+						{ ((ItemSandwichable) this.items[i].getItem()).getBottomModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) this.items[i].getItem()).modelBottomHeight * 0.033D); }
+					else
+						{ ((ItemSandwichable) this.items[i].getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) this.items[i].getItem()).modelTopHeight * 0.033D); }
+				else 
 					{ ((ItemSandwichable) this.items[i].getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) this.items[i].getItem()).modelTopHeight * 0.033D); }
 			else
 			{
