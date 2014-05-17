@@ -15,12 +15,14 @@ public class WorldGenWildTomato implements IWorldGenerator
 	{
 		if (world.provider.dimensionId == 0)
 		{
-			int x = chunkX + random.nextInt(16);
-			int z = chunkZ + random.nextInt(16);
+			int x = (chunkX * 16) + random.nextInt(16);
+			int z = (chunkZ * 16) + random.nextInt(16);
 			int y = world.getTopSolidOrLiquidBlock(x, z);
 			
-			if (world.getBlock(x, y, z) == Blocks.grass)
-				world.setBlock(x, y + 1, z, KitchenBlocks.wild_tomato);
+			
+			
+			if (world.getBlock(x, y - 1, z) == Blocks.grass)
+				{ world.setBlock(x, y, z, KitchenBlocks.wild_tomato); System.out.println(" Generating at: " + x + " " + y + " " + z); }
 		}
 	}
 }

@@ -2,22 +2,32 @@ package dk.mrspring.kitchen.block;
 
 import java.util.Random;
 
-import dk.mrspring.kitchen.KitchenItems;
-import net.minecraft.block.BlockFlower;
 import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.world.World;
+import dk.mrspring.kitchen.KitchenItems;
 
-public class BlockWildTomato extends BlockFlower
+public class BlockWildTomato extends BlockBase
 {
 	public BlockWildTomato()
 	{
-		super(field_149862_O);
+		super(Material.plants, "wild_tomato", true);
 	}
 	
 	@Override
 	public int getRenderType()
 	{
 		return 1;
+	}
+	
+	@Override
+	public boolean canBlockStay(World world, int x, int y, int z)
+	{
+		if (world.getBlock(x, y - 1, z) == Blocks.grass)
+			return true;
+		else
+			return false;
 	}
 	
 	@Override
