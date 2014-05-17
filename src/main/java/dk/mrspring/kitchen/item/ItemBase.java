@@ -13,7 +13,7 @@ import dk.mrspring.kitchen.model.ModelBreadSliceTop;
 
 public class ItemBase extends Item
 {
-	protected ItemBase(String name, String textureName, boolean useCreativeTab)
+	public ItemBase(String name, String textureName, boolean useCreativeTab)
 	{
 		super();
 		
@@ -24,28 +24,28 @@ public class ItemBase extends Item
 			this.setCreativeTab(Kitchen.instance.tab);
 	}
 	
-	protected ItemBase(String name, boolean useCreativeTab) 
+	public ItemBase(String name, boolean useCreativeTab) 
 	{
 		this(name, ModInfo.modid + ":" + name, useCreativeTab);
 	}
 	
 	public static void load()
 	{
-		registerItem(new ItemKnife().setMaxStackSize(1));
-		registerItem(new ItemMandP().setMaxStackSize(1));
-		registerItem(new ItemBase("mortar", true));
-		registerItem(new ItemBase("pestle", true));
-		registerItem(new ItemSandwichable("bacon_raw", true, 1).setCustomModel(new ModelBaconRaw(), new ModelBaconRaw(), 1, 1));
-		registerItem(new ItemSandwichable("bacon_cooked", true, 4).setCustomModel(new ModelBaconCooked(), new ModelBaconCooked(), 2, 2));
-		registerItem(new ItemSandwichBread("bread_slice", true).setCustomModel(new ModelBreadSliceTop(), new ModelBreadSliceBottom(), 3, 2));
+		registerItem(KitchenItems.knife);
+		registerItem(KitchenItems.mortar_and_pestle);
+		registerItem(KitchenItems.mortar);
+		registerItem(KitchenItems.pestle);
+		registerItem(KitchenItems.bacon_raw);
+		registerItem(KitchenItems.bread_slice);
 		GameRegistry.registerCustomItemStack("sandwich_itemstack", KitchenItems.basic_sandwich);
-		registerItem(new ItemTomato());
-		registerItem(new ItemLettuce());
-		registerItem(new ItemSandwichable("tomato_slice", true, 1));
-		registerItem(new ItemSandwichable("lettuce_leaf", true, 2));
-		registerItem(new ItemSandwichable("potato_slice", true, 2));
-		registerItem(new ItemSandwichable("carrot_slice", true, 2));
-		registerItem(new ItemBase("flour", true));
-		registerItem(new ItemSandwichBread("toast", true));
+		registerItem(KitchenItems.tomato);
+		registerItem(KitchenItems.lettuce);
+		registerItem(KitchenItems.tomato_slice);
+		registerItem(KitchenItems.lettuce_leaf);
+		registerItem(KitchenItems.cooked_bacon);
+		registerItem(KitchenItems.potato_slice);
+		registerItem(KitchenItems.carrot_slice);
+		registerItem(KitchenItems.flour);
+		registerItem(KitchenItems.toast);
 	}
 }

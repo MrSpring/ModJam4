@@ -15,12 +15,19 @@ public class ComboBLT extends SandwichCombo
 	{
 		super(ID, names);
 		
-		this.setRarity(EnumRarity.epic);
+		this.setRarity(EnumRarity.uncommon);
 	}
 	
 	@Override
 	public void addCustomItemInformation(List par1)
 	{
-		par1.add("One Of Each");
+		par1.add("");
+		par1.add("The Good ol' BLT");
+	}
+	
+	@Override
+	public int getAdditionalHeal()
+	{
+		return 3;
 	}
 }

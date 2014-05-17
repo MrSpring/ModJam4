@@ -1,35 +1,42 @@
 package dk.mrspring.kitchen;
 
 import static dk.mrspring.kitchen.GameRegisterer.findItem;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import cpw.mods.fml.common.registry.GameRegistry;
+import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.item.ItemKnife;
+import dk.mrspring.kitchen.item.ItemLettuce;
+import dk.mrspring.kitchen.item.ItemMandP;
 import dk.mrspring.kitchen.item.ItemSandwich;
 import dk.mrspring.kitchen.item.ItemSandwichBread;
 import dk.mrspring.kitchen.item.ItemSandwichable;
+import dk.mrspring.kitchen.item.ItemTomato;
+import dk.mrspring.kitchen.model.ModelBaconCooked;
+import dk.mrspring.kitchen.model.ModelBaconRaw;
+import dk.mrspring.kitchen.model.ModelBreadSliceBottom;
+import dk.mrspring.kitchen.model.ModelBreadSliceTop;
 
 public class KitchenItems
 {
-	// public static final Item knife = new ItemKnife("knife", true);
-	public static final Item knife = findItem("knife");
-	public static final Item mortar_and_pestle = findItem("mortar_and_pestle");
-	public static final Item mortar = findItem("mortar");
-	public static final Item pestle = findItem("pestle");
-	public static final ItemSandwichable bacon_raw = (ItemSandwichable) findItem("bacon_raw");
-	public static final ItemSandwichBread bread_slice = (ItemSandwichBread) findItem("bread_slice");
+	public static final Item knife = new ItemKnife().setMaxStackSize(1);
+	public static final Item mortar_and_pestle = new ItemMandP().setMaxStackSize(1);
+	public static final Item mortar = new ItemBase("mortar", true);
+	public static final Item pestle = new ItemBase("pestle", true);
+	public static final ItemSandwichable bacon_raw = new ItemSandwichable("bacon_raw", true, 1).setCustomModel(new ModelBaconRaw(), new ModelBaconRaw(), 1, 1);
+	public static final ItemSandwichBread bread_slice = (ItemSandwichBread) new ItemSandwichBread("bread_slice", true).setCustomModel(new ModelBreadSliceTop(), new ModelBreadSliceBottom(), 3, 2);
 	public static ItemStack basic_sandwich = getSandwichItemStackWithNBTTags(new ItemStack[] { new ItemStack(bread_slice, 1, 0), new ItemStack(bacon_raw, 1, 0), new ItemStack(bread_slice, 1, 0) });
-	public static final Item tomato = findItem("tomato");
-	public static final Item lettuce = findItem("lettuce");
-	public static final ItemSandwichable tomato_slice = (ItemSandwichable) findItem("tomato_slice");
-	public static final ItemSandwichable lettuce_leaf = (ItemSandwichable) findItem("lettuce_leaf");
-	public static final ItemSandwichable cooked_bacon = (ItemSandwichable) findItem("bacon_cooked");
-	public static final ItemSandwichable potato_slice = (ItemSandwichable) findItem("potato_slice");
-	public static final ItemSandwichable carrot_slice = (ItemSandwichable) findItem("carrot_slice");
-	public static final Item flour = findItem("flour");
-	public static final ItemSandwichBread toast = (ItemSandwichBread) findItem("toast");
+	public static final Item tomato = new ItemTomato();
+	public static final Item lettuce = new ItemLettuce();
+	public static final ItemSandwichable tomato_slice = new ItemSandwichable("tomato_slice", true, 1);
+	public static final ItemSandwichable lettuce_leaf = new ItemSandwichable("lettuce_leaf", true, 2);
+	public static final ItemSandwichable cooked_bacon = new ItemSandwichable("bacon_cooked", true, 4).setCustomModel(new ModelBaconCooked(), new ModelBaconCooked(), 2, 2);
+	public static final ItemSandwichable potato_slice = new ItemSandwichable("potato_slice", true, 2);
+	public static final ItemSandwichable carrot_slice = new ItemSandwichable("carrot_slice", true, 2);
+	public static final Item flour = new ItemBase("flour", true);
+	public static final ItemSandwichBread toast = new ItemSandwichBread("toast", true);
 	
 	private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
 	{

@@ -59,28 +59,15 @@ public class SandwichCombo
 		
 		for (int i = 0; i < layersList.tagCount(); ++i)
 		{
-			// NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
-			// layersInSandwich.add((ItemSandwichable) ItemStack.loadItemStackFromNBT(layerCompound).getItem());
-			
 			NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
 			String name = ItemStack.loadItemStackFromNBT(layerCompound).getItem().getUnlocalizedName().replace("item.", "");
 			
 			layersInSandwich.add(name);
 		}
-		
-		System.out.println(" Layers in Sandwich: " + layersInSandwich.size());
-		System.out.println(" Layers in Combo:    " + this.comboLayers.size());
-		
 		if (layersInSandwich.containsAll(this.comboLayers) && this.comboLayers.containsAll(layersInSandwich))
 			return true;
 		else
 			return false;
-			
-		
-		/*if (this.comboLayers.containsAll(layersInSandwich))
-			return true;
-		else
-			return false;*/
 	}
 	
 	public int getAdditionalHeal()
