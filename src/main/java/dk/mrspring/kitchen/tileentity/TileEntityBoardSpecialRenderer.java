@@ -21,6 +21,7 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 {
 	private double x, y, z;
 	private ItemStack[] layers;
+	private double yItemOffset = 0.0D;
 	
 	@Override
 	public void renderTileEntityAt(TileEntity var1, double x, double y, double z, float var8)
@@ -37,7 +38,7 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 		{
 			if (this.layers[i] != null)
 			{
-				renderItem(this.layers[i], 0.5D, 0.145D + (i * 0.33F), 0.33D, i);
+				renderItem(this.layers[i], 0.5D, 0.145D + (/*i * 0.033F*/this.yItemOffset), 0.33D, i);
 			}
 		}
 		
@@ -52,9 +53,9 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 			
 			if (((ItemSandwichable) this.layers[i].getItem()).hasCustomModel)
 				if (this.layers[i + 1] != null)
-					{ ((ItemSandwichable) this.layers[i].getItem()).getBottomModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); }
+					{ ((ItemSandwichable) this.layers[i].getItem()).getBottomModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) this.layers[i].getItem()).modelBottomHeight * 0.033D); }
 				else
-					{ ((ItemSandwichable) this.layers[i].getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); }
+					{ ((ItemSandwichable) this.layers[i].getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) this.layers[i].getItem()).modelTopHeight * 0.033D); }
 			else
 			{
 				EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
@@ -64,6 +65,8 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 				RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 				RenderItem.renderInFrame = false;
 			}
+			
+			this.yItemOffset += 0.033D;
 			
 		GL11.glPopMatrix();
 	}
