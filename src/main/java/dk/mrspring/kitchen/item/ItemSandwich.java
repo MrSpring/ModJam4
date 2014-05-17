@@ -22,7 +22,7 @@ public class ItemSandwich extends ItemFood
 		this.setMaxStackSize(1);
 		
 		this.setUnlocalizedName("sandwich");
-		this.setTextureName("minecraft:bread");
+		this.setTextureName(ModInfo.modid + ":sandwich");
 		
 		this.setCreativeTab(null);
 	}

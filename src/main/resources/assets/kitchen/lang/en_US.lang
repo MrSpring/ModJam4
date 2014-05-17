@@ -14,3 +14,7 @@ item.lettuce.name=Lettuce
 item.lettuce_leaf.name=Lettuce Leaves
 item.tomato_slice.name=Tomato Slice
 item.bacon_cooked.name=Cooked Bacon
+item.carrot_slice.name=Carrot Slices
+item.potato_slice.name=Slice of Potato
+item.mortar.name=Mortar
+item.pestle.name=Pestle

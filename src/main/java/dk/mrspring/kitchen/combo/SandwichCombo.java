@@ -34,7 +34,7 @@ public class SandwichCombo
 	}
 	
 	public static final SandwichCombo defaultCombo = new SandwichCombo(0, new String[] {  });
-	public static final SandwichCombo oneOfEach = new ComboOneOfEach(1, new String[] { "bread_slice", "bread_slice", "bacon_raw", "lettuce_leaf", "tomato_slice" });
+	public static final SandwichCombo oneOfEach = new ComboOneOfEach(1, new String[] { "bread_slice", "bread_slice", "bacon_cooked", "lettuce_leaf", "tomato_slice" });
 	public static final SandwichCombo onlyBread = new ComboOnlyBread(2, new String[] { "bread_slice", "bread_slice" });
 	
 	public void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) { }

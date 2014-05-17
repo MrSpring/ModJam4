@@ -56,10 +56,13 @@ public class Kitchen
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.tomato_slice, 4), new Object[] { "K", "T", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('R'), KitchenItems.lettuce });
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.lettuce_leaf, 5), new Object[] { "K", "L", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('P'), KitchenItems.tomato });
 		
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.pestle), new Object[] { "M", "P", Character.valueOf('M'), KitchenItems.mortar, Character.valueOf('P'), KitchenItems.pestle });
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.pestle), new Object[] { "P", "M", Character.valueOf('M'), KitchenItems.mortar, Character.valueOf('P'), KitchenItems.pestle });
 		
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.flour, 1), new Object[] { "W", "M", Character.valueOf('M'), KitchenItems.mortar_and_pestle, Character.valueOf('W'), Items.wheat });
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.flour, 3), new Object[] { "B", "M", Character.valueOf('M'), KitchenItems.mortar_and_pestle, Character.valueOf('B'), Items.bread });
+		
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.mortar), new Object[] { "S  S", " L ", Character.valueOf('S'), Blocks.stone, Character.valueOf('L'), Blocks.stone_slab });
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.mortar), new Object[] { "L  ", " S", Character.valueOf('S'), Blocks.stone, Character.valueOf('L'), Blocks.stone_slab });
 		
 		GameRegistry.addSmelting(KitchenItems.bacon_raw, new ItemStack(KitchenItems.cooked_bacon, 1, 0), 3.0F);
 		GameRegistry.addSmelting(KitchenItems.flour, new ItemStack(KitchenItems.toast, 2, 0), 3.0F);
