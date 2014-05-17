@@ -14,10 +14,13 @@ import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
+import dk.mrspring.kitchen.item.ItemSandwichable;
+
 public class ItemRenderSandwich implements IItemRenderer
 {
 	protected ItemStack[] items;
 	protected boolean acquiredItems = false;
+	private double yItemOffset = 0.0D;
 	
 	@Override
 	public boolean handleRenderType(ItemStack item, ItemRenderType type)
@@ -39,6 +42,8 @@ public class ItemRenderSandwich implements IItemRenderer
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data)
 	{
+		this.yItemOffset = 0.0D;
+		
 		switch(type)
 		{
 		case EQUIPPED:
@@ -77,7 +82,7 @@ public class ItemRenderSandwich implements IItemRenderer
 			
 			for (int i = 0; i < this.items.length; ++i)
 			{
-				this.renderItemEntity(this.items[i], 0.0D, (i * 0.031D), 0.0D);
+				this.renderItemEntity(this.items[i], 0.0D, (i * 0.031D + this.yItemOffset), 0.0D, i);
 			}
 				
 			GL11.glPopMatrix();
@@ -104,7 +109,7 @@ public class ItemRenderSandwich implements IItemRenderer
 				
 				for (int i = 0; i < this.items.length; ++i)
 				{
-					this.renderItemEntity(this.items[i], 0.0D, (i * 0.0311D), 0.0D);
+					this.renderItemEntity(this.items[i], 0.0D, (i * 0.0311D), 0.0D, i);
 				}
 					
 				GL11.glPopMatrix();
@@ -114,18 +119,26 @@ public class ItemRenderSandwich implements IItemRenderer
 		}
 	}
 	
-	private void renderItemEntity(ItemStack item, double xOffset, double yOffset, double zOffset)
+	private void renderItemEntity(ItemStack item, double xOffset, double yOffset, double zOffset, int i)
 	{
 		GL11.glPushMatrix();
 		
 			GL11.glTranslated(xOffset, yOffset, zOffset);
 			
-			EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
-			itemEntity.hoverStart = 0.0F;
-			RenderItem.renderInFrame = true;
-			GL11.glRotatef(180, 0, 1, 1);
-			RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
-			RenderItem.renderInFrame = false;
+			if (((ItemSandwichable) this.items[i].getItem()).hasCustomModel)
+				if (this.items[i + 1] != null)
+					{ ((ItemSandwichable) this.items[i].getItem()).getBottomModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) this.items[i].getItem()).modelBottomHeight * 0.033D); }
+				else
+					{ ((ItemSandwichable) this.items[i].getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) this.items[i].getItem()).modelTopHeight * 0.033D); }
+			else
+			{
+				EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
+				itemEntity.hoverStart = 0.0F;
+				RenderItem.renderInFrame = true;
+				GL11.glRotatef(180, 0, 1, 1);
+				RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+				RenderItem.renderInFrame = false;
+			}
 			
 		GL11.glPopMatrix();
 	}

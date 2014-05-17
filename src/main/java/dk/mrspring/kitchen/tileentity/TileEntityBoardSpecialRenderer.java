@@ -26,6 +26,8 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 	@Override
 	public void renderTileEntityAt(TileEntity var1, double x, double y, double z, float var8)
 	{
+		this.yItemOffset = 0.0D;
+		
 		GL11.glPushMatrix();
 		
 		GL11.glTranslated(x, y, z);
@@ -38,7 +40,7 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 		{
 			if (this.layers[i] != null)
 			{
-				renderItem(this.layers[i], 0.5D, 0.145D + (/*i * 0.033F*/this.yItemOffset), 0.33D, i);
+				renderItem(this.layers[i], 0.5D, 0.145D + (i * 0.033F + this.yItemOffset), 0.33D, i);
 			}
 		}
 		
@@ -65,8 +67,6 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 				RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 				RenderItem.renderInFrame = false;
 			}
-			
-			this.yItemOffset += 0.033D;
 			
 		GL11.glPopMatrix();
 	}
