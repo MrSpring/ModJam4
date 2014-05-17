@@ -68,6 +68,7 @@ public class ModelBreadSliceTop extends ModelBase
 		System.out.println(" Rendering top!");
 		
 		GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
+		GL11.glScalef(0.8F, 0.8F, 0.8F);
 		
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
