@@ -2,21 +2,24 @@ package dk.mrspring.kitchen.block;
 
 import java.util.Random;
 
-import dk.mrspring.kitchen.KitchenItems;
+import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
+import dk.mrspring.kitchen.KitchenItems;
+import dk.mrspring.kitchen.ModInfo;
 
-public class BlockWildLettuce extends BlockBase
+public class BlockWildLettuce extends BlockBush
 {
 	public BlockWildLettuce()
 	{
-		super(Material.plants, "wild_lettuce", true);
-	}
-	
-	@Override
-	public int getRenderType()
-	{
-		return 1;
+		super();
+		
+		this.setBlockName("wild_lettuce");
+		this.setBlockTextureName(ModInfo.modid + ":wild_lettuce");
+		this.setTickRandomly(true);
+		this.setBlockBounds(0.3F, 0.0F, 0.3F, 0.8F, 0.2F * 3.0F, 0.8F);
+		
+		this.setCreativeTab(null);
 	}
 	
 	@Override

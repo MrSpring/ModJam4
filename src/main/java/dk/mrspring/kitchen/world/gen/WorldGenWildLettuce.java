@@ -8,7 +8,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 import cpw.mods.fml.common.IWorldGenerator;
 import dk.mrspring.kitchen.KitchenBlocks;
 
-public class WorldGenWildTomato implements IWorldGenerator
+public class WorldGenWildLettuce implements IWorldGenerator
 {
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
@@ -22,7 +22,7 @@ public class WorldGenWildTomato implements IWorldGenerator
 			
 			
 			if (world.getBlock(x, y - 1, z) == Blocks.grass)
-				world.setBlock(x, y, z, KitchenBlocks.wild_tomato);
+				world.setBlock(x, y, z, KitchenBlocks.wild_lettuce);
 		}
 	}
 }

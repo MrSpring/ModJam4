@@ -2,32 +2,26 @@ package dk.mrspring.kitchen.block;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
 import dk.mrspring.kitchen.KitchenItems;
+import dk.mrspring.kitchen.ModInfo;
 
-public class BlockWildTomato extends BlockBase
+public class BlockWildTomato extends BlockBush
 {
 	public BlockWildTomato()
 	{
-		super(Material.plants, "wild_tomato", true);
-	}
-	
-	@Override
-	public int getRenderType()
-	{
-		return 1;
-	}
-	
-	@Override
-	public boolean canBlockStay(World world, int x, int y, int z)
-	{
-		if (world.getBlock(x, y - 1, z) == Blocks.grass)
-			return true;
-		else
-			return false;
+		super();
+		this.setBlockName("wild_tomato");
+		this.setBlockTextureName(ModInfo.modid + ":wild_tomato");
+		this.setTickRandomly(true);
+		this.setBlockBounds(0.3F, 0.0F, 0.3F, 0.8F, 0.2F * 3.0F, 0.8F);
+		
+		this.setCreativeTab(null);
 	}
 	
 	@Override
@@ -39,6 +33,6 @@ public class BlockWildTomato extends BlockBase
 	@Override
 	public int quantityDropped(Random p_149745_1_)
 	{
-		return 2;
+		return 1;
 	}
 }
