@@ -30,7 +30,7 @@ public class BlockLettuceCrop extends BlockCrops
 		this.setBlockName("lettuce_crop");
 		this.setBlockTextureName(ModInfo.modid + ":lettuce_crop");
 		
-		this.setCreativeTab(Kitchen.instance.tab);
+		this.setCreativeTab(null);
 	}
 	
 	@Override

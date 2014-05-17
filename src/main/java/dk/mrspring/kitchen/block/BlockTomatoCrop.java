@@ -30,7 +30,7 @@ public class BlockTomatoCrop extends BlockCrops
 		this.setBlockName("tomato_crop");
 		this.setBlockTextureName(ModInfo.modid + ":tomato_crop");
 		
-		this.setCreativeTab(Kitchen.instance.tab);
+		this.setCreativeTab(null);
 	}
 	
 	@Override
