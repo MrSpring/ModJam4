@@ -15,6 +15,7 @@ public class KitchenItems
 {
 	// public static final Item knife = new ItemKnife("knife", true);
 	public static final Item knife = findItem("knife");
+	public static final Item mortar_and_pestle = findItem("mortar_and_pestle");
 	public static final ItemSandwichable bacon_raw = (ItemSandwichable) findItem("bacon_raw");
 	public static final ItemSandwichBread bread_slice = (ItemSandwichBread) findItem("bread_slice");
 	public static ItemStack basic_sandwich = getSandwichItemStackWithNBTTags(new ItemStack[] { new ItemStack(bread_slice, 1, 0), new ItemStack(bacon_raw, 1, 0), new ItemStack(bread_slice, 1, 0) });
@@ -23,6 +24,10 @@ public class KitchenItems
 	public static final ItemSandwichable tomato_slice = (ItemSandwichable) findItem("tomato_slice");
 	public static final ItemSandwichable lettuce_leaf = (ItemSandwichable) findItem("lettuce_leaf");
 	public static final ItemSandwichable cooked_bacon = (ItemSandwichable) findItem("bacon_cooked");
+	public static final ItemSandwichable potato_slice = (ItemSandwichable) findItem("potato_slice");
+	public static final ItemSandwichable carrot_slice = (ItemSandwichable) findItem("carrot_slice");
+	public static final Item flour = findItem("flour");
+	public static final ItemSandwichBread toast = (ItemSandwichable) findItem("toast");
 	
 	private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
 	{

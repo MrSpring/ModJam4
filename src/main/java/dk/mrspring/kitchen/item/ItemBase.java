@@ -31,7 +31,8 @@ public class ItemBase extends Item
 	
 	public static void load()
 	{
-		registerItem(new ItemKnife("knife", true).setMaxStackSize(1));
+		registerItem(new ItemKnife().setMaxStackSize(1));
+		registerItem(new ItemMandP().setMaxStackSize(1));
 		registerItem(new ItemSandwichable("bacon_raw", true, 1).setCustomModel(new ModelBaconRaw(), new ModelBaconRaw(), 1, 1));
 		registerItem(new ItemSandwichable("bacon_cooked", true, 4).setCustomModel(new ModelBaconCooked(), new ModelBaconCooked(), 2, 2));
 		registerItem(new ItemSandwichBread("bread_slice", true).setCustomModel(new ModelBreadSliceTop(), new ModelBreadSliceBottom(), 3, 2));
@@ -42,5 +43,7 @@ public class ItemBase extends Item
 		registerItem(new ItemSandwichable("lettuce_leaf", true, 2));
 		registerItem(new ItemSandwichable("potato_slice", true, 2));
 		registerItem(new ItemSandwichable("carrot_slice", true, 2));
+		registerItem(new ItemBase("flour", true));
+		registerItem(new ItemSandwichBread("toast", true));
 	}
 }

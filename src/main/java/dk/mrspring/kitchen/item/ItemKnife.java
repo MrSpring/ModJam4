@@ -4,9 +4,9 @@ import dk.mrspring.kitchen.KitchenItems;
 
 public class ItemKnife extends ItemBase
 {
-	public ItemKnife(String name, boolean useCreativeTab)
+	public ItemKnife()
 	{
-		super(name, useCreativeTab);
+		super("knife", true);
 		
 		this.setContainerItem(this);
 	}
