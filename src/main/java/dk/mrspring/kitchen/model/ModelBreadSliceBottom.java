@@ -67,8 +67,6 @@ public class ModelBreadSliceBottom extends ModelBase
 		
 		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.modid + ":textures/models/bread_slice_bottom.png"));
 		
-		System.out.println(" Rendering bottom!");
-		
 		GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
 		GL11.glScalef(0.7F, 0.7F, 0.7F);
 		GL11.glTranslatef(0.0F, -1.475F, 0.215F);
