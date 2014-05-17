@@ -128,7 +128,7 @@ public class ModelBaconRaw extends ModelBase
 	{
 		GL11.glPushMatrix();
 		
-		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.modid + ":textures/models/raw_bacon"));
+		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.modid + ":textures/models/raw_bacon.png"));
 		
 		System.out.println(" Rendering top!");
 		

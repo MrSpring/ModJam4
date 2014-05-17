@@ -1,8 +1,13 @@
 package dk.mrspring.kitchen.model;
 
+import org.lwjgl.opengl.GL11;
+
+import dk.mrspring.kitchen.ModInfo;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
 
 public class ModelBaconCooked extends ModelBase
 {
@@ -121,8 +126,16 @@ public class ModelBaconCooked extends ModelBase
 	
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
 	{
+		GL11.glPushMatrix();
+		
+		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.modid + ":textures/models/cooked_bacon.png"));
+		
+		GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
+		GL11.glScalef(0.7F, 0.7F, 0.7F);
+		GL11.glTranslatef(0.0F, -1.475F, 0.215F);
+		
 		super.render(entity, f, f1, f2, f3, f4, f5);
-		setRotationAngles(f, f1, f2, f3, f4, f5);
+		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 		bacon31.render(f5);
 		bacon32.render(f5);
 		bacon33.render(f5);
@@ -138,6 +151,8 @@ public class ModelBaconCooked extends ModelBase
 		bacon13.render(f5);
 		bacon14.render(f5);
 		bacon15.render(f5);
+		
+		GL11.glPopMatrix();
 	}
 	
 	private void setRotation(ModelRenderer model, float x, float y, float z)
@@ -147,9 +162,9 @@ public class ModelBaconCooked extends ModelBase
 		model.rotateAngleZ = z;
 	}
 	
-	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
+	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
 	{
-		super.setRotationAngles(f, f1, f2, f3, f4, f5);
+		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 	}
 
 }
