@@ -9,9 +9,9 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import dk.mrspring.kitchen.item.ItemSandwichable;
 
-public class ComboOneOfEach extends SandwichCombo
+public class ComboBLT extends SandwichCombo
 {
-	public ComboOneOfEach(int ID, String[] names)
+	public ComboBLT(int ID, String[] names)
 	{
 		super(ID, names);
 		
