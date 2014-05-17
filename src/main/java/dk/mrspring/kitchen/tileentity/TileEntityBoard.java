@@ -26,7 +26,7 @@ public class TileEntityBoard extends TileEntity
 		this.layerIndex = 0;
 	}
 	
-	public boolean addLayer(ItemSandwichable par1)
+	public boolean addLayer(ItemSandwichable par1, EntityPlayer player)
 	{
 		if (this.layerIndex + 1 <= 10)
 		{

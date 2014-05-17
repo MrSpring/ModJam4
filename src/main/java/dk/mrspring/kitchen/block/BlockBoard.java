@@ -33,7 +33,7 @@ import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 
 public class BlockBoard extends BlockContainer
 {
-	private IIcon iconForSandwich;
+	TileEntityBoard tEntity;
 	
 	public BlockBoard()
 	{
@@ -139,16 +139,20 @@ public class BlockBoard extends BlockContainer
 	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
 	{
-		TileEntityBoard tEntity = (TileEntityBoard) world.getTileEntity(x, y, z);
-		
 		ArrayList<ItemStack> toReturn = new ArrayList<ItemStack>();
 		
-		for (int i = 0; i < tEntity.getLayers().length && tEntity.getLayers()[i] != null; ++i)
+		for (int i = 0; i < this.tEntity.getLayers().length && this.tEntity.getLayers()[i] != null; ++i)
 		{
-			toReturn.add(tEntity.getLayers()[i]);
+			toReturn.add(this.tEntity.getLayers()[i]);
 		}
 		
 		return toReturn;
+	}
+	
+	@Override
+	public void onBlockPreDestroy(World p_149725_1_, int p_149725_2_, int p_149725_3_, int p_149725_4_, int p_149725_5_)
+	{
+		this.tEntity = (TileEntityBoard) p_149725_1_.getTileEntity(p_149725_2_, p_149725_3_, p_149725_4_);
 	}
 	
 	@Override
