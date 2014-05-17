@@ -52,17 +52,16 @@ public class Kitchen
 		GameRegistry.addRecipe(new ShapedOreRecipe(KitchenBlocks.board, new Object[] { "SPS", Character.valueOf('S'), "slabWood", Character.valueOf('P'), Blocks.wooden_pressure_plate }));
 		GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, new Object[] { "I ", " S", Character.valueOf('S'), "stickWood", Character.valueOf('I'), Items.iron_ingot }));
 		
-		GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.bacon_raw, 3), new Object[] { new ItemStack(KitchenItems.knife), new ItemStack(Items.porkchop) });
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.bacon_raw, 3), new Object[] { "K", "P", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('P'), Items.porkchop });
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.tomato_slice, 4), new Object[] { "K", "T", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('R'), KitchenItems.lettuce });
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.lettuce_leaf, 5), new Object[] { "K", "L", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('P'), KitchenItems.tomato });
 		
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.bacon_raw), new Object[] { "K", "P", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('P'), Items.porkchop });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.tomato_slice), new Object[] { "K", "T", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('R'), KitchenItems.lettuce });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.lettuce_leaf), new Object[] { "K", "L", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('P'), KitchenItems.tomato });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.bacon_raw), new Object[] { "K", "P", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('P'), Items.porkchop });
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.pestle), new Object[] { "M", "P", Character.valueOf('M'), KitchenItems.mortar, Character.valueOf('P'), KitchenItems.pestle });
 		
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.flour, 1), new Object[] { "M", "W", Character.valueOf('M'), KitchenItems.mortar_and_pestle, Character.valueOf('W'), Items.wheat });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.flour, 3), new Object[] { "M", "B", Character.valueOf('M'), KitchenItems.mortar_and_pestle, Character.valueOf('B'), Items.bread });
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.flour, 1), new Object[] { "W", "M", Character.valueOf('M'), KitchenItems.mortar_and_pestle, Character.valueOf('W'), Items.wheat });
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.flour, 3), new Object[] { "B", "M", Character.valueOf('M'), KitchenItems.mortar_and_pestle, Character.valueOf('B'), Items.bread });
 		
 		GameRegistry.addSmelting(KitchenItems.bacon_raw, new ItemStack(KitchenItems.cooked_bacon, 1, 0), 3.0F);
-		GameRegistry.addSmelting(KitchenItems.bacon_raw, new ItemStack(KitchenItems.cooked_bacon, 1, 0), 3.0F);
+		GameRegistry.addSmelting(KitchenItems.flour, new ItemStack(KitchenItems.toast, 2, 0), 3.0F);
 	}
 }

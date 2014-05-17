@@ -33,6 +33,8 @@ public class ItemBase extends Item
 	{
 		registerItem(new ItemKnife().setMaxStackSize(1));
 		registerItem(new ItemMandP().setMaxStackSize(1));
+		registerItem(new ItemBase("mortar", true));
+		registerItem(new ItemBase("pestle", true));
 		registerItem(new ItemSandwichable("bacon_raw", true, 1).setCustomModel(new ModelBaconRaw(), new ModelBaconRaw(), 1, 1));
 		registerItem(new ItemSandwichable("bacon_cooked", true, 4).setCustomModel(new ModelBaconCooked(), new ModelBaconCooked(), 2, 2));
 		registerItem(new ItemSandwichBread("bread_slice", true).setCustomModel(new ModelBreadSliceTop(), new ModelBreadSliceBottom(), 3, 2));

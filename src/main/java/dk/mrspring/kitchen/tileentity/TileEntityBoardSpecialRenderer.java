@@ -54,10 +54,13 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 			GL11.glTranslated(xOffset, yOffset, zOffset);
 			
 			if (((ItemSandwichable) this.layers[i].getItem()).hasCustomModel)
-				if (this.layers[i + 1] != null)
-					{ ((ItemSandwichable) this.layers[i].getItem()).getBottomModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) this.layers[i].getItem()).modelBottomHeight * 0.03D); }
+				if (i + 1 < this.layers.length)
+					if (this.layers[i + 1] != null)
+						{ ((ItemSandwichable) this.layers[i].getItem()).getBottomModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) this.layers[i].getItem()).modelBottomHeight * 0.03D); }
+					else
+						{ ((ItemSandwichable) this.layers[i].getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) this.layers[i].getItem()).modelTopHeight * 0.03D); }
 				else
-					{ ((ItemSandwichable) this.layers[i].getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) this.layers[i].getItem()).modelTopHeight * 0.03D); }
+				{ ((ItemSandwichable) this.layers[i].getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) this.layers[i].getItem()).modelTopHeight * 0.03D); }
 			else
 			{
 				EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
