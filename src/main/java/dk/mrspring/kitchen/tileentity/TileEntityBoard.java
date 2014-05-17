@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.tileentity;
 import dk.mrspring.kitchen.item.ItemSandwichBread;
 import dk.mrspring.kitchen.item.ItemSandwichable;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -26,12 +27,13 @@ public class TileEntityBoard extends TileEntity
 		this.layerIndex = 0;
 	}
 	
-	public boolean addLayer(ItemSandwichable par1, EntityPlayer player)
+	public boolean addLayer(ItemSandwichable par1)
 	{
 		if (this.layerIndex + 1 <= 10)
 		{
 			this.layers[this.layerIndex] = new ItemStack(par1, 1, 0);
 			this.layerIndex++;
+			
 			return true;
 		}
 		else

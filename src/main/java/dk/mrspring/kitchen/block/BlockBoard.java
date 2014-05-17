@@ -54,6 +54,10 @@ public class BlockBoard extends BlockContainer
 	{
 		TileEntityBoard entity = (TileEntityBoard) world.getTileEntity(x, y, z);
 		
+		super.onBlockActivated(world, x, y, z, activator, p_149727_6_, p_149727_7_, p_149727_8_, p_149727_9_);
+		
+		world.markBlockForUpdate(x, y, z);
+		
 		if (!activator.isSneaking())
 		{
 			if (activator.getCurrentEquippedItem() != null)
