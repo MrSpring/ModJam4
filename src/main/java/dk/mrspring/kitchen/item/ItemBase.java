@@ -6,6 +6,8 @@ import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.model.ModelBreadSliceBottom;
+import dk.mrspring.kitchen.model.ModelBreadSliceTop;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 
@@ -32,7 +34,7 @@ public class ItemBase extends Item
 		// registerItem(KitchenItems.knife);
 		registerItem(new ItemKnife("knife", true).setMaxStackSize(1));
 		registerItem(new ItemSandwichable("bacon_raw", true, 2));
-		registerItem(new ItemSandwichBread("bread_slice", true));
+		registerItem(new ItemSandwichBread("bread_slice", true).setCustomModel(new ModelBreadSliceTop(), new ModelBreadSliceBottom(), 2));
 		// registerItem(new ItemSandwich().setFull3D(), "sandwich");
 		
 		GameRegistry.registerCustomItemStack("sandwich_itemstack", KitchenItems.basic_sandwich);

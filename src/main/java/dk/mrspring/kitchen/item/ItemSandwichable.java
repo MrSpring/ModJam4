@@ -1,13 +1,15 @@
 package dk.mrspring.kitchen.item;
 
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.item.Item;
 import dk.mrspring.kitchen.ModInfo;
 
 public class ItemSandwichable extends ItemBase
 {
 	private int healOnEaten = 1;
-	protected boolean hasCustomModel;
-	private ModelBase customModel;
+	public boolean hasCustomModel;
+	private ModelBase bottomModel;
+	private ModelBase topModel;
 	private int modelHeight = 1;
 	
 	public ItemSandwichable(String name, String textureName, boolean useCreativeTab, int healAmount)
@@ -27,10 +29,23 @@ public class ItemSandwichable extends ItemBase
 		return this.healOnEaten;
 	}
 	
-	public void setCustomModel(ModelBase model, int modelHeight)
+	public ModelBase getBottomModel()
+	{
+		return this.bottomModel;
+	}
+	
+	public ModelBase getTopModel()
+	{
+		return this.topModel;
+	}
+	
+	public ItemSandwichable setCustomModel(ModelBase top, ModelBase bottom, int modelHeight)
 	{
 		this.hasCustomModel = true;
-		this.customModel = model;
+		this.topModel = top;
+		this.bottomModel = bottom;
 		this.modelHeight = modelHeight;
+		
+		return this;
 	}
 }

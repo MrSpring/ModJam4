@@ -14,6 +14,7 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dk.mrspring.kitchen.item.ItemSandwichable;
 
 @SideOnly(Side.CLIENT)
 public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
@@ -35,7 +36,15 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 		for (int i = 0; i < this.layers.length; ++i)
 		{
 			if (this.layers[i] != null)
-				renderItem(this.layers[i], 0.5D, 0.145D + (i * 0.031D), 0.33D);
+			{
+				if (((ItemSandwichable) this.layers[i].getItem()).hasCustomModel)
+					if (this.layers[i + 1] != null)
+						((ItemSandwichable) this.layers[i].getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+					else
+						((ItemSandwichable) this.layers[i].getItem()).getBottomModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+				else
+					renderItem(this.layers[i], 0.5D, 0.145D + (i * 0.031D), 0.33D);
+			}
 		}
 	}
 	
