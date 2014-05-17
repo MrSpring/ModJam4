@@ -2,14 +2,18 @@ package dk.mrspring.kitchen.combo;
 
 import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
 import dk.mrspring.kitchen.item.ItemSandwichable;
 
 public class ComboOneOfEach extends SandwichCombo
 {
-	public ComboOneOfEach(int ID, ItemSandwichable[] items)
+	public ComboOneOfEach(int ID, String[] names)
 	{
-		super(ID, items);
+		super(ID, names);
 		
 		this.setRarity(EnumRarity.epic);
 	}

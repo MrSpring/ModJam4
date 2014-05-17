@@ -41,9 +41,4 @@ public class KitchenItems
 		
 		return basicSandwich;
 	}
-	
-	private void registerSandwich()
-	{
-		
-	}
 }

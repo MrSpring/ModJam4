@@ -30,7 +30,7 @@ public class ItemSandwich extends ItemFood
 	@Override
 	public EnumRarity getRarity(ItemStack par1ItemStack)
 	{
-		byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Combo");
+		byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Id");
 		
 		if (SandwichCombo.combos[(int) combo] != null)
 			return SandwichCombo.combos[(int) combo].getRarity();
@@ -41,7 +41,7 @@ public class ItemSandwich extends ItemFood
 	@Override
 	protected void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
 	{
-		byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Combo");
+		byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Id");
 		
 		if (SandwichCombo.combos[(int) combo] != null)
 			SandwichCombo.combos[(int) combo].onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
@@ -62,6 +62,11 @@ public class ItemSandwich extends ItemFood
 			healAmount += ((ItemSandwichable) ItemStack.loadItemStackFromNBT(layerCompound).getItem()).getHealAmount();
 		}
 		
+		byte combo = item.getTagCompound().getCompoundTag("Combo").getByte("Id");
+		
+		if (SandwichCombo.combos[(int) combo] != null)
+			healAmount += SandwichCombo.combos[(int) combo].getAdditionalHeal();
+		
 		return healAmount;
 	}
 	
@@ -76,7 +81,7 @@ public class ItemSandwich extends ItemFood
 			par3List.add(StatCollector.translateToLocal(ItemStack.loadItemStackFromNBT(layerCompound).getDisplayName()));
 		}
 		
-		byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Combo");
+		byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Id");
 		
 		if (SandwichCombo.combos[(int) combo] != null)
 			SandwichCombo.combos[(int) combo].addCustomItemInformation(par3List);

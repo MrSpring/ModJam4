@@ -15,28 +15,27 @@ import dk.mrspring.kitchen.item.ItemSandwichable;
 
 public class SandwichCombo
 {
-	protected ArrayList<ItemSandwichable> comboLayers = new ArrayList<ItemSandwichable>();
+	protected ArrayList<String> comboLayers = new ArrayList<String>();
 	protected EnumRarity rarity = EnumRarity.common;
 	protected String unlocalizedName = "sandwich.combo.untitled";
 	
 	public static SandwichCombo[] combos = new SandwichCombo[16];
 	private int lastId = 0;
 	
-	// TODO Implement PotionEffect things
-	
-	public SandwichCombo(int ID, ItemSandwichable[] items)
+	public SandwichCombo(int ID, String[] names)
 	{
-		for (int i = 0; i < items.length; ++i)
+		for (int i = 0; i < names.length; ++i)
 		{
-			if (items[i] != null)
-				this.comboLayers.add(items[i]);
+			if (names[i] != null)
+				this.comboLayers.add(names[i]);
 		}
 		
 		combos[ID] = this;
 	}
 	
-	public static final SandwichCombo defaultCombo = new SandwichCombo(0, new ItemSandwichable[] {  });
-	public static final SandwichCombo oneOfEach = new ComboOneOfEach(1, new ItemSandwichable[] { KitchenItems.bread_slice, KitchenItems.bread_slice, KitchenItems.bacon_raw, KitchenItems.lettuce_leaf, KitchenItems.tomato_slice });
+	public static final SandwichCombo defaultCombo = new SandwichCombo(0, new String[] {  });
+	public static final SandwichCombo oneOfEach = new ComboOneOfEach(1, new String[] { "bread_slice", "bread_slice", "bacon_raw", "lettuce_leaf", "tomato_slice" });
+	public static final SandwichCombo onlyBread = new ComboOnlyBread(2, new String[] { "bread_slice", "bread_slice" });
 	
 	public void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) { }
 	
@@ -54,19 +53,39 @@ public class SandwichCombo
 	
 	public boolean matches(ItemStack sandwich)
 	{
-		ArrayList<ItemSandwichable> layersInSandwich = new ArrayList<ItemSandwichable>();
+		ArrayList<String> layersInSandwich = new ArrayList<String>();
 		NBTTagList layersList = sandwich.stackTagCompound.getTagList("SandwichLayers", 10);
+		int layers = 0;
 		
 		for (int i = 0; i < layersList.tagCount(); ++i)
 		{
+			// NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
+			// layersInSandwich.add((ItemSandwichable) ItemStack.loadItemStackFromNBT(layerCompound).getItem());
+			
 			NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
-			layersInSandwich.add((ItemSandwichable) ItemStack.loadItemStackFromNBT(layerCompound).getItem());
+			String name = ItemStack.loadItemStackFromNBT(layerCompound).getItem().getUnlocalizedName().replace("item.", "");
+			
+			layersInSandwich.add(name);
 		}
 		
-		if (this.comboLayers.containsAll(layersInSandwich) && layersInSandwich.containsAll(this.comboLayers))
+		System.out.println(" Layers in Sandwich: " + layersInSandwich.size());
+		System.out.println(" Layers in Combo:    " + this.comboLayers.size());
+		
+		if (layersInSandwich.containsAll(this.comboLayers) && this.comboLayers.containsAll(layersInSandwich))
 			return true;
 		else
 			return false;
+			
+		
+		/*if (this.comboLayers.containsAll(layersInSandwich))
+			return true;
+		else
+			return false;*/
+	}
+	
+	public int getAdditionalHeal()
+	{
+		return 0;
 	}
 	
 	public void setUnlocalizedName(String name)

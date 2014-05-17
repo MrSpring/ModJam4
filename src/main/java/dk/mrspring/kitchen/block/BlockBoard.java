@@ -106,6 +106,8 @@ public class BlockBoard extends BlockContainer
 						
 						for (int i = 1; i < SandwichCombo.combos.length && SandwichCombo.combos[i] != null; ++i)
 						{
+							System.out.println(" Checking if Sandwich matches combo #" + i);
+							
 							if (SandwichCombo.combos[i].matches(item))
 								combo = (byte) i;
 						}

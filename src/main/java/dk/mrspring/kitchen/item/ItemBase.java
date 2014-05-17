@@ -29,7 +29,7 @@ public class ItemBase extends Item
 	
 	public static void load()
 	{
-		registerItem(new ItemBase("knife", true).setMaxStackSize(1).setContainerItem(KitchenItems.knife));
+		registerItem(new ItemKnife("knife", true).setMaxStackSize(1).setContainerItem(KitchenItems.knife));
 		registerItem(new ItemSandwichable("bacon_raw", true, 2));
 		registerItem(new ItemSandwichBread("bread_slice", true));
 		// registerItem(new ItemSandwich().setFull3D(), "sandwich");
