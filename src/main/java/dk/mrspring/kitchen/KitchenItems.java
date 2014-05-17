@@ -6,12 +6,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import dk.mrspring.kitchen.item.ItemKnife;
 import dk.mrspring.kitchen.item.ItemSandwich;
 import dk.mrspring.kitchen.item.ItemSandwichBread;
 import dk.mrspring.kitchen.item.ItemSandwichable;
 
 public class KitchenItems
 {
+	// public static final Item knife = new ItemKnife("knife", true);
 	public static final Item knife = findItem("knife");
 	public static final ItemSandwichable bacon_raw = (ItemSandwichable) findItem("bacon_raw");
 	public static final ItemSandwichBread bread_slice = (ItemSandwichBread) findItem("bread_slice");

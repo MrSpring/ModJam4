@@ -43,8 +43,6 @@ public class Kitchen
 		BlockBase.load();
 		ItemBase.load();
 		
-		KitchenItems.findItems();
-		
 		instance.proxy.registerRenderers();
 	}
 	
@@ -54,7 +52,9 @@ public class Kitchen
 		GameRegistry.addRecipe(new ShapedOreRecipe(KitchenBlocks.board, new Object[] { "SPS", Character.valueOf('S'), "slabWood", Character.valueOf('P'), Blocks.wooden_pressure_plate }));
 		GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, new Object[] { "I ", " S", Character.valueOf('S'), "stickWood", Character.valueOf('I'), Items.iron_ingot }));
 		
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.bacon_raw), new Object[] {
+		GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.bacon_raw, 3), new Object[] { new ItemStack(KitchenItems.knife), new ItemStack(Items.porkchop) });
+		
+		/*GameRegistry.addRecipe(new ItemStack(KitchenItems.bacon_raw), new Object[] {
 			"K", "P", 
 			Character.valueOf('K'), KitchenItems.knife,
 			Character.valueOf('P'), Items.porkchop });
@@ -63,6 +63,6 @@ public class Kitchen
 			Character.valueOf('R'), KitchenItems.lettuce });
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.lettuce_leaf), new Object[] { "K", "L", 
 			Character.valueOf('K'), KitchenItems.knife,
-			Character.valueOf('P'),KitchenItems.tomato });
+			Character.valueOf('P'),KitchenItems.tomato }); */
 	}
 }
