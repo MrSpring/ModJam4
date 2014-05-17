@@ -22,6 +22,7 @@ public class KitchenItems
 	public static final Item lettuce = findItem("lettuce");
 	public static final ItemSandwichable tomato_slice = (ItemSandwichable) findItem("tomato_slice");
 	public static final ItemSandwichable lettuce_leaf = (ItemSandwichable) findItem("lettuce_leaf");
+	public static final ItemSandwichable cooked_bacon = (ItemSandwichable) findItem("bacon_cooked");
 	
 	private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
 	{

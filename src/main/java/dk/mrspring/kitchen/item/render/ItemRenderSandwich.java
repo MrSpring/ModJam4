@@ -103,9 +103,11 @@ public class ItemRenderSandwich implements IItemRenderer
 				
 				GL11.glPushMatrix();
 				
-				GL11.glRotatef(180, 0.65F, 0.1F, 0.6F);
-				GL11.glTranslatef(-0.3F, -0.6F, 0.3F);
+				GL11.glRotatef(180, 0.65F, 0.12F, 0.6F);
+				GL11.glTranslatef(-0.3F, -0.5F, 0.3F);
 				GL11.glScalef(0.8F, 0.8F, 0.8F);
+				
+				GL11.glRotatef(180F, 1.0F, 0.0F, 0.0F);
 				
 				for (int i = 0; i < this.items.length; ++i)
 				{

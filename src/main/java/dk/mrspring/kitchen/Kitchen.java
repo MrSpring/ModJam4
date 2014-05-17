@@ -54,15 +54,9 @@ public class Kitchen
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.bacon_raw, 3), new Object[] { new ItemStack(KitchenItems.knife), new ItemStack(Items.porkchop) });
 		
-		/*GameRegistry.addRecipe(new ItemStack(KitchenItems.bacon_raw), new Object[] {
-			"K", "P", 
-			Character.valueOf('K'), KitchenItems.knife,
-			Character.valueOf('P'), Items.porkchop });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.tomato_slice), new Object[] { "K", "T", 
-			Character.valueOf('K'), KitchenItems.knife,
-			Character.valueOf('R'), KitchenItems.lettuce });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.lettuce_leaf), new Object[] { "K", "L", 
-			Character.valueOf('K'), KitchenItems.knife,
-			Character.valueOf('P'),KitchenItems.tomato }); */
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.bacon_raw), new Object[] { "K", "P", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('P'), Items.porkchop });
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.tomato_slice), new Object[] { "K", "T", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('R'), KitchenItems.lettuce });
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.lettuce_leaf), new Object[] { "K", "L", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('P'), KitchenItems.tomato });
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.bacon_raw), new Object[] { "K", "P", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('P'), Items.porkchop });
 	}
 }
