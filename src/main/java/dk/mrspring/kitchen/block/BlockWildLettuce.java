@@ -10,7 +10,7 @@ public class BlockWildLettuce extends BlockBase
 {
 	public BlockWildLettuce()
 	{
-		super(Material.grass, "wild_lettuce", true);
+		super(Material.plants, "wild_lettuce", true);
 	}
 	
 	@Override

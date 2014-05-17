@@ -16,6 +16,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
+import dk.mrspring.kitchen.world.gen.WorldGenWildTomato;
 
 @Mod(modid = ModInfo.modid, name = ModInfo.name, version = ModInfo.version)
 public class Kitchen
@@ -49,6 +50,8 @@ public class Kitchen
 	@EventHandler
 	public static void init(FMLInitializationEvent event)
 	{
+		GameRegistry.registerWorldGenerator(new WorldGenWildTomato(), 0);
+		
 		GameRegistry.addRecipe(new ShapedOreRecipe(KitchenBlocks.board, new Object[] { "SPS", Character.valueOf('S'), "slabWood", Character.valueOf('P'), Blocks.wooden_pressure_plate }));
 		GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, new Object[] { "I ", " S", Character.valueOf('S'), "stickWood", Character.valueOf('I'), Items.iron_ingot }));
 		

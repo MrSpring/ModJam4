@@ -3,14 +3,15 @@ package dk.mrspring.kitchen.block;
 import java.util.Random;
 
 import dk.mrspring.kitchen.KitchenItems;
+import net.minecraft.block.BlockFlower;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 
-public class BlockWildTomato extends BlockBase
+public class BlockWildTomato extends BlockFlower
 {
 	public BlockWildTomato()
 	{
-		super(Material.grass, "wild_tomato", true);
+		super(field_149862_O);
 	}
 	
 	@Override
