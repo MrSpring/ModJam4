@@ -58,5 +58,7 @@ public class Kitchen
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.tomato_slice), new Object[] { "K", "T", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('R'), KitchenItems.lettuce });
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.lettuce_leaf), new Object[] { "K", "L", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('P'), KitchenItems.tomato });
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.bacon_raw), new Object[] { "K", "P", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('P'), Items.porkchop });
+		
+		GameRegistry.addSmelting(KitchenItems.bacon_raw, new ItemStack(KitchenItems.cooked_bacon, 1, 0), 3.0F);
 	}
 }

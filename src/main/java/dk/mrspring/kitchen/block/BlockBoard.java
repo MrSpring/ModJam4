@@ -67,7 +67,7 @@ public class BlockBoard extends BlockContainer
 			else
 				if (entity.removeTopLayer())
 					if (!world.isRemote)
-						{ world.spawnEntityInWorld(new EntityItem(world, (double) x, (double) y, (double) z, entity.getLastRemoved())); return true; }
+						{ world.spawnEntityInWorld(new EntityItem(world, (double) x + 0.5, (double) y + 0.5, (double) z + 0.5, entity.getLastRemoved())); return true; }
 					else
 						return true;
 				else
@@ -106,18 +106,14 @@ public class BlockBoard extends BlockContainer
 						
 						for (int i = 1; i < SandwichCombo.combos.length && SandwichCombo.combos[i] != null; ++i)
 						{
-							System.out.println(" Checking if Sandwich matches combo #" + i);
-							
 							if (SandwichCombo.combos[i].matches(item))
 								combo = (byte) i;
 						}
 						
-						System.out.println(" Setting combo to: " + combo);
-						
 						comboCompound.setByte("Id", combo);
 						item.setTagInfo("Combo", comboCompound);
 						
-						world.spawnEntityInWorld(new EntityItem(world, (double)  x, (double)  y, (double)  z, item));
+						world.spawnEntityInWorld(new EntityItem(world, (double) x + 0.5, (double) y + 0.5, (double) z + 0.5, item));
 						entity.resetLayers();
 						return true;
 					}
