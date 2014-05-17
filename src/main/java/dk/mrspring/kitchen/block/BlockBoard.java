@@ -24,6 +24,7 @@ import dk.mrspring.kitchen.GameRegisterer;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.item.ItemSandwich;
 import dk.mrspring.kitchen.item.ItemSandwichable;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
@@ -99,6 +100,18 @@ public class BlockBoard extends BlockContainer
 						}
 						
 						item.setTagInfo("SandwichLayers", layersList);
+						
+						NBTTagCompound comboCompound = new NBTTagCompound();
+						byte combo = 0;
+						
+						for (int i = 1; i < SandwichCombo.combos.length && SandwichCombo.combos[i] != null; ++i)
+						{
+							if (SandwichCombo.combos[i].matches(item))
+								combo = (byte) i;
+						}
+						
+						comboCompound.setByte("Id", combo);
+						item.setTagInfo("Combo", comboCompound);
 						
 						world.spawnEntityInWorld(new EntityItem(world, (double)  x, (double)  y, (double)  z, item));
 						entity.resetLayers();

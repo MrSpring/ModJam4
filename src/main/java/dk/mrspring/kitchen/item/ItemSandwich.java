@@ -16,8 +16,6 @@ import dk.mrspring.kitchen.combo.SandwichCombo;
 
 public class ItemSandwich extends ItemFood
 {
-	private SandwichCombo combo;
-	
 	public ItemSandwich()
 	{
 		super(0, false);
@@ -30,19 +28,21 @@ public class ItemSandwich extends ItemFood
 	@Override
 	public EnumRarity getRarity(ItemStack par1ItemStack)
 	{
-		par1ItemStack.getTagCompound().getCompoundTag("Combo");
+		byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Combo");
 		
-		/*if (this.combo != null)
-			return combo.getRarity();
+		if (SandwichCombo.combos[(int) combo] != null)
+			return SandwichCombo.combos[(int) combo].getRarity();
 		else
-			return EnumRarity.common;*/
+			return EnumRarity.common;
 	}
 	
 	@Override
 	protected void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
 	{
-		if (this.combo != null)
-			this.combo.onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
+		byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Combo");
+		
+		if (SandwichCombo.combos[(int) combo] != null)
+			SandwichCombo.combos[(int) combo].onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
 		else
 			super.onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
 	}
@@ -74,8 +74,13 @@ public class ItemSandwich extends ItemFood
 			par3List.add(StatCollector.translateToLocal(ItemStack.loadItemStackFromNBT(layerCompound).getDisplayName()));
 		}
 		
-		if (this.combo != null)
-			this.combo.addCustomItemInformation(par3List);
+		byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Combo");
+		
+		if (SandwichCombo.combos[(int) combo] != null)
+			SandwichCombo.combos[(int) combo].addCustomItemInformation(par3List);
+		
+		/*if (this.combo != null)
+			this.combo.addCustomItemInformation(par3List);*/
 	}
 	
 	public static int calculateHealAmount(ItemSandwichable[] layers)

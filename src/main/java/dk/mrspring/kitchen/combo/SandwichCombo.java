@@ -8,13 +8,19 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import dk.mrspring.kitchen.item.ItemSandwichable;
 
 public class SandwichCombo
 {
 	protected ArrayList<ItemSandwichable> comboLayers = new ArrayList<ItemSandwichable>();
-	protected EnumRarity rarity;
+	protected EnumRarity rarity = EnumRarity.common;
+	protected String unlocalizedName = "sandwich.combo.untitled";
+	
+	public static SandwichCombo[] combos = new SandwichCombo[16];
+	private int lastId = 0;
+	
 	// TODO Implement PotionEffect things
 	
 	public SandwichCombo(ItemSandwichable[] items)
@@ -24,17 +30,16 @@ public class SandwichCombo
 			if (items[i] != null)
 				this.comboLayers.add(items[i]);
 		}
-	}
-	
-	public void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-	{
 		
+		combos[lastId] = this;
+		++lastId;
 	}
 	
-	public void addCustomItemInformation(List par1)
-	{
-		par1.add("Default Combo");
-	}
+	public static final SandwichCombo defaultCombo = new SandwichCombo(new ItemSandwichable[] {  });
+	
+	public void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) { }
+	
+	public void addCustomItemInformation(List par1) { }
 	
 	public void setRarity(EnumRarity par1)
 	{
@@ -63,8 +68,18 @@ public class SandwichCombo
 			return false;
 	}
 	
+	public void setUnlocalizedName(String name)
+	{
+		this.unlocalizedName = name;
+	}
+	
 	public String getUnlocalizedName()
 	{
-		return "sandwich.combo.default";
+		return this.unlocalizedName;
+	}
+	
+	public String getLocalizedName()
+	{
+		return StatCollector.translateToLocal(this.getUnlocalizedName());
 	}
 }
