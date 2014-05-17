@@ -34,7 +34,7 @@ public class ItemBase extends Item
 		// registerItem(KitchenItems.knife);
 		registerItem(new ItemKnife("knife", true).setMaxStackSize(1));
 		registerItem(new ItemSandwichable("bacon_raw", true, 2));
-		registerItem(new ItemSandwichBread("bread_slice", true).setCustomModel(new ModelBreadSliceTop(), new ModelBreadSliceBottom(), 2));
+		registerItem(new ItemSandwichBread("bread_slice", true).setCustomModel(new ModelBreadSliceTop(), new ModelBreadSliceBottom(), 3, 2));
 		// registerItem(new ItemSandwich().setFull3D(), "sandwich");
 		
 		GameRegistry.registerCustomItemStack("sandwich_itemstack", KitchenItems.basic_sandwich);

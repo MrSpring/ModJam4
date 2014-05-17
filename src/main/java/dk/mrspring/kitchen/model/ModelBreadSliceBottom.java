@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.model;
 
+import org.lwjgl.opengl.GL11;
+
 import dk.mrspring.kitchen.ModInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;

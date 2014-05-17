@@ -10,7 +10,8 @@ public class ItemSandwichable extends ItemBase
 	public boolean hasCustomModel;
 	private ModelBase bottomModel;
 	private ModelBase topModel;
-	private int modelHeight = 1;
+	public int modelBottomHeight = 1;
+	public int modelTopHeight = 1;
 	
 	public ItemSandwichable(String name, String textureName, boolean useCreativeTab, int healAmount)
 	{
@@ -39,12 +40,13 @@ public class ItemSandwichable extends ItemBase
 		return this.topModel;
 	}
 	
-	public ItemSandwichable setCustomModel(ModelBase top, ModelBase bottom, int modelHeight)
+	public ItemSandwichable setCustomModel(ModelBase top, ModelBase bottom, int modelTopHeight, int modelBottomHeight)
 	{
 		this.hasCustomModel = true;
 		this.topModel = top;
 		this.bottomModel = bottom;
-		this.modelHeight = modelHeight;
+		this.modelBottomHeight = modelBottomHeight;
+		this.modelTopHeight = modelTopHeight;
 		
 		return this;
 	}

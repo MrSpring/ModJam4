@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.model;
 
+import org.lwjgl.opengl.GL11;
+
 import dk.mrspring.kitchen.ModInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -64,6 +66,8 @@ public class ModelBreadSliceTop extends ModelBase
 		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.modid + ":textures/models/bread_slice_top.png"));
 		
 		System.out.println(" Rendering top!");
+		
+		GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
 		
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
