@@ -23,6 +23,8 @@ public class ItemSandwich extends ItemFood
 		
 		this.setUnlocalizedName("sandwich");
 		this.setTextureName("minecraft:bread");
+		
+		this.setCreativeTab(null);
 	}
 	
 	@Override

@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.item.ItemSandwichable;
 
 public class SandwichCombo
@@ -23,7 +24,7 @@ public class SandwichCombo
 	
 	// TODO Implement PotionEffect things
 	
-	public SandwichCombo(ItemSandwichable[] items)
+	public SandwichCombo(int ID, ItemSandwichable[] items)
 	{
 		for (int i = 0; i < items.length; ++i)
 		{
@@ -31,11 +32,11 @@ public class SandwichCombo
 				this.comboLayers.add(items[i]);
 		}
 		
-		combos[lastId] = this;
-		++lastId;
+		combos[ID] = this;
 	}
 	
-	public static final SandwichCombo defaultCombo = new SandwichCombo(new ItemSandwichable[] {  });
+	public static final SandwichCombo defaultCombo = new SandwichCombo(0, new ItemSandwichable[] {  });
+	public static final SandwichCombo oneOfEach = new ComboOneOfEach(1, new ItemSandwichable[] { KitchenItems.bread_slice, KitchenItems.bread_slice, KitchenItems.bacon_raw, KitchenItems.lettuce_leaf, KitchenItems.tomato_slice });
 	
 	public void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) { }
 	

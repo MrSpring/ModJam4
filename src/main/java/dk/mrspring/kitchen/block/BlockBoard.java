@@ -110,6 +110,8 @@ public class BlockBoard extends BlockContainer
 								combo = (byte) i;
 						}
 						
+						System.out.println(" Setting combo to: " + combo);
+						
 						comboCompound.setByte("Id", combo);
 						item.setTagInfo("Combo", comboCompound);
 						

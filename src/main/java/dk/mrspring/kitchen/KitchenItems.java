@@ -15,18 +15,15 @@ public class KitchenItems
 	public static final Item knife = findItem("knife");
 	public static final ItemSandwichable bacon_raw = (ItemSandwichable) findItem("bacon_raw");
 	public static final ItemSandwichBread bread_slice = (ItemSandwichBread) findItem("bread_slice");
-	// public static final ItemSandwich sandwich = (ItemSandwich) findItem("sandwich");
-	
 	public static ItemStack basic_sandwich = getSandwichItemStackWithNBTTags(new ItemStack[] { new ItemStack(bread_slice, 1, 0), new ItemStack(bacon_raw, 1, 0), new ItemStack(bread_slice, 1, 0) });
-	
 	public static final Item tomato = findItem("tomato");
 	public static final Item lettuce = findItem("lettuce");
-	public static final Item tomato_slice = findItem("tomato_slice");
-	public static final Item lettuce_leaf = findItem("lettuce_leaf");
+	public static final ItemSandwichable tomato_slice = (ItemSandwichable) findItem("tomato_slice");
+	public static final ItemSandwichable lettuce_leaf = (ItemSandwichable) findItem("lettuce_leaf");
 	
 	private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
 	{
-		ItemSandwich sandwich = new ItemSandwich(); // Yay! It's now working. :D
+		ItemSandwich sandwich = new ItemSandwich();
 		GameRegistry.registerItem(sandwich, "sandwich");
 		
 		ItemStack basicSandwich = new ItemStack(sandwich, 1, 0);
