@@ -8,30 +8,24 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class ComboSmartChicken extends SandwichCombo
+public class ComboVeggie extends SandwichCombo
 {
-	public ComboSmartChicken(int ID)
+	public ComboVeggie(int ID)
 	{
-		super(ID, new String[] { "toast", "toast", "chicken_fillet_cooked", "tomato_slice", "lettuce_leaf" });
-		this.setRarity(EnumRarity.uncommon);
+		super(ID, new String[] { "bread_slice", "bread_slice", "carrot_slice", "lettuce_leaf", "tomato_slice", "cheese_slice" });
+		this.setRarity(EnumRarity.rare);
 	}
 	
 	@Override
 	public void addCustomItemInformation(List par1)
 	{
 		par1.add("");
-		par1.add("7-Smart Chicken");
-	}
-	
-	@Override
-	public int getAdditionalHeal()
-	{
-		return 1;
+		par1.add("Veggie Sandwich");
 	}
 	
 	@Override
 	public void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
 	{
-		par3EntityPlayer.addPotionEffect(new PotionEffect(1, 10 * 20, 0));
+		par3EntityPlayer.addPotionEffect(new PotionEffect(10, 6 * 20, 1));
 	}
 }

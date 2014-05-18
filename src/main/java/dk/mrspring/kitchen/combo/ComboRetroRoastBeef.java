@@ -7,13 +7,12 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import dk.mrspring.kitchen.item.ItemSandwichable;
 
-public class ComboBLT extends SandwichCombo
+public class ComboRetroRoastBeef extends SandwichCombo
 {
-	public ComboBLT(int ID)
+	public ComboRetroRoastBeef(int ID)
 	{
-		super(ID, new String[] { "toast", "toast", "bacon_cooked", "lettuce_leaf", "tomato_slice" });
+		super(ID, new String[] { "bread_slice", "bread_slice", "tomato_slice", "lettuce_leaf", "roast_beef", "roast_beef" });
 		this.setRarity(EnumRarity.uncommon);
 	}
 	
@@ -21,12 +20,12 @@ public class ComboBLT extends SandwichCombo
 	public void addCustomItemInformation(List par1)
 	{
 		par1.add("");
-		par1.add("The Good ol' BLT");
+		par1.add("Retro Roastbeef");
 	}
 	
 	@Override
-	public int getAdditionalHeal()
+	public void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
 	{
-		return 1;
+		par3EntityPlayer.addPotionEffect(new PotionEffect(5, 20 * 20, 1));
 	}
 }
