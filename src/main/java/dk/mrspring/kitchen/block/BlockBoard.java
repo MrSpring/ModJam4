@@ -19,6 +19,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.Kitchen;
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.item.ItemSandwichable;
@@ -109,6 +110,9 @@ public class BlockBoard extends BlockContainer
 						
 						comboCompound.setByte("Id", combo);
 						item.setTagInfo("Combo", comboCompound);
+						
+						if (combo == 5)
+							item = new ItemStack(KitchenItems.book, 1, 0);
 						
 						world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, item));
 						entity.resetLayers();

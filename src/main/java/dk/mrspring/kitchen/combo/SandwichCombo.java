@@ -38,6 +38,7 @@ public class SandwichCombo
 	public static final SandwichCombo onlyBread = new ComboOnlyBread(2, new String[] { "bread_slice", "bread_slice" });
 	public static final SandwichCombo bigMac = new ComboBigMac(3);
 	public static final SandwichCombo smartChicken = new ComboSmartChicken(4);
+	public static final SandwichCombo book = new ComboBook(5);
 	
 	public void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) { }
 	

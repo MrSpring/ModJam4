@@ -54,5 +54,8 @@ public class ItemBase extends Item
 		registerItem(KitchenItems.chicken_leg);
 		registerItem(KitchenItems.cheese);
 		registerItem(KitchenItems.cheese_slice);
+		registerItem(KitchenItems.paper_slice);
+		registerItem(KitchenItems.leather_slice);
+		registerItem(KitchenItems.book);
 	}
 }

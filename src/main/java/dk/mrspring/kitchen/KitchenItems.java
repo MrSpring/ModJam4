@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.item.ItemBase;
+import dk.mrspring.kitchen.item.ItemBook;
 import dk.mrspring.kitchen.item.ItemKnife;
 import dk.mrspring.kitchen.item.ItemLettuce;
 import dk.mrspring.kitchen.item.ItemMandP;
@@ -44,6 +45,9 @@ public class KitchenItems
 	public static final Item chicken_leg = new ItemFood(4, true).setUnlocalizedName("chicken_leg").setTextureName(ModInfo.modid + ":chicken_leg").setCreativeTab(Kitchen.instance.tab);
 	public static final Item cheese = new ItemFood(3, false).setUnlocalizedName("cheese").setTextureName(ModInfo.modid + ":cheese").setCreativeTab(Kitchen.instance.tab);
 	public static final ItemSandwichable cheese_slice = new ItemSandwichable("cheese_slice", true, 3);
+	public static final ItemSandwichable paper_slice = new ItemSandwichable("page", true, 0);
+	public static final ItemSandwichable leather_slice = new ItemSandwichable("leather_slice", true, 0);
+	public static final Item book = new ItemBook();
 	
 	private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
 	{
