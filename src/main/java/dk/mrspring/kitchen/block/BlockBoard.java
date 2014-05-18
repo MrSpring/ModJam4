@@ -122,7 +122,7 @@ public class BlockBoard extends BlockContainer
 				else return false;
 			}
 		}
-		else return false;
+		else return true;
 		
 		/*if (!world.isRemote)
 			world.markBlockForUpdate(x, y, z);*/

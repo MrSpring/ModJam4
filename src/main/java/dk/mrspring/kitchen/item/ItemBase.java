@@ -35,19 +35,22 @@ public class ItemBase extends Item
 		registerItem(KitchenItems.mortar_and_pestle);
 		registerItem(KitchenItems.mortar);
 		registerItem(KitchenItems.pestle);
-		registerItem(KitchenItems.bacon_raw);
+		registerItem(KitchenItems.raw_bacon);
 		registerItem(KitchenItems.bread_slice);
 		GameRegistry.registerCustomItemStack("sandwich_itemstack", KitchenItems.basic_sandwich);
 		registerItem(KitchenItems.tomato);
 		registerItem(KitchenItems.lettuce);
 		registerItem(KitchenItems.tomato_slice);
 		registerItem(KitchenItems.lettuce_leaf);
-		registerItem(KitchenItems.cooked_bacon);
+		registerItem(KitchenItems.bacon);
 		registerItem(KitchenItems.potato_slice);
 		registerItem(KitchenItems.carrot_slice);
 		registerItem(KitchenItems.flour);
 		registerItem(KitchenItems.toast);
 		registerItem(KitchenItems.raw_roast_beef);
 		registerItem(KitchenItems.roast_beef);
+		registerItem(KitchenItems.raw_chicken_fillet);
+		registerItem(KitchenItems.chicken_fillet);
+		registerItem(KitchenItems.chicken_leg);
 	}
 }

@@ -65,7 +65,8 @@ public class ItemRenderSandwich implements IItemRenderer
 				if(!((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && !((Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative) && RenderManager.instance.playerViewY == 180.0F)))
 				{
 					GL11.glRotatef(180, -0.15F, 1.0F, -0.6F);
-					GL11.glTranslatef(-0.5F, 0.0F, -0.2F);
+					GL11.glTranslatef(-0.5F, 0.0F, -0.3F);
+					GL11.glScalef(1.4F, 1.4F, 1.4F);
 				}
 				else
 				{
