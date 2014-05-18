@@ -65,6 +65,9 @@ public class Kitchen
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.bread_slice, 2), new Object[] { "K", "B", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('B'), Items.bread });
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.raw_roast_beef, 2), new Object[] { "K", "B", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('B'), Items.beef });
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.raw_chicken_fillet, 4), new Object[] { "K", "C", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('C'), Items.chicken });
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.chicken_leg, 2), new Object[] { "K", "C", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('C'), Items.cooked_chicken });
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.cheese_slice, 2), new Object[] { "K", "C", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('C'), KitchenItems.cheese });
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.cheese, 2), new Object[] { "M", Character.valueOf('M'), Items.milk_bucket });
 		
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.mortar_and_pestle), new Object[] { "P", "M", Character.valueOf('M'), KitchenItems.mortar, Character.valueOf('P'), KitchenItems.pestle });
 		
@@ -76,5 +79,7 @@ public class Kitchen
 		
 		GameRegistry.addSmelting(KitchenItems.raw_bacon, new ItemStack(KitchenItems.bacon, 1, 0), 3.0F);
 		GameRegistry.addSmelting(KitchenItems.flour, new ItemStack(KitchenItems.toast, 2, 0), 3.0F);
+		GameRegistry.addSmelting(KitchenItems.raw_chicken_fillet, new ItemStack(KitchenItems.chicken_fillet, 1, 0), 3.0F);
+		GameRegistry.addSmelting(KitchenItems.raw_roast_beef, new ItemStack(KitchenItems.roast_beef, 1, 0), 3.0F);
 	}
 }
