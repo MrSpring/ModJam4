@@ -5,6 +5,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -17,7 +18,6 @@ import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import dk.mrspring.kitchen.world.gen.WorldGenWildLettuce;
-import dk.mrspring.kitchen.world.gen.WorldGenWildTomato;
 
 @Mod(modid = ModInfo.modid, name = ModInfo.name, version = ModInfo.version)
 public class Kitchen
@@ -51,7 +51,8 @@ public class Kitchen
 	@EventHandler
 	public static void init(FMLInitializationEvent event)
 	{
-		GameRegistry.registerWorldGenerator(new WorldGenWildTomato(), 0);
+		MinecraftForge.addGrassSeed(new ItemStack(KitchenItems.tomato), 10);
+		
 		GameRegistry.registerWorldGenerator(new WorldGenWildLettuce(), 1);
 		
 		GameRegistry.addRecipe(new ShapedOreRecipe(KitchenBlocks.board, new Object[] { "SPS", Character.valueOf('S'), "slabWood", Character.valueOf('P'), Blocks.wooden_pressure_plate }));

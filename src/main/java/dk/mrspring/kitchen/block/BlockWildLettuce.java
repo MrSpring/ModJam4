@@ -12,13 +12,13 @@ public class BlockWildLettuce extends BlockBush
 {
 	public BlockWildLettuce()
 	{
-		super();
+		super(Material.plants);
 		
 		this.setBlockName("wild_lettuce");
 		this.setBlockTextureName(ModInfo.modid + ":wild_lettuce");
 		this.setTickRandomly(true);
 		this.setBlockBounds(0.3F, 0.0F, 0.3F, 0.8F, 0.2F * 3.0F, 0.8F);
-		
+		this.setStepSound(soundTypeGrass);
 		this.setCreativeTab(null);
 	}
 	
