@@ -37,6 +37,8 @@ public class KitchenItems
 	public static final ItemSandwichable carrot_slice = new ItemSandwichable("carrot_slice", true, 2);
 	public static final Item flour = new ItemBase("flour", true);
 	public static final ItemSandwichBread toast = new ItemSandwichBread("toast", true);
+	public static final ItemSandwichable raw_roast_beef = new ItemSandwichable("raw_roast_beef", ModInfo.modid + ":beef_slice", true, 1);
+	public static final ItemSandwichable roast_beef = new ItemSandwichable("roast_beef", true, 4);
 	
 	private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
 	{

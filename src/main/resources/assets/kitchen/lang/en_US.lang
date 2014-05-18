@@ -18,3 +18,6 @@ item.carrot_slice.name=Carrot Slices
 item.potato_slice.name=Slice of Potato
 item.mortar.name=Mortar
 item.pestle.name=Pestle
+item.mortar_and_pestle.name=Mortar and Pestle
+item.flour.name=Flour
+item.toast.name=Piece of Toast

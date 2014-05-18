@@ -1,33 +1,26 @@
 package dk.mrspring.kitchen.block;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import dk.mrspring.kitchen.GameRegisterer;
+import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.combo.SandwichCombo;
-import dk.mrspring.kitchen.item.ItemSandwich;
 import dk.mrspring.kitchen.item.ItemSandwichable;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 
@@ -54,11 +47,87 @@ public class BlockBoard extends BlockContainer
 	{
 		TileEntityBoard entity = (TileEntityBoard) world.getTileEntity(x, y, z);
 		
-		super.onBlockActivated(world, x, y, z, activator, p_149727_6_, p_149727_7_, p_149727_8_, p_149727_9_);
+		if (!world.isRemote)
+		{
+			if (!activator.isSneaking())
+			{
+				if (activator.getCurrentEquippedItem() != null)
+				{
+					if (activator.getCurrentEquippedItem().getItem() instanceof ItemSandwichable)
+					{
+						if (entity.addLayer((ItemSandwichable) activator.getCurrentEquippedItem().getItem()))
+						{
+							--activator.getCurrentEquippedItem().stackSize;
+							world.markBlockForUpdate(x, y, z);
+							return true;
+						}
+						else return false;
+					}
+					else return false;
+				}
+				else
+				{
+					if (entity.removeTopLayer())
+					{
+						world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, entity.getLastRemoved()));
+						world.markBlockForUpdate(x, y, z);
+						return true;
+					}
+					else return false;
+				}
+			}
+			else
+			{
+				if (activator.getCurrentEquippedItem() == null)
+				{
+					if (entity.isAcceptableSandwich())
+					{
+						ItemStack[] itemsFromEntity = entity.getLayers();
+						
+						ItemStack item = GameRegistry.findItemStack(ModInfo.modid, "sandwich", 1);
+						
+						NBTTagList layersList = new NBTTagList();
+						
+						for (int i = 0; i < itemsFromEntity.length && itemsFromEntity[i] != null; ++i)
+						{
+							NBTTagCompound layerCompound = new NBTTagCompound();
+							itemsFromEntity[i].writeToNBT(layerCompound);
+							layersList.appendTag(layerCompound);
+						}
+						
+						item.setTagInfo("SandwichLayers", layersList);
+						
+						
+						NBTTagCompound comboCompound = new NBTTagCompound();
+						byte combo = 0;
+						
+						for (int i = 0; i < SandwichCombo.combos.length && SandwichCombo.combos[i] != null; ++i)
+						{
+							if (SandwichCombo.combos[i].matches(item))
+								combo = (byte) i;
+						}
+						
+						comboCompound.setByte("Id", combo);
+						item.setTagInfo("Combo", comboCompound);
+						
+						world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, item));
+						entity.resetLayers();
+						
+						world.markBlockForUpdate(x, y, z);
+						
+						return true;
+					}
+					else return false;
+				}
+				else return false;
+			}
+		}
+		else return false;
 		
-		world.markBlockForUpdate(x, y, z);
+		/*if (!world.isRemote)
+			world.markBlockForUpdate(x, y, z);*/
 		
-		if (!activator.isSneaking())
+		/*if (!activator.isSneaking())
 		{
 			if (activator.getCurrentEquippedItem() != null)
 				if (activator.getCurrentEquippedItem().getItem() instanceof ItemSandwichable)
@@ -131,7 +200,7 @@ public class BlockBoard extends BlockContainer
 					return false;
 			else
 				return false;
-		}
+		}*/
 	}
 	
 	@Override
@@ -156,6 +225,7 @@ public class BlockBoard extends BlockContainer
 	@Override
 	public void onBlockPreDestroy(World p_149725_1_, int p_149725_2_, int p_149725_3_, int p_149725_4_, int p_149725_5_)
 	{
+		super.onBlockPreDestroy(p_149725_1_, p_149725_2_, p_149725_3_, p_149725_4_, p_149725_5_);
 		this.tEntity = (TileEntityBoard) p_149725_1_.getTileEntity(p_149725_2_, p_149725_3_, p_149725_4_);
 	}
 	

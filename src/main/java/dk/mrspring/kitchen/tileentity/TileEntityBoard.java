@@ -13,6 +13,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 public class TileEntityBoard extends TileEntity
 {
@@ -29,6 +30,8 @@ public class TileEntityBoard extends TileEntity
 	
 	public boolean addLayer(ItemSandwichable par1)
 	{
+		System.out.println(" Adding layer: " + par1.getUnlocalizedName());
+		
 		if (this.layerIndex + 1 <= 10)
 		{
 			this.layers[this.layerIndex] = new ItemStack(par1, 1, 0);
@@ -79,6 +82,7 @@ public class TileEntityBoard extends TileEntity
 	{
 		super.readFromNBT(compound);
 		
+		this.resetLayers();
 		NBTTagList list = compound.getTagList("Items", 10);
 		this.layers = new ItemStack[10];
 		

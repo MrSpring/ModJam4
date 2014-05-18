@@ -39,9 +39,7 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 		for (int i = 0; i < this.layers.length; ++i)
 		{
 			if (this.layers[i] != null)
-			{
 				renderItem(this.layers[i], 0.5D, 0.145D + (i * 0.033F + this.yItemOffset), 0.33D, i);
-			}
 		}
 		
 		GL11.glPopMatrix();

@@ -47,5 +47,7 @@ public class ItemBase extends Item
 		registerItem(KitchenItems.carrot_slice);
 		registerItem(KitchenItems.flour);
 		registerItem(KitchenItems.toast);
+		registerItem(KitchenItems.raw_roast_beef);
+		registerItem(KitchenItems.roast_beef);
 	}
 }
