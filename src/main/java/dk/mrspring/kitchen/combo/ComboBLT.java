@@ -13,7 +13,8 @@ public class ComboBLT extends SandwichCombo
 {
 	public ComboBLT(int ID)
 	{
-		super(ID, new String[] { "toast", "toast", "bacon_cooked", "lettuce_leaf", "tomato_slice" });
+		super(ID);
+		this.setNames(new String[] { "toast", "bacon_cooked", "lettuce_leaf", "tomato_slice", "toast" });
 		this.setRarity(EnumRarity.uncommon);
 	}
 	

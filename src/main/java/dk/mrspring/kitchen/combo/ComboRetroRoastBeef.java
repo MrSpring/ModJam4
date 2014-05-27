@@ -12,7 +12,8 @@ public class ComboRetroRoastBeef extends SandwichCombo
 {
 	public ComboRetroRoastBeef(int ID)
 	{
-		super(ID, new String[] { "bread_slice", "bread_slice", "tomato_slice", "lettuce_leaf", "roast_beef", "roast_beef" });
+		super(ID);
+		this.setNames(new String[] { "bread_slice", "roast_beef", "roast_beef", "tomato_slice", "lettuce_leaf", "bread_slice" });
 		this.setRarity(EnumRarity.uncommon);
 	}
 	

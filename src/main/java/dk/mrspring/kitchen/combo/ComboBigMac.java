@@ -12,7 +12,8 @@ public class ComboBigMac extends SandwichCombo
 {
 	public ComboBigMac(int ID)
 	{
-		super(ID, new String[] { "bread_slice", "bread_slice", "bread_slice", "lettuce_leaf", "lettuce_leaf", "roast_beef", "roast_beef", "cheese_slice" });
+		super(ID);
+		this.setNames(new String[] { "bread_slice", "cheese_slice", "roast_beef", "lettuce_leaf", "bread_slice", "roast_beef", "lettuce_leaf", "bread_slice" });
 		this.setRarity(EnumRarity.rare);
 	}
 	

@@ -9,7 +9,8 @@ public class ComboOnlyBread extends SandwichCombo
 {
 	public ComboOnlyBread(int ID, String[] names)
 	{
-		super(ID, names);
+		super(ID);
+		this.setNames(names);
 	}
 	
 	@Override

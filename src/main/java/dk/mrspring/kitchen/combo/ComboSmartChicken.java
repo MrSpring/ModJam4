@@ -12,7 +12,8 @@ public class ComboSmartChicken extends SandwichCombo
 {
 	public ComboSmartChicken(int ID)
 	{
-		super(ID, new String[] { "toast", "toast", "chicken_fillet_cooked", "tomato_slice", "lettuce_leaf" });
+		super(ID);
+		this.setNames(new String[] { "toast", "chicken_fillet_cooked", "tomato_slice", "lettuce_leaf", "toast" });
 		this.setRarity(EnumRarity.uncommon);
 	}
 	

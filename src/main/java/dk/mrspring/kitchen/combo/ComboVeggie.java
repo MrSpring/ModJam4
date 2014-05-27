@@ -12,7 +12,8 @@ public class ComboVeggie extends SandwichCombo
 {
 	public ComboVeggie(int ID)
 	{
-		super(ID, new String[] { "bread_slice", "bread_slice", "carrot_slice", "lettuce_leaf", "tomato_slice", "cheese_slice" });
+		super(ID);
+		this.setNames(new String[] { "bread_slice", "carrot_slice", "lettuce_leaf", "tomato_slice", "cheese_slice", "bread_slice" });
 		this.setRarity(EnumRarity.rare);
 	}
 	
