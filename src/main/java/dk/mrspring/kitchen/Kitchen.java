@@ -37,7 +37,7 @@ public class Kitchen
 		{
 			@Override
 			public Item getTabIconItem()
-				{ return Items.bread; }
+				{ return KitchenItems.basic_sandwich.getItem(); }
 		};
 		
 		GameRegistry.registerTileEntity(TileEntityBoard.class, "tileEntityBoard");
