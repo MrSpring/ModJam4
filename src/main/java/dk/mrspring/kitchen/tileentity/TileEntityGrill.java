@@ -76,35 +76,39 @@ public class TileEntityGrill extends TileEntity
 	@Override
 	public void updateEntity()
 	{
-		if (this.coalTimeLeft > 0 && !this.isOpen)
-			--this.coalTimeLeft;
+		if (!worldObj.isRemote)
+		{
+			if (this.coalTimeLeft > 0)
+				--this.coalTimeLeft;
 
-		if (!this.isOpen)
-			++this.itemGrillTime;
-		else
-			this.itemGrillTime = 0;
+			if (!this.isOpen && this.coalTimeLeft > 0)
+				++this.itemGrillTime;
+			else
+				this.itemGrillTime = 0;
 
-		if (this.itemGrillTime > 200)
-			this.itemState = FINISHED;
-		else if (this.itemGrillTime > 300)
-			this.itemState = BURNT;
-		else if (this.itemGrillTime > 450)
-			this.itemState = INCINERATED;
-		else
-			this.itemState = NOT_FINISHED;
+			if (this.itemGrillTime > 200)
+				this.itemState = FINISHED;
+			else if (this.itemGrillTime > 300)
+				this.itemState = BURNT;
+			else if (this.itemGrillTime > 450)
+				this.itemState = INCINERATED;
+			else
+				this.itemState = NOT_FINISHED;
 
-		System.out.println(" Current State: " + this.itemState);
-		System.out.println(" Current Grill Time: " + this.itemGrillTime);
-		System.out.println(" Current Coal Time: " + this.coalTimeLeft);
+			System.out.println(" Current State: " + this.itemState);
+			System.out.println(" Current Grill Time: " + this.itemGrillTime);
+			System.out.println(" Current Coal Time: " + this.coalTimeLeft);
+			System.out.println(" ");
 
-		if (this.itemState == FINISHED)
-			this.finishItems();
+			if (this.itemState == FINISHED)
+				this.finishItems();
 
-		if (this.itemState == BURNT)
-			this.burnItems();
+			if (this.itemState == BURNT)
+				this.burnItems();
 
-		if (this.itemState == INCINERATED)
-			this.burnGrill();
+			if (this.itemState == INCINERATED)
+				this.burnGrill();
+		}
 	}
 
 	public void finishItems()

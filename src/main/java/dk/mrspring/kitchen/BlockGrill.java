@@ -2,7 +2,6 @@ package dk.mrspring.kitchen;
 
 import java.util.Random;
 
-import com.sun.accessibility.internal.resources.accessibility_zh_TW;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;

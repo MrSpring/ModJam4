@@ -28,12 +28,12 @@ public class Kitchen
 	@SidedProxy(serverSide = "dk.mrspring.kitchen.CommonProxy", clientSide = "dk.mrspring.kitchen.ClientProxy")
 	public static CommonProxy proxy;
 	
-	public static CreativeTabs tab;
+	public CreativeTabs tab;
 	
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event)
 	{
-		tab = new CreativeTabs("tabKitchen")
+		instance.tab = new CreativeTabs("tabKitchen")
 		{
 			@Override
 			public Item getTabIconItem()
