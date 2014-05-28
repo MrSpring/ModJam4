@@ -66,7 +66,7 @@ public class BlockGrill extends BlockContainer
 					if (corner == 0)
 						return false;
 					
-					
+					tileEntity.setItem(activator.getCurrentEquippedItem(), corner - 1);
 					
 					return true;
 				}
