@@ -2,16 +2,24 @@ package dk.mrspring.kitchen;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import dk.mrspring.kitchen.block.BlockBase;
+import dk.mrspring.kitchen.tileentity.TileEntityGrill;
 
-public class BlockGrill extends BlockBase
+public class BlockGrill extends BlockContainer
 {
 	public BlockGrill()
 	{
-		super(Material.iron, "grill", true);
+		super(Material.iron);
+		
+		this.setBlockName("grill");
+		this.setBlockTextureName(ModInfo.modid + ":grill");
+		
+		this.setCreativeTab(Kitchen.instance.tab);
+		
 		this.setTickRandomly(true);
 	}
 	
@@ -30,29 +38,51 @@ public class BlockGrill extends BlockBase
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer activator, int side, float activateX, float activateY, float activateZ)
 	{
+		/*
+		 * 4 3
+		 * 1 2
+		 */
+		
 		if (world.isRemote)
 		{
-			System.out.println(" Side: " + side + ", activation X: " + activateX + ", activation Y: " + activateY + ", activation Z: " + activateZ);
-			if (side == 1)
+			if (activator.getCurrentEquippedItem() != null)
 			{
-				if (activateX < 0.5 && activateZ < 0.5)
-					System.out.println(" Right-clicked in the Bottom Left corner!");
+				TileEntityGrill tileEntity = (TileEntityGrill) world.getTileEntity(x, y, z);
 				
-				if (activateX < 0.5 && activateZ > 0.5)
-					System.out.println(" Right-clicked in the Bottom Right corner!");
-				
-				if (activateX > 0.5 && activateZ > 0.5)
-					System.out.println(" Right-clicked in the Top Right corner!");
-				
-				if (activateX > 0.5 && activateZ < 0.5)
-					System.out.println(" Right-clicked in the Top Left corner!");
-				
-				return true;
+				System.out.println(" Side: " + side + ", activation X: " + activateX + ", activation Y: " + activateY + ", activation Z: " + activateZ);
+				if (side == 1)
+				{
+					int corner = 0;
+					
+					if (activateX < 0.5 && activateZ < 0.5)
+						corner = 1;
+					if (activateX < 0.5 && activateZ > 0.5)
+						corner = 2;
+					if (activateX > 0.5 && activateZ > 0.5)
+						corner = 3;
+					if (activateX > 0.5 && activateZ < 0.5)
+						corner = 4;
+					
+					if (corner == 0)
+						return false;
+					
+					
+					
+					return true;
+				}
+				else
+					return false;
 			}
 			else
 				return false;
 		}
 		else
 			return false;
+	}
+
+	@Override
+	public TileEntity createNewTileEntity(World var1, int var2)
+	{
+		return new TileEntityGrill();
 	}
 }
