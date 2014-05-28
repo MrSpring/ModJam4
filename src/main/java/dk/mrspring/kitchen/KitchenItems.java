@@ -44,6 +44,7 @@ public class KitchenItems
 	public static final Item chicken_leg = new ItemFood(4, true).setUnlocalizedName("chicken_leg").setTextureName(ModInfo.modid + ":chicken_leg").setCreativeTab(Kitchen.instance.tab);
 	public static final Item cheese = new ItemFood(3, false).setUnlocalizedName("cheese").setTextureName(ModInfo.modid + ":cheese").setCreativeTab(Kitchen.instance.tab);
 	public static final ItemSandwichable cheese_slice = new ItemSandwichable("cheese_slice", true, 3);
+    public static final Item burnt_meat = new ItemFood(1, false).setUnlocalizedName("burnt_meat").setCreativeTab(Kitchen.instance.tab);
 	
 	private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
 	{
