@@ -1,12 +1,6 @@
 package dk.mrspring.kitchen;
 
-import static dk.mrspring.kitchen.GameRegisterer.findBlock;
-import dk.mrspring.kitchen.block.BlockBase;
-import dk.mrspring.kitchen.block.BlockBoard;
-import dk.mrspring.kitchen.block.BlockLettuceCrop;
-import dk.mrspring.kitchen.block.BlockTomatoCrop;
-import dk.mrspring.kitchen.block.BlockWildLettuce;
-import dk.mrspring.kitchen.block.BlockWildTomato;
+import dk.mrspring.kitchen.block.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 

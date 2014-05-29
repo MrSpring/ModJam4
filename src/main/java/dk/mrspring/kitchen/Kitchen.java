@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen;
 
+import dk.mrspring.kitchen.tileentity.TileEntityGrill;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -41,6 +42,7 @@ public class Kitchen
 		};
 		
 		GameRegistry.registerTileEntity(TileEntityBoard.class, "tileEntityBoard");
+        GameRegistry.registerTileEntity(TileEntityGrill.class, "tileEntityGrill");
 		
 		BlockBase.load();
 		ItemBase.load();

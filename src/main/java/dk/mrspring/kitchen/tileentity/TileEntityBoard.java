@@ -30,8 +30,6 @@ public class TileEntityBoard extends TileEntity
 	
 	public boolean addLayer(ItemSandwichable par1)
 	{
-		System.out.println(" Adding layer: " + par1.getUnlocalizedName());
-		
 		if (this.layerIndex + 1 <= 10)
 		{
 			this.layers[this.layerIndex] = new ItemStack(par1, 1, 0);

@@ -19,7 +19,6 @@ import dk.mrspring.kitchen.item.ItemSandwichable;
 @SideOnly(Side.CLIENT)
 public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 {
-	private double x, y, z;
 	private ItemStack[] layers;
 	private double yItemOffset = 0.0D;
 	

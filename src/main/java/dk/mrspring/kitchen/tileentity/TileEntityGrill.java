@@ -34,20 +34,38 @@ public class TileEntityGrill extends TileEntity
 			return true;
 		}
 
-		if (!this.isOpen)
-			if (FurnaceRecipes.smelting().getSmeltingResult(item).getItem() instanceof ItemFood)
-				if (this.items[index] == null)
-				{
-					this.items[index] = itemStack;
-					this.isEmpty = true;
-					return true;
-				} else
-					return false;
-			else
-				return false;
-		else
-			return false;
+		if (this.isOpen)
+            if (FurnaceRecipes.smelting().getSmeltingResult(item) != null)
+    			if (FurnaceRecipes.smelting().getSmeltingResult(item).getItem() instanceof ItemFood)
+                    if (this.items[index] == null)
+                    {
+                        this.items[index] = itemStack;
+                        this.isEmpty = true;
+
+                        if (this.items[0] != null)
+                            System.out.println("1: " + this.items[0].getDisplayName());
+                        if (this.items[1] != null)
+                            System.out.println("2: " + this.items[1].getDisplayName());
+                        if (this.items[2] != null)
+                            System.out.println("3: " + this.items[2].getDisplayName());
+                        if (this.items[3] != null)
+                            System.out.println("4: " + this.items[3].getDisplayName());
+
+                        return true;
+                    } else
+                        return false;
+                else
+                    return false;
+            else
+                return false;
+        else
+            return false;
 	}
+
+    public ItemStack[] getItems()
+    {
+        return this.items;
+    }
 
 	public ItemStack removeItem(int index)
 	{
@@ -95,11 +113,11 @@ public class TileEntityGrill extends TileEntity
 			else
 				this.itemState = NOT_FINISHED;
 
-			System.out.println(" Current State: " + this.itemState);
+			/*System.out.println(" Current State: " + this.itemState);
 			System.out.println(" Current Grill Time: " + this.itemGrillTime);
 			System.out.println(" Current Coal Time: " + this.coalTimeLeft);
 			System.out.println(" ");
-
+*/
 			if (this.itemState == FINISHED)
 				this.finishItems();
 
