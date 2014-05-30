@@ -7,7 +7,8 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -23,14 +24,7 @@ public class BlockGrill extends BlockContainer
 		this.setBlockTextureName(ModInfo.modid + ":grill");
 
 		this.setCreativeTab(Kitchen.instance.tab);
-
-		this.setTickRandomly(true);
-	}
-
-	@Override
-	public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
-	{
-		super.updateTick(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_, p_149674_5_);
+        this.setTickRandomly(true);
 	}
 
 	@Override
@@ -47,70 +41,76 @@ public class BlockGrill extends BlockContainer
 		 * 1 2
 		 */
 
-		if (!world.isRemote)
-		{
-			TileEntityGrill tileEntity = (TileEntityGrill) world.getTileEntity(x, y, z);
+        TileEntityGrill tileEntity = (TileEntityGrill) world.getTileEntity(x, y, z);
 
-			int corner = 0;
+        int corner = 0;
 
-			if (side == 1)
-			{
-				if (activateX < 0.5 && activateZ < 0.5)
-					corner = 1;
-				if (activateX < 0.5 && activateZ > 0.5)
-					corner = 2;
-				if (activateX > 0.5 && activateZ > 0.5)
-					corner = 3;
-				if (activateX > 0.5 && activateZ < 0.5)
-					corner = 4;
-			}
+        if (side == 1)
+        {
+            if (activateX < 0.5 && activateZ < 0.5)
+                corner = 0;
+            if (activateX < 0.5 && activateZ > 0.5)
+                corner = 1;
+            if (activateX > 0.5 && activateZ > 0.5)
+                corner = 2;
+            if (activateX > 0.5 && activateZ < 0.5)
+                corner = 3;
+        }
+        else return false;
 
-			if (activator.getCurrentEquippedItem() != null)
-			{
-				if (corner != 0)
-					if (tileEntity.setItem(activator.getCurrentEquippedItem(), corner - 1))
+        if (!world.isRemote)
+        {
+            if (!activator.isSneaking())
+            {
+                if (activator.getCurrentEquippedItem() != null)
+                {
+                    if (FurnaceRecipes.smelting().getSmeltingResult(activator.getCurrentEquippedItem()).getItem() instanceof ItemFood)
                     {
-                        --activator.getCurrentEquippedItem().stackSize;
-                        System.out.println(" Adding item to corner: " + corner);
+                        if (tileEntity.setItem(activator.getCurrentEquippedItem(), corner))
+                        {
+                            --activator.getCurrentEquippedItem().stackSize;
+                            world.markBlockForUpdate(x, y, z);
+                            return true;
+                        }
+                        else
+                            return false;
+                    }
+                    else
+                        return false;
+                }
+                else
+                {
+                    if (tileEntity.getItem(corner) != null)
+                    {
+                        world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, tileEntity.getItem(corner)));
+                        tileEntity.removeItem(corner);
                         world.markBlockForUpdate(x, y, z);
                         return true;
                     }
                     else
                         return false;
-				else
-					return false;
-			} else
-			{
-				if (activator.isSneaking())
-				{
-					if (tileEntity.getIsOpen())
-					{
-						tileEntity.closeLid();
-						System.out.println(" Closing lid!");
-                        world.markBlockForUpdate(x, y, z);
-						return true;
-					} else
-					{
-						tileEntity.openLid();
-						System.out.println(" Opening lid!");
-                        world.markBlockForUpdate(x, y, z);
-						return true;
-					}
-				} else
-				{
-					ItemStack item = tileEntity.removeItem(corner - 1);
-
-					if (item != null)
-					{
-						world.spawnEntityInWorld(new EntityItem(world, x, y, z, item));
-                        world.markBlockForUpdate(x, y, z);
-						return true;
-					} else
-						return false;
-				}
-			}
-		} else
-			return false;
+                }
+            }
+            else
+            {
+                if (tileEntity.getIsOpen())
+                {
+                    tileEntity.closeLid();
+                    world.markBlockForUpdate(x, y, z);
+                    return true;
+                } else
+                {
+                    tileEntity.openLid();
+                    world.markBlockForUpdate(x, y, z);
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            world.markBlockForUpdate(x, y, z);
+            return true;
+        }
 	}
 
     @Override

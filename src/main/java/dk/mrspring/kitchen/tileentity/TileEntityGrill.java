@@ -72,29 +72,15 @@ public class TileEntityGrill extends TileEntity
         return this.items;
     }
 
-	public ItemStack removeItem(int index)
+	public void removeItem(int index)
 	{
-		if (!this.isEmpty)
-		{
-			if (this.items[index] != null)
-			{
-				boolean wasLastItem = true;
-
-				for (int i = 0; i < this.items.length; ++i)
-					if (this.items[i] != null)
-						wasLastItem = false;
-
-				this.isEmpty = wasLastItem;
-
-				ItemStack item = this.items[index];
-				this.items[index] = null;
-
-				return item;
-			} else
-				return null;
-		} else
-			return null;
+		this.items[index] = null;
 	}
+
+    public ItemStack getItem(int index)
+    {
+        return this.items[index];
+    }
 
 	@Override
 	public void updateEntity()
@@ -118,11 +104,6 @@ public class TileEntityGrill extends TileEntity
 			else
 				this.itemState = NOT_FINISHED;
 
-			/*System.out.println(" Current State: " + this.itemState);
-			System.out.println(" Current Grill Time: " + this.itemGrillTime);
-			System.out.println(" Current Coal Time: " + this.coalTimeLeft);
-			System.out.println(" ");
-*/
 			if (this.itemState == FINISHED)
 				this.finishItems();
 
@@ -180,15 +161,12 @@ public class TileEntityGrill extends TileEntity
 		return true;
 	}
 
-	public ItemStack getItem(int index)
-	{
-		return this.items[index];
-	}
-
     @Override
     public void readFromNBT(NBTTagCompound nbtTagCompound)
     {
         super.readFromNBT(nbtTagCompound);
+
+        System.out.println(" Reading from NBT!");
 
         this.items = new ItemStack[4];
 
@@ -196,17 +174,21 @@ public class TileEntityGrill extends TileEntity
         for(int i = 0; i < nbtTagList.tagCount(); ++i)
         {
             NBTTagCompound itemCompound = nbtTagList.getCompoundTagAt(i);
-            this.setItem(ItemStack.loadItemStackFromNBT(itemCompound), i);
+            this.items[i] = ItemStack.loadItemStackFromNBT(itemCompound);
         }
 
         this.itemGrillTime = nbtTagCompound.getByte("GrillTime");
         this.coalTimeLeft = nbtTagCompound.getByte("CoalTime");
+        this.isOpen = nbtTagCompound.getBoolean("IsOpen");
+        this.isEmpty = nbtTagCompound.getBoolean("IsEmpty");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound nbtTagCompound)
     {
-        super.readFromNBT(nbtTagCompound);
+        super.writeToNBT(nbtTagCompound);
+
+        System.out.println(" Writing to NBT!");
 
         NBTTagList itemList = new NBTTagList();
 
@@ -215,7 +197,7 @@ public class TileEntityGrill extends TileEntity
             if (this.getItem(i) != null)
             {
                 NBTTagCompound itemCompound = new NBTTagCompound();
-                this.getItem(i).writeToNBT(itemCompound);
+                this.items[i].writeToNBT(itemCompound);
                 itemList.appendTag(itemCompound);
             }
         }
@@ -224,6 +206,8 @@ public class TileEntityGrill extends TileEntity
 
         nbtTagCompound.setByte("GrillTime", (byte) this.itemGrillTime);
         nbtTagCompound.setByte("CoalTime", (byte) this.coalTimeLeft);
+        nbtTagCompound.setBoolean("IpOpen", this.isOpen);
+        nbtTagCompound.setBoolean("IsEmpty", this.isEmpty);
     }
 
     @Override

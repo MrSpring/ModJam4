@@ -29,17 +29,16 @@ public class TileEntityGrillSpecialRenderer extends TileEntitySpecialRenderer
 
             TileEntityGrill tileEntityGrill = (TileEntityGrill) var1;
 
-            ItemStack[] items = tileEntityGrill.getItems();
+            for(int i = 0; i < 4; ++i)
+            {
+                this.renderItem(tileEntityGrill.getItem(i), 0.0, 1.4, 0.0 + (i * 0.4));
+            }
 
-            if (items[0] != null)
-                this.renderItem(items[0], -0.25D + 0.5D, 1.4D, -0.25D + 0.5D);
-            if (items[1] != null)
-                this.renderItem(items[1], -0.25D + 0.5D, 1.4D, +0.25D + 0.5D);
-            if (items[2] != null)
-                this.renderItem(items[2], +0.25D + 0.5D, 1.4D, -0.25D + 0.5D);
-            if (items[3] != null)
-                this.renderItem(items[3], +0.25D + 0.5D, 1.4D, +0.25D + 0.5D);
-
+            /*this.renderItem(tileEntityGrill.getItem(0), -0.25D + 0.5D, 1.4D, -0.25D + 0.5D);
+            this.renderItem(tileEntityGrill.getItem(1), -0.25D + 0.5D, 1.4D, +0.25D + 0.5D);
+            this.renderItem(tileEntityGrill.getItem(2), +0.25D + 0.5D, 1.4D, -0.25D + 0.5D);
+            this.renderItem(tileEntityGrill.getItem(3), +0.25D + 0.5D, 1.4D, +0.25D + 0.5D);
+*/
         GL11.glPopMatrix();
     }
 
@@ -47,21 +46,19 @@ public class TileEntityGrillSpecialRenderer extends TileEntitySpecialRenderer
     {
         GL11.glPushMatrix();
 
-            System.out.println(" Rendering: " + item.getDisplayName());
+            if (item != null)
+            {
+                GL11.glTranslated(xOffset, yOffset, zOffset - 0.2);
 
-            ItemStack stackToRender = item;
-            stackToRender.stackSize = 1;
+                EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
+                itemEntity.hoverStart = 0.0F;
+                RenderItem.renderInFrame = true;
+                GL11.glRotatef(180, 0, 1, 1);
+                RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+                RenderItem.renderInFrame = false;
 
-            GL11.glTranslated(xOffset, yOffset, zOffset - 0.2);
-
-            EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, stackToRender);
-            itemEntity.hoverStart = 0.0F;
-            RenderItem.renderInFrame = true;
-            GL11.glRotatef(180, 0, 1, 1);
-            RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
-            RenderItem.renderInFrame = false;
-
-            stackToRender = null;
+                GL11.glTranslated(0.0D, 0.0D, 0.0D);
+            }
 
         GL11.glPopMatrix();
     }
