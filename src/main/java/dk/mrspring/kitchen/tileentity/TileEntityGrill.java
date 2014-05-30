@@ -5,6 +5,11 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityGrill extends TileEntity
@@ -179,4 +184,59 @@ public class TileEntityGrill extends TileEntity
 	{
 		return this.items[index];
 	}
+
+    @Override
+    public void readFromNBT(NBTTagCompound nbtTagCompound)
+    {
+        super.readFromNBT(nbtTagCompound);
+
+        this.items = new ItemStack[4];
+
+        NBTTagList nbtTagList = nbtTagCompound.getTagList("Items", 10);
+        for(int i = 0; i < nbtTagList.tagCount(); ++i)
+        {
+            NBTTagCompound itemCompound = nbtTagList.getCompoundTagAt(i);
+            this.setItem(ItemStack.loadItemStackFromNBT(itemCompound), i);
+        }
+
+        this.itemGrillTime = nbtTagCompound.getByte("GrillTime");
+        this.coalTimeLeft = nbtTagCompound.getByte("CoalTime");
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound nbtTagCompound)
+    {
+        super.readFromNBT(nbtTagCompound);
+
+        NBTTagList itemList = new NBTTagList();
+
+        for(int i = 0; i < this.items.length; ++i)
+        {
+            if (this.getItem(i) != null)
+            {
+                NBTTagCompound itemCompound = new NBTTagCompound();
+                this.getItem(i).writeToNBT(itemCompound);
+                itemList.appendTag(itemCompound);
+            }
+        }
+
+        nbtTagCompound.setTag("Items", itemList);
+
+        nbtTagCompound.setByte("GrillTime", (byte) this.itemGrillTime);
+        nbtTagCompound.setByte("CoalTime", (byte) this.coalTimeLeft);
+    }
+
+    @Override
+    public Packet getDescriptionPacket()
+    {
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+        this.writeToNBT(nbtTagCompound);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, nbtTagCompound);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+    {
+        this.readFromNBT(pkt.func_148857_g());
+    }
 }

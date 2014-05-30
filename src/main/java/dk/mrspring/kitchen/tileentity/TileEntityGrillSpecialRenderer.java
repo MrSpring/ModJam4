@@ -31,10 +31,14 @@ public class TileEntityGrillSpecialRenderer extends TileEntitySpecialRenderer
 
             ItemStack[] items = tileEntityGrill.getItems();
 
-            this.renderItem(items[0], -0.25D + 0.5D, 1.4D, -0.25D + 0.5D);
-            this.renderItem(items[1], -0.25D + 0.5D, 1.4D, +0.25D + 0.5D);
-            this.renderItem(items[2], +0.25D + 0.5D, 1.4D, -0.25D + 0.5D);
-            this.renderItem(items[3], +0.25D + 0.5D, 1.4D, +0.25D + 0.5D);
+            if (items[0] != null)
+                this.renderItem(items[0], -0.25D + 0.5D, 1.4D, -0.25D + 0.5D);
+            if (items[1] != null)
+                this.renderItem(items[1], -0.25D + 0.5D, 1.4D, +0.25D + 0.5D);
+            if (items[2] != null)
+                this.renderItem(items[2], +0.25D + 0.5D, 1.4D, -0.25D + 0.5D);
+            if (items[3] != null)
+                this.renderItem(items[3], +0.25D + 0.5D, 1.4D, +0.25D + 0.5D);
 
         GL11.glPopMatrix();
     }
@@ -43,8 +47,8 @@ public class TileEntityGrillSpecialRenderer extends TileEntitySpecialRenderer
     {
         GL11.glPushMatrix();
 
-        if (item != null)
-        {
+            System.out.println(" Rendering: " + item.getDisplayName());
+
             ItemStack stackToRender = item;
             stackToRender.stackSize = 1;
 
@@ -58,7 +62,7 @@ public class TileEntityGrillSpecialRenderer extends TileEntitySpecialRenderer
             RenderItem.renderInFrame = false;
 
             stackToRender = null;
-        }
+
         GL11.glPopMatrix();
     }
 }
