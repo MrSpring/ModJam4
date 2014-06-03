@@ -7,3 +7,7 @@ gradle/*
 out/*
 ModJam4.iml
 ModJam4.ipr
+.classpath
+.project
+gradlew
+gradlew.bat
