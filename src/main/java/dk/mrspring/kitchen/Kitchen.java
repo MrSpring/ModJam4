@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen;
 
+import dk.mrspring.kitchen.comboold.SandwichCombo;
 import dk.mrspring.kitchen.tileentity.TileEntityGrill;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -7,6 +8,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -19,6 +21,8 @@ import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import dk.mrspring.kitchen.world.gen.WorldGenWildLettuce;
+
+import java.io.File;
 
 @Mod(modid = ModInfo.modid, name = ModInfo.name, version = ModInfo.version)
 public class Kitchen
@@ -34,6 +38,35 @@ public class Kitchen
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event)
 	{
+		ModLogger.print(ModLogger.INFO, "Loading built-in Combos...");
+
+
+
+		ModLogger.print(ModLogger.INFO, "Loading custom Combos...");
+
+		File[] files = event.getModConfigurationDirectory().listFiles();
+
+		for (int i = 0; i < files.length; ++i)
+		{
+			if (files[i].isFile())
+			{
+				int j = files[i].getName().lastIndexOf('.');
+				String extension = files[i].getName().substring(j);
+
+				if (extension.equals(".cfg"))
+				{
+					SandwichCombo combo = SandwichCombo.defaultCombo.getComboFromConfig(new Configuration(files[i]));
+					if (combo != null)
+					{
+						ModLogger.print(ModLogger.INFO, "- Found Combo: " + combo.getLocalizedName() + ", adding it to the List");
+						SandwichCombo.addCombo(combo);
+					}
+					else
+						ModLogger.print(ModLogger.WARNING, "- Failed to load Combo");
+				}
+			}
+		}
+
 		instance.tab = new CreativeTabs("tabKitchen")
 		{
 			@Override

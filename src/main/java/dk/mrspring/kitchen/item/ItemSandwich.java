@@ -10,9 +10,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.combo.SandwichCombo;
+import dk.mrspring.kitchen.comboold.SandwichCombo;
 
 public class ItemSandwich extends ItemFood
 {
@@ -86,8 +85,8 @@ public class ItemSandwich extends ItemFood
 		if (SandwichCombo.combos[(int) combo] != null)
 			SandwichCombo.combos[(int) combo].addCustomItemInformation(par3List);
 		
-		/*if (this.combo != null)
-			this.combo.addCustomItemInformation(par3List);*/
+		/*if (this.comboold != null)
+			this.comboold.addCustomItemInformation(par3List);*/
 	}
 	
 	public static int calculateHealAmount(ItemSandwichable[] layers)

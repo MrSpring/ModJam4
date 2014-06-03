@@ -2,13 +2,11 @@ package dk.mrspring.kitchen.block;
 
 import java.util.ArrayList;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -19,9 +17,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.combo.SandwichCombo;
+import dk.mrspring.kitchen.comboold.SandwichCombo;
 import dk.mrspring.kitchen.item.ItemSandwichable;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 
