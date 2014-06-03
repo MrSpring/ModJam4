@@ -4,5 +4,6 @@ bin/*
 build/*
 eclipse/*
 gradle/*
+out/*
 ModJam4.iml
 ModJam4.ipr
