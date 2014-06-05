@@ -11,7 +11,6 @@ import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
-import dk.mrspring.kitchen.tileentity.TileEntityGrill;
 import dk.mrspring.kitchen.world.gen.WorldGenWildLettuce;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -43,7 +42,6 @@ public class Kitchen
 		};
 		
 		GameRegistry.registerTileEntity(TileEntityBoard.class, "tileEntityBoard");
-        GameRegistry.registerTileEntity(TileEntityGrill.class, "tileEntityGrill");
 		
 		BlockBase.load();
 		ItemBase.load();
@@ -61,7 +59,7 @@ public class Kitchen
 		GameRegistry.registerWorldGenerator(new WorldGenWildLettuce(), 1);
 		
 		GameRegistry.addRecipe(new ShapedOreRecipe(KitchenBlocks.board, new Object[] { "SPS", Character.valueOf('S'), "slabWood", Character.valueOf('P'), Blocks.wooden_pressure_plate }));
-		GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, new Object[] { "I ", " S", Character.valueOf('S'), "stickWood", Character.valueOf('I'), Items.iron_ingot }));
+        GameRegistry.addRecipe(new ItemStack(KitchenBlocks.tiles, 2), new Object[] { "IB", "CC", "CC", Character.valueOf('I'), new ItemStack(Items.dye, 1, 0), Character.valueOf('B'), new ItemStack(Items.dye, 1, 15), Character.valueOf('C'), Items.clay_ball });
 		
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.raw_bacon, 3), new Object[] { "K", "P", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('P'), Items.porkchop });
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.tomato_slice, 4), new Object[] { "K", "T", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('T'), KitchenItems.tomato });
@@ -76,6 +74,7 @@ public class Kitchen
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.cheese, 2), new Object[] { "M", Character.valueOf('M'), Items.milk_bucket });
 		
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.mortar_and_pestle), new Object[] { "P", "M", Character.valueOf('M'), KitchenItems.mortar, Character.valueOf('P'), KitchenItems.pestle });
+        GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, new Object[] { "I ", " S", Character.valueOf('S'), "stickWood", Character.valueOf('I'), Items.iron_ingot }));
 		
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.flour, 1), new Object[] { "W", "M", Character.valueOf('M'), KitchenItems.mortar_and_pestle, Character.valueOf('W'), Items.wheat });
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.flour, 3), new Object[] { "B", "M", Character.valueOf('M'), KitchenItems.mortar_and_pestle, Character.valueOf('B'), Items.bread });

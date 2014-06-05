@@ -1,11 +1,12 @@
 package dk.mrspring.kitchen.block;
 
-import static dk.mrspring.kitchen.GameRegisterer.registerBlock;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+
+import static dk.mrspring.kitchen.GameRegisterer.registerBlock;
 
 public class BlockBase extends Block
 {
@@ -33,6 +34,5 @@ public class BlockBase extends Block
 		registerBlock(KitchenBlocks.lettuce_crop);
 		registerBlock(KitchenBlocks.wild_tomato);
 		registerBlock(KitchenBlocks.wild_lettuce);
-		registerBlock(KitchenBlocks.grill);
 	}
 }
