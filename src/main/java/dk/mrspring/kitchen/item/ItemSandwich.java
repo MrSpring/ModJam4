@@ -29,13 +29,24 @@ public class ItemSandwich extends ItemFood
 	@Override
 	public EnumRarity getRarity(ItemStack par1ItemStack)
 	{
-		byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Id");
+        if (par1ItemStack.getTagCompound() != null)
+        {
+            NBTTagCompound comboCompound = par1ItemStack.getTagCompound().getCompoundTag("Combo");
+            if (comboCompound != null)
+            {
+                byte combo = comboCompound.getByte("Id");
 
-        if (combo != 0)
-    		if (SandwichCombo.combos[(int) combo] != null)
-    			return SandwichCombo.combos[(int) combo].getRarity();
-    		else
-    			return EnumRarity.common;
+                if (combo != 0)
+                    if (SandwichCombo.combos[(int) combo] != null)
+                        return SandwichCombo.combos[(int) combo].getRarity();
+                    else
+                        return EnumRarity.common;
+                else
+                    return EnumRarity.common;
+            }
+            else
+                return EnumRarity.common;
+        }
         else
             return EnumRarity.common;
 	}
