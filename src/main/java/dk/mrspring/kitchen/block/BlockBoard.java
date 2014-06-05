@@ -1,7 +1,11 @@
 package dk.mrspring.kitchen.block;
 
-import java.util.ArrayList;
-
+import cpw.mods.fml.common.registry.GameRegistry;
+import dk.mrspring.kitchen.Kitchen;
+import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.combo.SandwichCombo;
+import dk.mrspring.kitchen.item.ItemSandwichable;
+import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -15,12 +19,8 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.comboold.SandwichCombo;
-import dk.mrspring.kitchen.item.ItemSandwichable;
-import dk.mrspring.kitchen.tileentity.TileEntityBoard;
+
+import java.util.ArrayList;
 
 public class BlockBoard extends BlockContainer
 {
@@ -103,6 +103,8 @@ public class BlockBoard extends BlockContainer
 						
 						for (int i = 0; i < SandwichCombo.combos.length && SandwichCombo.combos[i] != null; ++i)
 						{
+                            System.out.println(" Checking if Sandwich matches combo: " + SandwichCombo.combos[i].getUnlocalizedName());
+
 							if (SandwichCombo.combos[i].matches(item))
 								combo = (byte) i;
 						}

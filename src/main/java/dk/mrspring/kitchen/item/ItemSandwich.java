@@ -1,7 +1,7 @@
 package dk.mrspring.kitchen.item;
 
-import java.util.List;
-
+import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.combo.SandwichCombo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemFood;
@@ -10,8 +10,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.comboold.SandwichCombo;
+
+import java.util.List;
 
 public class ItemSandwich extends ItemFood
 {
@@ -30,22 +30,26 @@ public class ItemSandwich extends ItemFood
 	public EnumRarity getRarity(ItemStack par1ItemStack)
 	{
 		byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Id");
-		
-		if (SandwichCombo.combos[(int) combo] != null)
-			return SandwichCombo.combos[(int) combo].getRarity();
-		else
-			return EnumRarity.common;
+
+        if (combo != 0)
+    		if (SandwichCombo.combos[(int) combo] != null)
+    			return SandwichCombo.combos[(int) combo].getRarity();
+    		else
+    			return EnumRarity.common;
+        else
+            return EnumRarity.common;
 	}
 	
 	@Override
 	protected void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
 	{
-		byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Id");
-		
-		if (SandwichCombo.combos[(int) combo] != null)
-			SandwichCombo.combos[(int) combo].onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
-		else
-			super.onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
+        byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Id");
+
+        if (combo != 0)
+	    	if (SandwichCombo.combos[(int) combo] != null)
+	    		SandwichCombo.combos[(int) combo].onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
+	    	else
+	    		super.onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
 	}
 	
 	@Override
@@ -54,50 +58,44 @@ public class ItemSandwich extends ItemFood
 		int healAmount = 0;
 		
 		NBTTagList layersList = item.stackTagCompound.getTagList("SandwichLayers", 10);
-		
-		for (int i = 0; i < layersList.tagCount(); ++i)
-		{
-			NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
-			healAmount += ((ItemSandwichable) ItemStack.loadItemStackFromNBT(layerCompound).getItem()).getHealAmount();
-		}
-		
-		byte combo = item.getTagCompound().getCompoundTag("Combo").getByte("Id");
-		
-		if (SandwichCombo.combos[(int) combo] != null)
-			healAmount += SandwichCombo.combos[(int) combo].getAdditionalHeal();
-		
-		return healAmount;
+
+        if (layersList != null)
+        {
+            for (int i = 0; i < layersList.tagCount(); ++i)
+            {
+                NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
+                healAmount += ((ItemSandwichable) ItemStack.loadItemStackFromNBT(layerCompound).getItem()).getHealAmount();
+            }
+
+            byte combo = item.getTagCompound().getCompoundTag("Combo").getByte("Id");
+
+            if (SandwichCombo.combos[(int) combo] != null)
+                healAmount += SandwichCombo.combos[(int) combo].getExtraHeal();
+
+            return healAmount;
+        }
+        else
+            return healAmount;
 	}
 	
 	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
 	{
 		NBTTagList layersList = par1ItemStack.stackTagCompound.getTagList("SandwichLayers", 10);
-		
-		for (int i = 0; i < layersList.tagCount(); ++i)
-		{
-			NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
-			par3List.add(StatCollector.translateToLocal(ItemStack.loadItemStackFromNBT(layerCompound).getDisplayName()));
-		}
-		
-		byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Id");
-		
-		if (SandwichCombo.combos[(int) combo] != null)
-			SandwichCombo.combos[(int) combo].addCustomItemInformation(par3List);
-		
-		/*if (this.comboold != null)
-			this.comboold.addCustomItemInformation(par3List);*/
-	}
-	
-	public static int calculateHealAmount(ItemSandwichable[] layers)
-	{
-		int totalHealAmount = 0;
-		
-		for (int i = 0; i < layers.length; ++i)
-		{
-			totalHealAmount += layers[i].getHealAmount();
-		}
-		
-		return totalHealAmount;
+
+        if (layersList != null)
+        {
+            for (int i = 0; i < layersList.tagCount(); ++i)
+            {
+                NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
+                par3List.add(StatCollector.translateToLocal(ItemStack.loadItemStackFromNBT(layerCompound).getDisplayName()));
+            }
+
+            byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Id");
+
+            if (combo != 0)
+                if (SandwichCombo.combos[(int) combo] != null)
+                    SandwichCombo.combos[(int) combo].addCustomInfo(par3List);
+        }
 	}
 }

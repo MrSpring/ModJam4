@@ -1,108 +1,124 @@
 package dk.mrspring.kitchen.combo;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.common.config.Configuration;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SandwichCombo
 {
-	protected String name = "default";
+    protected ArrayList<String> comboLayers = new ArrayList<String>();
+    protected String name = "default";
+    protected EnumRarity rarity = EnumRarity.common;
+    protected int extraHeal = 0;
 
-	protected boolean useTranslator = true;
+    public static SandwichCombo[] combos = new SandwichCombo[16];
 
-	protected String unlocalizedToolTip = "Default Tooltip! Change in the Config!";
-	protected String unlocalizedName = "Default Name! Change in the Config!";
-	protected String unlocalizedDescription = "Default Description! Change in the Config!";
+	public SandwichCombo(int id, String localizableName, EnumRarity enumRarity)
+    {
+        if (combos[id] != null)
+            this.combos[id] = this;
 
-	public SandwichCombo()
-	{
+        this.setName(localizableName);
+        this.setRarity(enumRarity);
+    }
 
-	}
+    public static final SandwichCombo big_mac = new SandwichCombo(0, "big_mac", EnumRarity.rare).setComboLayers(new String[] { "bread_slice", "cheese_slice", "roast_beef", "lettuce_leaf", "bread_slice", "roast_beef", "lettuce_leaf", "bread_slice" }).setExtraHeal(1);
+    public static final SandwichCombo blt = new SandwichCombo(1, "blt", EnumRarity.uncommon).setComboLayers(new String[] { "toast", "bacon_cooked", "lettuce_leaf", "tomato_slice", "toast" }).setExtraHeal(1);
+    public static final SandwichCombo only_bread = new SandwichCombo(2, "only_bread", EnumRarity.common).setComboLayers(new String[] { "bread_slice", "bread_slice" });
+    public static final SandwichCombo retro_roast_beef = new SandwichCombo(3, "rrb", EnumRarity.uncommon).setComboLayers(new String[] { "bread_slice", "roast_beef", "roast_beef", "tomato_slice", "lettuce_leaf", "bread_slice" }).setExtraHeal(3);
+    public static final SandwichCombo smart_chicken = new SandwichCombo(4, "smart_chicken", EnumRarity.uncommon).setComboLayers(new String[] { "toast", "chicken_fillet_cooked", "tomato_slice", "lettuce_leaf", "toast" });
+    public static final SandwichCombo veggie = new SandwichCombo(5, "veggie", EnumRarity.rare).setComboLayers(new String[] { "bread_slice", "carrot_slice", "lettuce_leaf", "tomato_slice", "cheese_slice", "bread_slice" });
 
-	public static SandwichCombo getFromConfig(Configuration configuration)
-	{
-		SandwichCombo combo = new SandwichCombo();
+    public SandwichCombo setName(String name)
+    {
+        this.name = name;
+        return this;
+    }
 
-		configuration.load();
+    public String getUnlocalizedName()
+    {
+        return "combo." + this.name;
+    }
 
+    public String getLocalizedName()
+    {
+        if (StatCollector.canTranslate(this.getUnlocalizedName() + ".name"))
+            return StatCollector.translateToLocal(this.getUnlocalizedName() + ".name");
+        else
+            return this.getUnlocalizedName() + ".name";
+    }
 
+    public SandwichCombo setRarity(EnumRarity rarity)
+    {
+        this.rarity = rarity;
+        return this;
+    }
 
-		configuration.save();
-	}
+    public EnumRarity getRarity()
+    {
+        return this.rarity;
+    }
 
-	public SandwichCombo(String translatableName)
-	{
-		this.useTranslator = true;
-		this.name = translatableName;
-	}
+    public SandwichCombo setComboLayers(String[] array)
+    {
+        this.comboLayers = new ArrayList<String>(Arrays.asList(array));
+        return this;
+    }
 
-	public SandwichCombo setLocalizableName(String name)
-	{
-		this.name = name;
-		this.useTranslator = true;
-		return this;
-	}
+    public ArrayList<String> getComboLayers()
+    {
+        return comboLayers;
+    }
 
-	public String getUnlocalizedDescription()
-	{
-		return this.unlocalizedDescription;
-	}
+    public void onFoodEaten(ItemStack itemStack, World world, EntityPlayer player)
+    {
 
-	public String getUnlocalizedToolTip()
-	{
-		return this.unlocalizedToolTip;
-	}
+    }
 
-	public String getUnlocalizedName()
-	{
-		return this.unlocalizedName;
-	}
+    public SandwichCombo setExtraHeal(int extraHeal)
+    {
+        this.extraHeal = extraHeal;
+        return this;
+    }
 
-	public void setUnlocalizedDescription(String unlocalizedDescription)
-	{
-		this.unlocalizedDescription = unlocalizedDescription;
-	}
+    public int getExtraHeal()
+    {
+        return this.extraHeal;
+    }
 
-	public void setUnlocalizedToolTip(String unlocalizedToolTip)
-	{
-		this.unlocalizedToolTip = unlocalizedToolTip;
-	}
+    public void addCustomInfo(List list)
+    {
+        list.add("");
 
-	public String getDescriptuon()
-	{
-		if (!this.useTranslator)
-			return this.getUnlocalizedDescription();
-		else
-		{
-			if (StatCollector.canTranslate("combo." + this.name + ".description"))
-				return StatCollector.translateToLocal("combo." + this.name + ".description");
-			else
-				return this.getUnlocalizedDescription();
-		}
-	}
+        if (StatCollector.canTranslate(this.getUnlocalizedName() + ".name"))
+            list.add(StatCollector.translateToLocal(this.getUnlocalizedName() + ".name"));
+        else
+            list.add(this.getUnlocalizedName() + ".name");
+    }
 
-	public String getTooltip()
-	{
-		if (!this.useTranslator)
-			return this.getUnlocalizedToolTip();
-		else
-		{
-			if (StatCollector.canTranslate("combo." + this.name + ".tool_tip"));
-				return StatCollector.translateToLocal("combo." + this.name + ".tool_tip");
-			else
-				return this.getUnlocalizedToolTip();
-		}
-	}
+    public boolean matches(ItemStack sandwich)
+    {
+        ArrayList<String> layersInSandwich = new ArrayList<String>();
+        NBTTagList layersList = sandwich.stackTagCompound.getTagList("SandwichLayers", 10);
 
-	public String getName()
-	{
-		if (!this.useTranslator)
-			return this.getUnlocalizedName();
-		else
-		{
-			if (StatCollector.canTranslate("combo." + this.name + ".name"))
-				return StatCollector.translateToLocal("combo." + this.name + ".name");
-			else
-				return this.getUnlocalizedName();
-		}
-	}
+        for (int i = 0; i < layersList.tagCount(); ++i)
+        {
+            NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
+            String name = ItemStack.loadItemStackFromNBT(layerCompound).getItem().getUnlocalizedName().replace("item.", "");
+
+            layersInSandwich.add(name);
+        }
+        if (layersInSandwich.containsAll(this.comboLayers) && this.comboLayers.containsAll(layersInSandwich))
+            return true;
+        else
+            return false;
+    }
 }
