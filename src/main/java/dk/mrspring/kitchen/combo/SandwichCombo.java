@@ -23,19 +23,29 @@ public class SandwichCombo
 
 	public SandwichCombo(int id, String localizableName, EnumRarity enumRarity)
     {
-        if (combos[id] != null)
-            this.combos[id] = this;
+        if (combos[id] == null)
+            combos[id] = this;
 
         this.setName(localizableName);
         this.setRarity(enumRarity);
     }
 
-    public static final SandwichCombo big_mac = new SandwichCombo(0, "big_mac", EnumRarity.rare).setComboLayers(new String[] { "bread_slice", "cheese_slice", "roast_beef", "lettuce_leaf", "bread_slice", "roast_beef", "lettuce_leaf", "bread_slice" }).setExtraHeal(1);
-    public static final SandwichCombo blt = new SandwichCombo(1, "blt", EnumRarity.uncommon).setComboLayers(new String[] { "toast", "bacon_cooked", "lettuce_leaf", "tomato_slice", "toast" }).setExtraHeal(1);
-    public static final SandwichCombo only_bread = new SandwichCombo(2, "only_bread", EnumRarity.common).setComboLayers(new String[] { "bread_slice", "bread_slice" });
-    public static final SandwichCombo retro_roast_beef = new SandwichCombo(3, "rrb", EnumRarity.uncommon).setComboLayers(new String[] { "bread_slice", "roast_beef", "roast_beef", "tomato_slice", "lettuce_leaf", "bread_slice" }).setExtraHeal(3);
-    public static final SandwichCombo smart_chicken = new SandwichCombo(4, "smart_chicken", EnumRarity.uncommon).setComboLayers(new String[] { "toast", "chicken_fillet_cooked", "tomato_slice", "lettuce_leaf", "toast" });
-    public static final SandwichCombo veggie = new SandwichCombo(5, "veggie", EnumRarity.rare).setComboLayers(new String[] { "bread_slice", "carrot_slice", "lettuce_leaf", "tomato_slice", "cheese_slice", "bread_slice" });
+    public static SandwichCombo big_mac;
+    public static SandwichCombo blt;
+    public static SandwichCombo only_bread;
+    public static SandwichCombo retro_roast_beef;
+    public static SandwichCombo smart_chicken;
+    public static SandwichCombo veggie;
+
+    public static void load()
+    {
+        big_mac = new SandwichCombo(1, "big_mac", EnumRarity.rare).setComboLayers(new String[] { "bread_slice", "cheese_slice", "roast_beef", "lettuce_leaf", "bread_slice", "roast_beef", "lettuce_leaf", "bread_slice" }).setExtraHeal(1);
+        blt = new SandwichCombo(2, "blt", EnumRarity.uncommon).setComboLayers(new String[] { "toast", "bacon_cooked", "lettuce_leaf", "tomato_slice", "toast" }).setExtraHeal(1);
+        only_bread = new SandwichCombo(3, "only_bread", EnumRarity.common).setComboLayers(new String[] { "bread_slice", "bread_slice" });
+        retro_roast_beef = new SandwichCombo(4, "rrb", EnumRarity.uncommon).setComboLayers(new String[] { "bread_slice", "roast_beef", "roast_beef", "tomato_slice", "lettuce_leaf", "bread_slice" }).setExtraHeal(3);
+        smart_chicken = new SandwichCombo(5, "smart_chicken", EnumRarity.uncommon).setComboLayers(new String[] { "toast", "chicken_fillet_cooked", "tomato_slice", "lettuce_leaf", "toast" });
+        veggie = new SandwichCombo(6, "veggie", EnumRarity.rare).setComboLayers(new String[] { "bread_slice", "carrot_slice", "lettuce_leaf", "tomato_slice", "cheese_slice", "bread_slice" });
+    }
 
     public SandwichCombo setName(String name)
     {

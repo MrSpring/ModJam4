@@ -8,6 +8,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
+import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import dk.mrspring.kitchen.tileentity.TileEntityGrill;
@@ -53,6 +54,8 @@ public class Kitchen
 	@EventHandler
 	public static void init(FMLInitializationEvent event)
 	{
+        SandwichCombo.load();
+
 		MinecraftForge.addGrassSeed(new ItemStack(KitchenItems.tomato), 10);
 		
 		GameRegistry.registerWorldGenerator(new WorldGenWildLettuce(), 1);
