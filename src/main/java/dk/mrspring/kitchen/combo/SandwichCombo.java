@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.combo;
 
+import dk.mrspring.kitchen.ModLogger;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
