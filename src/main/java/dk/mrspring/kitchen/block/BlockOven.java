@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockOven extends BlockContainer
@@ -97,16 +96,6 @@ public class BlockOven extends BlockContainer
 		this.openIcon = iconRegister.registerIcon(ModInfo.modid + ":oven_open");
 	}
 
-	@Override
-	public IIcon getIcon(IBlockAccess p_149673_1_, int p_149673_2_, int p_149673_3_, int p_149673_4_, int p_149673_5_)
-	{
-		TileEntityOven tileEntityOven = (TileEntityOven) p_149673_1_.getTileEntity(p_149673_2_, p_149673_3_, p_149673_4_);
-
-		System.out.println(" Getting icon. Is oven open?: " + tileEntityOven.isOpen());
-
-		return tileEntityOven.isOpen() ? this.openIcon : super.getIcon(p_149673_1_, p_149673_2_, p_149673_3_, p_149673_4_, p_149673_5_);
-	}
-
     @Override
     public boolean renderAsNormalBlock()
     {
@@ -117,6 +106,12 @@ public class BlockOven extends BlockContainer
     public boolean isOpaqueCube()
     {
         return false;
+    }
+
+    @Override
+    public int getRenderType()
+    {
+        return -1;
     }
 
     @Override
