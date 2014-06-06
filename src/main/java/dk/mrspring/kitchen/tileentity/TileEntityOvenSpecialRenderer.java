@@ -35,7 +35,7 @@ public class TileEntityOvenSpecialRenderer extends TileEntitySpecialRenderer
         GL11.glPushMatrix();
 
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, tileEntityOven.isOpen());
+        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, tileEntityOven.lidAngle);
 
         GL11.glPopMatrix();
 

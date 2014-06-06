@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.model;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import org.lwjgl.opengl.GL11;
 
 public class ModelOven extends ModelBase
 {
@@ -66,42 +67,51 @@ public class ModelOven extends ModelBase
       Back.setTextureSize(64, 64);
       Back.mirror = true;
       setRotation(Back, 0F, 0F, 0F);
+
+
       LidBottom = new ModelRenderer(this, 33, 6);
       LidBottom.addBox(0F, 0F, 0F, 12, 2, 1);
       LidBottom.setRotationPoint(-6F, 17F, -6.5F);
       LidBottom.setTextureSize(64, 64);
       LidBottom.mirror = true;
       setRotation(LidBottom, 0F, 0F, 0F);
+
       LidTop = new ModelRenderer(this, 33, 6);
-      LidTop.addBox(0F, 0F, 0F, 12, 2, 1);
-      LidTop.setRotationPoint(-6F, 11F, -6.5F);
+      LidTop.addBox(0F, -6F, 0F, 12, 2, 1);
+      LidTop.setRotationPoint(-6F, 17F, -6.5F);
       LidTop.setTextureSize(64, 64);
       LidTop.mirror = true;
       setRotation(LidTop, 0F, 0F, 0F);
+
       LidRight = new ModelRenderer(this, 33, 0);
-      LidRight.addBox(0F, 0F, 0F, 2, 4, 1);
-      LidRight.setRotationPoint(4F, 13F, -6.5F);
+      LidRight.addBox(10F, -4F, 0F, 2, 4, 1);
+      LidRight.setRotationPoint(-6F, 17F, -6.5F);
       LidRight.setTextureSize(64, 64);
       LidRight.mirror = true;
       setRotation(LidRight, 0F, 0F, 0F);
+
       LidLeft = new ModelRenderer(this, 33, 0);
-      LidLeft.addBox(0F, 0F, 0F, 2, 4, 1);
-      LidLeft.setRotationPoint(-6F, 13F, -6.5F);
+      LidLeft.addBox(0F, -4F, 0F, 2, 4, 1);
+      LidLeft.setRotationPoint(-6F, 17F, -6.5F);
       LidLeft.setTextureSize(64, 64);
       LidLeft.mirror = true;
       setRotation(LidLeft, 0F, 0F, 0F);
+
       LidWindow = new ModelRenderer(this, 23, 13);
-      LidWindow.addBox(0F, 0F, 0F, 8, 4, 0);
-      LidWindow.setRotationPoint(-4F, 13F, -6F);
+      LidWindow.addBox(2F, -4F, 0.5F, 8, 4, 0);
+      LidWindow.setRotationPoint(-6F, 17F, -6.5F);
       LidWindow.setTextureSize(64, 64);
       LidWindow.mirror = true;
       setRotation(LidWindow, 0F, 0F, 0F);
+
       LidHandle = new ModelRenderer(this, 40, 3);
-      LidHandle.addBox(0F, 0F, 0F, 4, 1, 1);
-      LidHandle.setRotationPoint(-2F, 11.5F, -7.5F);
+      LidHandle.addBox(4F, -5.5F, -1F, 4, 1, 1);
+      LidHandle.setRotationPoint(-6F, 17F, -6.5F);
       LidHandle.setTextureSize(64, 64);
       LidHandle.mirror = true;
       setRotation(LidHandle, 0F, 0F, 0F);
+
+
       Top1 = new ModelRenderer(this, 48, 50);
       Top1.addBox(0F, 0F, 0F, 4, 1, 4);
       Top1.setRotationPoint(2F, 8F, -4F);
@@ -134,28 +144,41 @@ public class ModelOven extends ModelBase
       setRotation(TopBase, 0F, 0F, 0F);
   }
   
-  public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, boolean isOpen)
-  {
-    super.render(entity, f, f1, f2, f3, f4, f5);
-    setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-    BottomBase.render(f5);
-    Top.render(f5);
-    RightSide.render(f5);
-    LeftSide.render(f5);
-    Bottom.render(f5);
-    Back.render(f5);
-    LidBottom.render(f5);
-    LidTop.render(f5);
-    LidRight.render(f5);
-    LidLeft.render(f5);
-    LidWindow.render(f5);
-    LidHandle.render(f5);
-    Top1.render(f5);
-    Top2.render(f5);
-    Top3.render(f5);
-    Top4.render(f5);
-    TopBase.render(f5);
-  }
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, float lidAngle)
+	{
+		super.render(entity, f, f1, f2, f3, f4, f5);
+		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+		BottomBase.render(f5);
+		Top.render(f5);
+		RightSide.render(f5);
+		LeftSide.render(f5);
+		Bottom.render(f5);
+		Back.render(f5);
+
+    	LidBottom.render(f5);
+		LidBottom.rotateAngleX = (lidAngle * 1.25F);
+
+    	LidTop.render(f5);
+		LidTop.rotateAngleX = (lidAngle * 1.25F);
+
+    	LidRight.render(f5);
+		LidRight.rotateAngleX = (lidAngle * 1.25F);
+
+    	LidLeft.render(f5);
+		LidLeft.rotateAngleX = (lidAngle * 1.25F);
+
+    	LidWindow.render(f5);
+		LidWindow.rotateAngleX = (lidAngle * 1.25F);
+
+    	LidHandle.render(f5);
+		LidHandle.rotateAngleX = (lidAngle * 1.25F) ;
+
+    	Top1.render(f5);
+    	Top2.render(f5);
+    	Top3.render(f5);
+    	Top4.render(f5);
+    	TopBase.render(f5);
+	}
   
   private void setRotation(ModelRenderer model, float x, float y, float z)
   {

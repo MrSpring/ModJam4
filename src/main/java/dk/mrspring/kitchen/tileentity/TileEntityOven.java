@@ -31,6 +31,9 @@ public class TileEntityOven extends TileEntity
 	protected boolean isOpen = false;
 	protected boolean hasCoal = false;
 
+	protected float lidAngle = 0;
+	protected float lastLidAngle = lidAngle;
+
 	public boolean addItemStack(ItemStack itemStack)
 	{
 		if (!worldObj.isRemote)
@@ -94,7 +97,20 @@ public class TileEntityOven extends TileEntity
 	@Override
 	public void updateEntity()
 	{
-		System.out.println(" Burn Time: " + this.burnTime);
+		lastLidAngle = lidAngle;
+
+		if (this.isOpen())
+		{
+			if (lidAngle + 0.1F < 1.0)
+				lidAngle += 0.1F;
+		}
+		else
+		{
+			if (lidAngle - 0.1F > 0.0)
+				lidAngle -= 0.1F;
+		}
+
+		System.out.println(" Lid Angle: " + lidAngle);
 
 		if (!this.isOpen && this.hasCoal)
 			this.burnTime++;
