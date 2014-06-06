@@ -107,7 +107,19 @@ public class BlockOven extends BlockContainer
 		return tileEntityOven.isOpen() ? this.openIcon : super.getIcon(p_149673_1_, p_149673_2_, p_149673_3_, p_149673_4_, p_149673_5_);
 	}
 
-	@Override
+    @Override
+    public boolean renderAsNormalBlock()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube()
+    {
+        return false;
+    }
+
+    @Override
 	public TileEntity createNewTileEntity(World var1, int var2)
 	{
 		return new TileEntityOven();
