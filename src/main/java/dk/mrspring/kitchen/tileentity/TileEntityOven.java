@@ -18,6 +18,7 @@ public class TileEntityOven extends TileEntity
 	protected int burnTime = 0;
 	protected int itemState = 0;
 	protected boolean isCooking = false;
+    protected int metadata = 0;
 
 	public static final int RAW = 0;
 	public static final int COOKED = 1;
@@ -96,6 +97,8 @@ public class TileEntityOven extends TileEntity
 	@Override
 	public void updateEntity()
 	{
+        this.metadata = worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord);
+
 		if (!worldObj.isRemote)
 			worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 

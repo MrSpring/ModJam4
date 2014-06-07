@@ -1,17 +1,18 @@
 package dk.mrspring.kitchen.block;
 
 import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.tileentity.TileEntityOven;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -72,7 +73,16 @@ public class BlockOven extends BlockContainer
 			return true;
 	}
 
-	@Override
+    @Override
+    public void onBlockPlacedBy(World p_149689_1_, int x, int y, int z, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
+    {
+        int rotation = (MathHelper.floor_double((double) (p_149689_5_.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3);
+        System.out.println(rotation);
+        p_149689_1_.setBlockMetadataWithNotify(z, y, z, rotation, 2);
+        super.onBlockPlacedBy(p_149689_1_, x, y, z, p_149689_5_, p_149689_6_);
+    }
+
+    @Override
 	public void randomDisplayTick(World world, int x, int y, int z, Random random)
 	{
 		TileEntityOven tileEntityOven = (TileEntityOven) world.getTileEntity(x, y, z);
@@ -89,8 +99,8 @@ public class BlockOven extends BlockContainer
 			switch (itemState)
 			{
 				case TileEntityOven.RAW: break;
-				case TileEntityOven.COOKED: break; //TODO Spawn smoke particles around Lid
-				case TileEntityOven.BURNT: break; // TODO Spawn fire and smoke particles around Lid
+				case TileEntityOven.COOKED: world.spawnParticle("smoke", x, y, z, 0.0, 0.0, 0.0); break; //TODO Spawn smoke particles around Lid
+				case TileEntityOven.BURNT: world.spawnParticle("smoke", x, y, z, 0.0, 0.0, 0.0); world.spawnParticle("flame", x, y, z, 0.0, 0.0, 0.0); break; // TODO Spawn fire and smoke particles around Lid
 			}
 		}
 	}

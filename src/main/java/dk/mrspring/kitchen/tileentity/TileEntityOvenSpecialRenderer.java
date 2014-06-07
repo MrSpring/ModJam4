@@ -1,7 +1,6 @@
 package dk.mrspring.kitchen.tileentity;
 
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.item.ItemSandwichable;
 import dk.mrspring.kitchen.model.ModelOven;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -18,7 +17,6 @@ public class TileEntityOvenSpecialRenderer extends TileEntitySpecialRenderer
     protected ModelOven model;
 	protected ResourceLocation inactiveTexture;
 	protected ResourceLocation activeTexture;
-	protected TileEntityOven tileEntityOven;
 
 	ItemStack[] itemStacks;
 
@@ -35,8 +33,7 @@ public class TileEntityOvenSpecialRenderer extends TileEntitySpecialRenderer
     @Override
     public void renderTileEntityAt(TileEntity var1, double x, double y, double z, float var8)
     {
-		if (this.tileEntityOven == null)
-        	this.tileEntityOven = (TileEntityOven) var1;
+		TileEntityOven tileEntityOven = (TileEntityOven) var1;
 
         GL11.glPushMatrix();
 
@@ -50,11 +47,21 @@ public class TileEntityOvenSpecialRenderer extends TileEntitySpecialRenderer
         GL11.glPushMatrix();
 
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, this.tileEntityOven.getLidAngle());
+
+        GL11.glPushMatrix();
+        int metadata = 0;
+        tileEntityOven.getBlockMetadata();
+
+        // System.out.println(" Metadata: " + metadata);
+
+        GL11.glRotatef(metadata * (-90), 0F, 0F, 1F);
+
+        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, tileEntityOven.getLidAngle());
+        GL11.glPopMatrix();
 
 		itemStacks = new ItemStack[4];
 
-		itemStacks = this.tileEntityOven.getOvenItems();
+		itemStacks = tileEntityOven.getOvenItems();
 
 		double d = 0.5D;
 
