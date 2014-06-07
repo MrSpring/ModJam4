@@ -1,8 +1,6 @@
 package dk.mrspring.kitchen.tileentity;
 
-import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
-import dk.mrspring.kitchen.block.BlockOven;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -130,13 +128,13 @@ public class TileEntityOven extends TileEntity
 			this.itemState = RAW;
 		}
 
-		if (this.burnTime == 200)
+		if (this.burnTime == 400)
 		{
 			this.itemState = COOKED;
 			this.cookItems();
 		}
 
-		if (this.burnTime == 300)
+		if (this.burnTime == 600)
 		{
 			this.itemState = BURNT;
 			this.burnItems();
@@ -188,6 +186,7 @@ public class TileEntityOven extends TileEntity
 	public void setOpen()
 	{
 		this.isOpen = true;
+        this.hasCoal = false;
 		this.isCooking = false;
 	}
 
