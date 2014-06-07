@@ -217,6 +217,29 @@ public class TileEntityOven extends TileEntity
 		}
 	}
 
+	public ItemStack removeTopItem()
+	{
+		int i;
+		ItemStack itemStack= null;
+
+		for(i = 3; i >= 0; --i)
+		{
+			if (this.ovenItems[i] != null)
+				if (this.ovenItems[i].getItem() != null)
+				{
+					itemStack = this.ovenItems[i].copy();
+					this.ovenItems[i] = null;
+					break;
+				}
+		}
+
+
+		if (itemStack != null)
+			return itemStack;
+		else
+			return null;
+	}
+
 	public void burnItems()
 	{
 		for(int i = 0; i < this.ovenItems.length; ++i)

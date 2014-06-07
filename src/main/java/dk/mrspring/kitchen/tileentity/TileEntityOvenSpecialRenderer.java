@@ -58,14 +58,10 @@ public class TileEntityOvenSpecialRenderer extends TileEntitySpecialRenderer
 
 		double d = 0.5D;
 
-		System.out.println("Rendering items:");
-
 		for(int i = 0; i < itemStacks.length; ++i)
 		{
 			if (itemStacks[i] != null)
 			{
-				System.out.println(" " + itemStacks[i].getDisplayName());
-
 				switch (i)
 				{
 					case 0: renderItem(itemStacks[i], d, 1.2, -d); break;
@@ -75,7 +71,6 @@ public class TileEntityOvenSpecialRenderer extends TileEntitySpecialRenderer
 				}
 			}
 		}
-		System.out.println("");
 
         GL11.glPopMatrix();
 

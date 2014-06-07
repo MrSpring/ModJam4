@@ -7,7 +7,9 @@ import dk.mrspring.kitchen.tileentity.TileEntityOven;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
@@ -41,7 +43,23 @@ public class BlockOven extends BlockContainer
 
 			if (!activator.isSneaking())
 				if (tileEntity.isOpen())
-					return tileEntity.addItemStack(activator.getCurrentEquippedItem());
+					if (activator.getCurrentEquippedItem() != null)
+						return tileEntity.addItemStack(activator.getCurrentEquippedItem());
+					else
+					{
+						ItemStack removed = tileEntity.removeTopItem();
+
+						if (removed != null)
+							if (removed.getItem() != null)
+							{
+								world.spawnEntityInWorld(new EntityItem(world, x, y, z, removed));
+								return true;
+							}
+							else
+								return false;
+						else
+							return false;
+					}
 				else
 					return false;
 			else
