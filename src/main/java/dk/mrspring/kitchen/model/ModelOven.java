@@ -7,6 +7,8 @@ import org.lwjgl.opengl.GL11;
 
 public class ModelOven extends ModelBase
 {
+	protected float lidAngle;
+
   //fields
     ModelRenderer BottomBase;
     ModelRenderer Top;
@@ -30,7 +32,9 @@ public class ModelOven extends ModelBase
   {
     textureWidth = 64;
     textureHeight = 64;
-    
+
+	  this.lidAngle = 0;
+
       BottomBase = new ModelRenderer(this, 0, 32);
       BottomBase.addBox(0F, 0F, 0F, 16, 4, 13);
       BottomBase.setRotationPoint(-8F, 20F, -5F);
@@ -146,6 +150,8 @@ public class ModelOven extends ModelBase
   
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, float lidAngle)
 	{
+		this.lidAngle = lidAngle;
+
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 		BottomBase.render(f5);
@@ -156,28 +162,30 @@ public class ModelOven extends ModelBase
 		Back.render(f5);
 
     	LidBottom.render(f5);
-		LidBottom.rotateAngleX = (lidAngle * 1.25F);
+		LidBottom.rotateAngleX = (this.lidAngle * 1.25F);
 
     	LidTop.render(f5);
-		LidTop.rotateAngleX = (lidAngle * 1.25F);
+		LidTop.rotateAngleX = (this.lidAngle * 1.25F);
 
     	LidRight.render(f5);
-		LidRight.rotateAngleX = (lidAngle * 1.25F);
+		LidRight.rotateAngleX = (this.lidAngle * 1.25F);
 
     	LidLeft.render(f5);
-		LidLeft.rotateAngleX = (lidAngle * 1.25F);
+		LidLeft.rotateAngleX = (this.lidAngle * 1.25F);
 
     	LidWindow.render(f5);
-		LidWindow.rotateAngleX = (lidAngle * 1.25F);
+		LidWindow.rotateAngleX = (this.lidAngle * 1.25F);
 
     	LidHandle.render(f5);
-		LidHandle.rotateAngleX = (lidAngle * 1.25F) ;
+		LidHandle.rotateAngleX = (this.lidAngle * 1.25F) ;
 
     	Top1.render(f5);
     	Top2.render(f5);
     	Top3.render(f5);
     	Top4.render(f5);
     	TopBase.render(f5);
+
+		this.lidAngle = 0;
 	}
   
   private void setRotation(ModelRenderer model, float x, float y, float z)

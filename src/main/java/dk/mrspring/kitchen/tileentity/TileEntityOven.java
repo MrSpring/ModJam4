@@ -19,10 +19,11 @@ public class TileEntityOven extends TileEntity
 	protected ItemStack[] ovenItems = new ItemStack[4];
 	protected int burnTime = 0;
 	protected int itemState = 0;
+	protected boolean isCooking = false;
 
-	private final int RAW = 0;
-	private final int COOKED = 1;
-	private final int BURNT = 2;
+	public static final int RAW = 0;
+	public static final int COOKED = 1;
+	public static final int BURNT = 2;
 
 	public static final int TOGGLE_OPEN_CLOSE = 0;
 	public static final int SET_ACTIVE = 1;
@@ -80,7 +81,7 @@ public class TileEntityOven extends TileEntity
 					} else
 						return false;
 				}
-				else  if (itemStack.getItem() == Items.coal)
+				else if (itemStack.getItem() == Items.coal && !this.hasCoal())
 				{
 					this.hasCoal = true;
 					--itemStack.stackSize;
@@ -97,38 +98,45 @@ public class TileEntityOven extends TileEntity
 	@Override
 	public void updateEntity()
 	{
-		lastLidAngle = lidAngle;
+		if (!worldObj.isRemote)
+			worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 
 		if (this.isOpen())
 		{
-			if (lidAngle + 0.1F < 1.0)
-				lidAngle += 0.1F;
+			if (this.lidAngle + 0.1F < 1.0)
+				this.lidAngle += 0.1F;
 		}
 		else
 		{
-			if (lidAngle - 0.1F > 0.0)
-				lidAngle -= 0.1F;
+			if (this.lidAngle - 0.1F > 0.0)
+				this.lidAngle -= 0.1F;
 		}
 
-		System.out.println(" Lid Angle: " + lidAngle);
-
-		if (!this.isOpen && this.hasCoal)
-			this.burnTime++;
+		if (!this.isOpen() && this.hasCoal)
+			if (!this.isCooking)
+				if (this.canCookItems())
+				{
+					++this.burnTime;
+					this.isCooking = true;
+				} else
+					this.burnTime = 0;
+			else
+				++this.burnTime;
 		else
 			this.burnTime = 0;
 
 		if (this.burnTime == 0)
-			{ this.itemState = RAW; ((BlockOven) KitchenBlocks.oven).updateBlockState(this.worldObj, this.xCoord, this.yCoord, this.zCoord, SET_INACTIVE); }
-		else
-			((BlockOven) KitchenBlocks.oven).updateBlockState(this.worldObj, this.xCoord, this.yCoord, this.zCoord, SET_ACTIVE);
+		{
+			this.itemState = RAW;
+		}
 
-		if (this.burnTime > 200)
+		if (this.burnTime == 200)
 		{
 			this.itemState = COOKED;
 			this.cookItems();
 		}
 
-		if (this.burnTime > 300)
+		if (this.burnTime == 300)
 		{
 			this.itemState = BURNT;
 			this.burnItems();
@@ -140,9 +148,47 @@ public class TileEntityOven extends TileEntity
 		return isOpen;
 	}
 
+	public boolean hasCoal()
+	{
+		return hasCoal;
+	}
+
+	public int getItemState()
+	{
+		return itemState;
+	}
+
+	public ItemStack[] getOvenItems()
+	{
+		return ovenItems;
+	}
+
+	public float getLidAngle()
+	{
+		return this.lidAngle;
+	}
+
+	public boolean canCookItems()
+	{
+		boolean foundIncompatible = false;
+
+		for(ItemStack item : this.ovenItems)
+			if (item != null)
+				if (item.getItem() != null)
+					if (FurnaceRecipes.smelting().getSmeltingResult(item) != null)
+						if (!(FurnaceRecipes.smelting().getSmeltingResult(item).getItem() instanceof ItemFood))
+							foundIncompatible = true;
+						else ;
+					else
+						foundIncompatible = true;
+
+		return !foundIncompatible;
+	}
+
 	public void setOpen()
 	{
 		this.isOpen = true;
+		this.isCooking = false;
 	}
 
 	public void setClosed()
@@ -153,12 +199,16 @@ public class TileEntityOven extends TileEntity
 
 	public void cookItems()
 	{
+		System.out.println(" Cooking Items!");
+
 		for(int i = 0; i < this.ovenItems.length; ++i)
 		{
 			if (this.ovenItems[i] != null)
 			{
 				if (this.ovenItems[i].getItem() != null)
 				{
+					System.out.println(" Cooking: " + this.ovenItems[i].getDisplayName());
+
 					int stackSize = this.ovenItems[i].stackSize;
 					this.ovenItems[i] = FurnaceRecipes.smelting().getSmeltingResult(this.ovenItems[i]);
 					this.ovenItems[i].stackSize = stackSize;
@@ -205,6 +255,7 @@ public class TileEntityOven extends TileEntity
 		compound.setBoolean("IsOpen", this.isOpen());
 		compound.setBoolean("HasCoal", this.hasCoal);
 		compound.setShort("ItemState", (short) this.itemState);
+		compound.setBoolean("IsCooking", this.isCooking);
 
 		NBTTagList nbtTagList = new NBTTagList();
 
@@ -231,6 +282,7 @@ public class TileEntityOven extends TileEntity
 		this.isOpen = compound.getBoolean("IsOpen");
 		this.hasCoal = compound.getBoolean("HasCoal");
 		this.itemState = compound.getShort("ItemState");
+		this.isCooking = compound.getBoolean("IsCooking");
 
 		this.ovenItems = new ItemStack[4];
 

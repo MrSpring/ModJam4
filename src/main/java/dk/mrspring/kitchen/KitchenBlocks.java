@@ -12,6 +12,5 @@ public class KitchenBlocks
 	public static final Block lettuce_crop = new BlockLettuceCrop();
 	public static final Block wild_tomato = new BlockWildTomato();
 	public static final Block wild_lettuce = new BlockWildLettuce();
-	public static final Block oven = new BlockOven(false);
-	public static final Block oven_active = new BlockOven(true);
+	public static final Block oven = new BlockOven();
 }

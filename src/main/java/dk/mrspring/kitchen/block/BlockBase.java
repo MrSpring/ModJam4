@@ -34,7 +34,6 @@ public class BlockBase extends Block
 		registerBlock(KitchenBlocks.lettuce_crop);
 		registerBlock(KitchenBlocks.wild_tomato);
 		registerBlock(KitchenBlocks.wild_lettuce);
-		registerBlock(KitchenBlocks.oven, "oven_inactive");
 		registerBlock(KitchenBlocks.oven);
 	}
 }

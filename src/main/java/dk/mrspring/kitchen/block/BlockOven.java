@@ -12,19 +12,20 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 public class BlockOven extends BlockContainer
 {
 	protected IIcon openIcon;
 
-	public BlockOven(boolean isActive)
+	public BlockOven()
 	{
 		super(Material.iron);
 
-		this.setBlockName(isActive ? "oven_active" : "oven_inactive");
-		this.setBlockTextureName(ModInfo.modid + ":" + (isActive ? "oven_active" : "oven_inactive"));
+		this.setBlockName("oven");
+		this.setBlockTextureName(ModInfo.modid + ":oven");
 
-		if (!isActive)
-			this.setCreativeTab(Kitchen.instance.tab);
+		this.setCreativeTab(Kitchen.instance.tab);
 
 		this.setTickRandomly(true);
 	}
@@ -45,7 +46,7 @@ public class BlockOven extends BlockContainer
 					return false;
 			else
 			{
-				this.updateBlockState(world, x, y, z, TileEntityOven.TOGGLE_OPEN_CLOSE);
+				this.updateBlockState(world, x, y, z);
 				return true;
 			}
 		}
@@ -53,40 +54,39 @@ public class BlockOven extends BlockContainer
 			return true;
 	}
 
-	public void updateBlockState(World world, int x, int y, int z, int action)
+	@Override
+	public void randomDisplayTick(World world, int x, int y, int z, Random random)
 	{
-		switch (action)
+		TileEntityOven tileEntityOven = (TileEntityOven) world.getTileEntity(x, y, z);
+
+		boolean isOpen = tileEntityOven.isOpen();
+		boolean hasCoal = tileEntityOven.hasCoal();
+		int itemState = tileEntityOven.getItemState();
+
+		if (hasCoal)
+			world.spawnParticle("flame", x + 0.1 + (random.nextDouble() * 0.8), y + 0.5, z + 0.2 + (random.nextDouble() * 0.7), 0.0, 0.0, 0.0);
+
+		if (!isOpen)
 		{
-		case(TileEntityOven.SET_ACTIVE):
-		{
-			if (world.getBlock(x, y, z) == KitchenBlocks.oven)
-				world.setBlock(x, y, z, KitchenBlocks.oven_active);
-
-			break;
-		}
-		case(TileEntityOven.SET_INACTIVE):
-		{
-			if (world.getBlock(x, y, z) == KitchenBlocks.oven_active)
-				world.setBlock(x, y, z, KitchenBlocks.oven);
-
-			break;
-		}
-		case(TileEntityOven.TOGGLE_OPEN_CLOSE):
-		{
-			System.out.println(" Toggling open/close");
-
-			TileEntityOven tileEntityOven = (TileEntityOven) world.getTileEntity(x, y, z);
-
-			world.markBlockForUpdate(x, y, z);
-
-			if (tileEntityOven.isOpen())
-				tileEntityOven.setClosed();
-			else
-				tileEntityOven.setOpen();
-
-			break;
+			switch (itemState)
+			{
+				case TileEntityOven.RAW: break;
+				case TileEntityOven.COOKED: break; //TODO Spawn smoke particles around Lid
+				case TileEntityOven.BURNT: break; // TODO Spawn fire and smoke particles around Lid
+			}
 		}
 	}
+
+	public void updateBlockState(World world, int x, int y, int z)
+	{
+		System.out.println(" Toggling open/close");
+
+		TileEntityOven tileEntityOven = (TileEntityOven) world.getTileEntity(x, y, z);
+
+		if (tileEntityOven.isOpen())
+			tileEntityOven.setClosed();
+		else
+			tileEntityOven.setOpen();
 	}
 
 	@Override
