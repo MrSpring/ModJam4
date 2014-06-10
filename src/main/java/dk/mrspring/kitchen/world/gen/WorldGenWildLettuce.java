@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldType;
 import net.minecraft.world.chunk.IChunkProvider;
 import cpw.mods.fml.common.IWorldGenerator;
 import dk.mrspring.kitchen.KitchenBlocks;
@@ -21,7 +22,7 @@ public class WorldGenWildLettuce implements IWorldGenerator
 			
 			
 			
-			if (world.getBlock(x, y - 1, z) == Blocks.grass)
+			if (world.getBlock(x, y - 1, z) == Blocks.grass && world.getWorldInfo().getTerrainType() != WorldType.FLAT)
 				world.setBlock(x, y, z, KitchenBlocks.wild_lettuce);
 		}
 	}
