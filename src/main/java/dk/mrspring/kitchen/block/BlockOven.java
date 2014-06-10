@@ -12,7 +12,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -104,7 +103,6 @@ public class BlockOven extends BlockContainer
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
     {
         int rotation = (MathHelper.floor_double((double) (p_149689_5_.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3);
-        System.out.println(rotation);
 		super.onBlockPlacedBy(world, x, y, z, p_149689_5_, p_149689_6_);
 
         world.setBlockMetadataWithNotify(x, y, z, rotation, 0);

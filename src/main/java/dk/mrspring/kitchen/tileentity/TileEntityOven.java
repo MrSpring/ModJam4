@@ -204,8 +204,6 @@ public class TileEntityOven extends TileEntity
 			{
 				if (this.ovenItems[i].getItem() != null)
 				{
-					System.out.println(" Cooking: " + this.ovenItems[i].getDisplayName());
-
 					int stackSize = this.ovenItems[i].stackSize;
 					this.ovenItems[i] = FurnaceRecipes.smelting().getSmeltingResult(this.ovenItems[i]);
 					this.ovenItems[i].stackSize = stackSize;
