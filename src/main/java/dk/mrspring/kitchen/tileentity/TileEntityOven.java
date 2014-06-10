@@ -12,6 +12,8 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
+import java.util.Random;
+
 public class TileEntityOven extends TileEntity
 {
 	protected ItemStack[] ovenItems = new ItemStack[4];
@@ -91,8 +93,8 @@ public class TileEntityOven extends TileEntity
 	@Override
 	public void updateEntity()
 	{
-		if (!worldObj.isRemote)
-			worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+		if (this.lidAngle == 0)
+			new Random().nextFloat();
 
 		if (this.isOpen())
 		{
@@ -126,12 +128,14 @@ public class TileEntityOven extends TileEntity
 		if (this.burnTime == 400)
 		{
 			this.itemState = COOKED;
+			this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 			this.cookItems();
 		}
 
 		if (this.burnTime == 600)
 		{
 			this.itemState = BURNT;
+			this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 			this.burnItems();
 		}
 	}
