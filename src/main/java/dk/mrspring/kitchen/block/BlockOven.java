@@ -93,16 +93,42 @@ public class BlockOven extends BlockContainer
 		boolean hasCoal = tileEntityOven.hasCoal();
 		int itemState = tileEntityOven.getItemState();
 
+		int metadata = world.getBlockMetadata(x, y, z);
+
+		// world.spawnParticle("smoke", x + 0.1 + (random.nextDouble() * 0.8), y + 0.8125, z + 0.125, 0.0, 0.0, -0.025); // TODO Move to Metadata no. 0
+		// world.spawnParticle("smoke", x + 1.0 - 0.125, y + 0.8125, z + 0.1 + (random.nextDouble() * 0.8), 0.025, 0.0, 0.0); // TODO Move to Metadata no. 1
+		// world.spawnParticle("smoke", x + 0.1 + (random.nextDouble() * 0.8), y + 0.8125, z + 1.0 - 0.125, 0.0, 0.0, 0.025); // TODO Move to Metadata no. 2
+		// world.spawnParticle("smoke", x + 0.125, y + 0.8125, z + 0.1 + (random.nextDouble() * 0.8), -0.025, 0.0, 0.0); // TODO Move to Metadata no. 3
+
 		if (hasCoal)
-			world.spawnParticle("flame", x + 0.1 + (random.nextDouble() * 0.8), y + 0.5, z + 0.2 + (random.nextDouble() * 0.7), 0.0, 0.0, 0.0);
+			world.spawnParticle("flame", x + 0.2 + (random.nextDouble() * 0.6), y + 0.5, z + 0.2 + (random.nextDouble() * 0.6), 0.0, 0.0, 0.0);
 
 		if (!isOpen)
 		{
 			switch (itemState)
 			{
 				case TileEntityOven.RAW: break;
-				case TileEntityOven.COOKED: world.spawnParticle("smoke", x, y, z, 0.0, 0.0, 0.0); break; //TODO Spawn smoke particles around Lid
-				case TileEntityOven.BURNT: world.spawnParticle("smoke", x, y, z, 0.0, 0.0, 0.0); world.spawnParticle("flame", x, y, z, 0.0, 0.0, 0.0); break; // TODO Spawn fire and smoke particles around Lid
+				case TileEntityOven.COOKED:
+				{
+					switch (metadata)
+					{
+						case 0: world.spawnParticle("smoke", x + 0.1 + (random.nextDouble() * 0.8), y + 0.8125, z + 0.125, 0.0, 0.0, -0.025); break; // TODO Move partivles up here.
+						case 1: world.spawnParticle("smoke", x + 1.0 - 0.125, y + 0.8125, z + 0.1 + (random.nextDouble() * 0.8), 0.025, 0.0, 0.0); break;
+						case 2: world.spawnParticle("smoke", x + 0.1 + (random.nextDouble() * 0.8), y + 0.8125, z + 1.0 - 0.125, 0.0, 0.0, 0.025); break;
+						case 3: world.spawnParticle("smoke", x + 0.125, y + 0.8125, z + 0.1 + (random.nextDouble() * 0.8), -0.025, 0.0, 0.0); break;
+					}
+
+				} break;
+				case TileEntityOven.BURNT:
+				{
+					switch (metadata)
+					{
+						case 0: world.spawnParticle("smoke", x + 0.1 + (random.nextDouble() * 0.8), y + 0.8125, z + 0.125, 0.0, 0.0, -0.025); world.spawnParticle("flame", x + 0.1 + (random.nextDouble() * 0.8), y + 0.8125, z + 0.1, 0.0, 0.0, 0.0); break; // TODO Move partivles up here.
+						case 1: world.spawnParticle("smoke", x + 1.0 - 0.125, y + 0.8125, z + 0.1 + (random.nextDouble() * 0.8), 0.025, 0.0, 0.0); world.spawnParticle("flame", x + 1.0 - 0.1, y + 0.8125, z + 0.1 + (random.nextDouble() * 0.8), 0.0, 0.0, 0.0); break;
+						case 2: world.spawnParticle("smoke", x + 0.1 + (random.nextDouble() * 0.8), y + 0.8125, z + 1.0 - 0.125, 0.0, 0.0, 0.025); world.spawnParticle("flame", x + 0.1 + (random.nextDouble() * 0.8), y + 0.8125, z + 1.0 - 0.1, 0.0, 0.0, 0.0); break;
+						case 3: world.spawnParticle("smoke", x + 0.125, y + 0.8125, z + 0.1 + (random.nextDouble() * 0.8), -0.025, 0.0, 0.0); world.spawnParticle("flame", x + 0.1, y + 0.8125, z + 0.1 + (random.nextDouble() * 0.8), -0.025, 0.0, 0.0); break;
+					}
+				} break;
 			}
 		}
 	}

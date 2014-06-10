@@ -16,14 +16,14 @@ public class ModLogger
 		switch (type)
 		{
 			case INFO:
-				System.out.println("[" + time + "] [TheKitchenMod-INFO] " + message);
+				System.out.println("[" + time + "] [TheKitchenMod/INFO] " + message);
 				break;
 			case WARNING:
-				System.out.println("[" + time + "] [TheKitchenMod-WARNING] " + message);
+				System.out.println("[" + time + "] [TheKitchenMod/WARNING] " + message);
 				if (obj[0] != null && obj[0] instanceof Exception) ((Exception) obj[0]).printStackTrace();
 				break;
 			case ERROR:
-				System.err.println("[" + time + "] [TheKitchenMod-ERROR] " + message);
+				System.err.println("[" + time + "] [TheKitchenMod/ERROR] " + message);
 				if (obj[0] != null && obj[0] instanceof Exception) ((Exception) obj[0]).printStackTrace();
 				break;
 		}
