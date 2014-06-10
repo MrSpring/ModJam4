@@ -4,6 +4,7 @@ tile.tiles.name=Kacheln
 tile.board.name=Schneidebrett
 tile.tomato_crop.name=Tomatenpflanze
 tile.lettuce_crop.name=Kopfsalat
+tile.oven.name=Ofen
 
 item.knife.name=Messer
 item.bacon_raw.name=Roher Speck
@@ -28,6 +29,7 @@ item.chicken_fillet_cooked.name=Gebratenes Hühnchenfilet
 item.chicken_leg.name=Hühnerbein
 item.cheese.name=Käse
 item.cheese_slice.name=Käsescheibe
+item.burnt_meat.name=Verbranntes Fleisch
 
 combo.big_mac.name=Es gibt nur einen!
 combo.blt.name=Der gute alte BLT
