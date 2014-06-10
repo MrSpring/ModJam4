@@ -50,11 +50,9 @@ public class TileEntityOvenSpecialRenderer extends TileEntitySpecialRenderer
 
         GL11.glPushMatrix();
         int metadata = 0;
-        tileEntityOven.getBlockMetadata();
+        metadata = tileEntityOven.getBlockMetadata();
 
-        // System.out.println(" Metadata: " + metadata);
-
-        GL11.glRotatef(metadata * (-90), 0F, 0F, 1F);
+        GL11.glRotatef(metadata * (90), 0F, 1F, 0F);
 
         this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, tileEntityOven.getLidAngle());
         GL11.glPopMatrix();

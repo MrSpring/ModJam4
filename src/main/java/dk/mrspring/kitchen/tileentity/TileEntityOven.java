@@ -172,6 +172,7 @@ public class TileEntityOven extends TileEntity
 	public boolean canCookItems()
 	{
 		boolean foundIncompatible = false;
+		boolean foundNonNull = false;
 
 		for(ItemStack item : this.ovenItems)
 			if (item != null)
@@ -179,11 +180,11 @@ public class TileEntityOven extends TileEntity
 					if (FurnaceRecipes.smelting().getSmeltingResult(item) != null)
 						if (!(FurnaceRecipes.smelting().getSmeltingResult(item).getItem() instanceof ItemFood))
 							foundIncompatible = true;
-						else ;
+						else foundNonNull = true;
 					else
 						foundIncompatible = true;
 
-		return !foundIncompatible;
+		return foundNonNull && !foundIncompatible;
 	}
 
 	public void setOpen()
@@ -201,8 +202,6 @@ public class TileEntityOven extends TileEntity
 
 	public void cookItems()
 	{
-		System.out.println(" Cooking Items!");
-
 		for(int i = 0; i < this.ovenItems.length; ++i)
 		{
 			if (this.ovenItems[i] != null)

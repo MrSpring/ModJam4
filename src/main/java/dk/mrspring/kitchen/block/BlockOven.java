@@ -74,12 +74,13 @@ public class BlockOven extends BlockContainer
 	}
 
     @Override
-    public void onBlockPlacedBy(World p_149689_1_, int x, int y, int z, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
     {
         int rotation = (MathHelper.floor_double((double) (p_149689_5_.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3);
         System.out.println(rotation);
-        p_149689_1_.setBlockMetadataWithNotify(z, y, z, rotation, 2);
-        super.onBlockPlacedBy(p_149689_1_, x, y, z, p_149689_5_, p_149689_6_);
+		super.onBlockPlacedBy(world, x, y, z, p_149689_5_, p_149689_6_);
+
+        world.setBlockMetadataWithNotify(x, y, z, rotation, 0);
     }
 
     @Override
@@ -121,7 +122,6 @@ public class BlockOven extends BlockContainer
 	public void registerBlockIcons(IIconRegister iconRegister)
 	{
 		super.registerBlockIcons(iconRegister);
-		this.openIcon = iconRegister.registerIcon(ModInfo.modid + ":oven_open");
 	}
 
     @Override
