@@ -144,6 +144,8 @@ public class BlockBoard extends BlockContainer
 		{
 			toReturn.add(this.tEntity.getLayers()[i]);
 		}
+
+		toReturn.add(new ItemStack(this, 1, 0));
 		
 		return toReturn;
 	}

@@ -16,10 +16,13 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class BlockOven extends BlockContainer
 {
+	TileEntityOven tileEntityOven;
+
 	public BlockOven()
 	{
 		super(Material.iron);
@@ -32,6 +35,29 @@ public class BlockOven extends BlockContainer
 		this.setTickRandomly(true);
 		this.setHardness(4.0F);
 		this.setStepSound(Block.soundTypePiston);
+	}
+
+	@Override
+	public void onBlockPreDestroy(World p_149725_1_, int p_149725_2_, int p_149725_3_, int p_149725_4_, int p_149725_5_)
+	{
+		this.tileEntityOven = (TileEntityOven) p_149725_1_.getTileEntity(p_149725_2_, p_149725_3_, p_149725_4_);
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
+	{
+		ArrayList<ItemStack> toReturn = new ArrayList<ItemStack>();
+
+		if (this.tileEntityOven != null)
+			for (ItemStack item : this.tileEntityOven.getOvenItems())
+			{
+				if (item != null)
+					toReturn.add(item);
+			}
+
+		toReturn.add(new ItemStack(this, 1, 0));
+
+		return toReturn;
 	}
 
 	@Override
@@ -130,8 +156,6 @@ public class BlockOven extends BlockContainer
 
 	public void updateBlockState(World world, int x, int y, int z)
 	{
-		System.out.println(" Toggling open/close");
-
 		TileEntityOven tileEntityOven = (TileEntityOven) world.getTileEntity(x, y, z);
 
 		if (tileEntityOven.isOpen())
