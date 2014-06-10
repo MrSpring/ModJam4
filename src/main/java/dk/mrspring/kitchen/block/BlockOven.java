@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.block;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.tileentity.TileEntityOven;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -19,8 +20,6 @@ import java.util.Random;
 
 public class BlockOven extends BlockContainer
 {
-	protected IIcon openIcon;
-
 	public BlockOven()
 	{
 		super(Material.iron);
@@ -31,6 +30,8 @@ public class BlockOven extends BlockContainer
 		this.setCreativeTab(Kitchen.instance.tab);
 
 		this.setTickRandomly(true);
+		this.setHardness(4.0F);
+		this.setStepSound(Block.soundTypePiston);
 	}
 
 	@Override

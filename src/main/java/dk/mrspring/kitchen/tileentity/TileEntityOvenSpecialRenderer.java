@@ -49,7 +49,7 @@ public class TileEntityOvenSpecialRenderer extends TileEntitySpecialRenderer
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
 
         GL11.glPushMatrix();
-        int metadata = 0;
+        int metadata;
         metadata = tileEntityOven.getBlockMetadata();
 
         GL11.glRotatef(metadata * (90), 0F, 1F, 0F);
@@ -61,7 +61,9 @@ public class TileEntityOvenSpecialRenderer extends TileEntitySpecialRenderer
 
 		itemStacks = tileEntityOven.getOvenItems();
 
-		double d = 0.5D;
+		double d = 0.2;
+
+		GL11.glScalef(0.75F, 0.75F, 0.75F);
 
 		for(int i = 0; i < itemStacks.length; ++i)
 		{
@@ -69,10 +71,10 @@ public class TileEntityOvenSpecialRenderer extends TileEntitySpecialRenderer
 			{
 				switch (i)
 				{
-					case 0: renderItem(itemStacks[i], d, 1.2, -d); break;
-					case 1: renderItem(itemStacks[i], d, 1.2, d); break;
-					case 2: renderItem(itemStacks[i], -d, 1.2, d); break;
-					case 3: renderItem(itemStacks[i], -d, 1.2, -d); break;
+					case 0: renderItem(itemStacks[i], d, 1.6, -d - 0.2); break;
+					case 1: renderItem(itemStacks[i], d, 1.6, d - 0.2); break;
+					case 2: renderItem(itemStacks[i], -d, 1.6, d - 0.2); break;
+					case 3: renderItem(itemStacks[i], -d, 1.6, -d - 0.2); break;
 				}
 			}
 		}
@@ -92,7 +94,10 @@ public class TileEntityOvenSpecialRenderer extends TileEntitySpecialRenderer
 
 			GL11.glTranslated(xOffset, yOffset, zOffset);
 
-			EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
+			ItemStack toRender = item.copy();
+			toRender.stackSize = 1;
+
+			EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, toRender);
 			itemEntity.hoverStart = 0.0F;
 			RenderItem.renderInFrame = true;
 			GL11.glRotatef(180, 0, 1, 1);
