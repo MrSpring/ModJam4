@@ -4,6 +4,7 @@ tile.tiles.name=Tiles
 tile.board.name=Cutting Board
 tile.tomato_crop.name=Tomato Plant
 tile.lettuce_crop.name=Lettuce Crop
+tile.oven.name=Oven
 
 item.knife.name=Knife
 item.bacon_raw.name=Raw Bacon
