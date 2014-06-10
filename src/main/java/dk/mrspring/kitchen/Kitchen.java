@@ -18,9 +18,11 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+
+import static java.lang.Character.valueOf;
 
 @Mod(modid = ModInfo.modid, name = ModInfo.name, version = ModInfo.version)
 public class Kitchen
@@ -36,6 +38,8 @@ public class Kitchen
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event)
 	{
+        ModConfig.load(new Configuration(event.getSuggestedConfigurationFile()));
+
 		instance.tab = new CreativeTabs("tabKitchen")
 		{
 			@Override
@@ -49,7 +53,7 @@ public class Kitchen
 		BlockBase.load();
 		ItemBase.load();
 		
-		instance.proxy.registerRenderers();
+		proxy.registerRenderers();
 	}
 	
 	@EventHandler
@@ -63,29 +67,36 @@ public class Kitchen
 		
 		GameRegistry.registerWorldGenerator(new WorldGenWildLettuce(), 1);
 		
-		GameRegistry.addRecipe(new ShapedOreRecipe(KitchenBlocks.board, new Object[] { "SPS", Character.valueOf('S'), "slabWood", Character.valueOf('P'), Blocks.wooden_pressure_plate }));
-        GameRegistry.addRecipe(new ItemStack(KitchenBlocks.tiles, 2), new Object[] { "IB", "CC", "CC", Character.valueOf('I'), new ItemStack(Items.dye, 1, 0), Character.valueOf('B'), new ItemStack(Items.dye, 1, 15), Character.valueOf('C'), Items.clay_ball });
+		GameRegistry.addRecipe(new ShapedOreRecipe(KitchenBlocks.board, "SPS", valueOf('S'), "slabWood", valueOf('P'), Blocks.wooden_pressure_plate));
+        GameRegistry.addRecipe(new ItemStack(KitchenBlocks.tiles, 2), "IB", "CC", "CC", valueOf('I'), new ItemStack(Items.dye, 1, 0), valueOf('B'), new ItemStack(Items.dye, 1, 15), valueOf('C'), Items.clay_ball);
+
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.raw_bacon, 3), new ItemStack(KitchenItems.knife), new ItemStack(Items.porkchop));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.tomato_slice, 4), new ItemStack(KitchenItems.knife), new ItemStack(KitchenItems.tomato));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.lettuce_leaf, 2), new ItemStack(KitchenItems.knife), new ItemStack(KitchenItems.lettuce));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.carrot_slice, 2), new ItemStack(KitchenItems.knife), new ItemStack(Items.carrot));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.potato_slice, 3), new ItemStack(KitchenItems.knife), new ItemStack(Items.potato));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.bread_slice, 2), new ItemStack(KitchenItems.knife), new ItemStack(Items.bread));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.raw_roast_beef, 2), new ItemStack(KitchenItems.knife), new ItemStack(Items.beef));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.raw_chicken_fillet, 4), new ItemStack(KitchenItems.knife), new ItemStack(Items.chicken));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.chicken_leg, 2), new ItemStack(KitchenItems.knife), new ItemStack(Items.cooked_chicken));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.cheese_slice, 2), new ItemStack(KitchenItems.knife), new ItemStack(KitchenItems.cheese));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.cheese, 2), new ItemStack(KitchenItems.knife), new ItemStack(Items.milk_bucket));
+
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.mortar_and_pestle, 1), new ItemStack(KitchenItems.mortar), new ItemStack(KitchenItems.pestle));
+
+        switch (ModConfig.knifeRecipe)
+        {
+            case 0: GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "I ", " S", valueOf('S'), "stickWood", valueOf('I'), "ingotIron")); break;
+            case 1: GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "I", "S", valueOf('S'), "stickWood", valueOf('I'), "ingotIron")); break;
+            case 2: GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "IS", valueOf('S'), "stickWood", valueOf('I'), "ingotIron")); break;
+
+            default: GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "I ", " S", valueOf('S'), "stickWood", valueOf('I'), Items.iron_ingot)); break;
+        }
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.flour, 1), "W", "M", valueOf('M'), KitchenItems.mortar_and_pestle, valueOf('W'), Items.wheat);
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.flour, 3), "B", "M", valueOf('M'), KitchenItems.mortar_and_pestle, valueOf('B'), Items.bread);
 		
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.raw_bacon, 3), new Object[] { "K", "P", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('P'), Items.porkchop });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.tomato_slice, 4), new Object[] { "K", "T", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('T'), KitchenItems.tomato });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.lettuce_leaf, 5), new Object[] { "K", "L", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('L'), KitchenItems.lettuce });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.carrot_slice, 2), new Object[] { "K", "C", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('C'), Items.carrot });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.potato_slice, 3), new Object[] { "K", "P", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('P'), Items.potato });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.bread_slice, 2), new Object[] { "K", "B", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('B'), Items.bread });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.raw_roast_beef, 2), new Object[] { "K", "B", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('B'), Items.beef });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.raw_chicken_fillet, 4), new Object[] { "K", "C", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('C'), Items.chicken });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.chicken_leg, 2), new Object[] { "K", "C", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('C'), Items.cooked_chicken });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.cheese_slice, 2), new Object[] { "K", "C", Character.valueOf('K'), KitchenItems.knife, Character.valueOf('C'), KitchenItems.cheese });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.cheese, 2), new Object[] { "M", Character.valueOf('M'), Items.milk_bucket });
-		
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.mortar_and_pestle), new Object[] { "P", "M", Character.valueOf('M'), KitchenItems.mortar, Character.valueOf('P'), KitchenItems.pestle });
-        GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, new Object[] { "I ", " S", Character.valueOf('S'), "stickWood", Character.valueOf('I'), Items.iron_ingot }));
-		
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.flour, 1), new Object[] { "W", "M", Character.valueOf('M'), KitchenItems.mortar_and_pestle, Character.valueOf('W'), Items.wheat });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.flour, 3), new Object[] { "B", "M", Character.valueOf('M'), KitchenItems.mortar_and_pestle, Character.valueOf('B'), Items.bread });
-		
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.mortar), new Object[] { "S S", " S ", Character.valueOf('S'), Blocks.stone });
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.pestle), new Object[] { "S ", " S", Character.valueOf('S'), Blocks.stone });
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.mortar), "S S", " S ", valueOf('S'), Blocks.stone);
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.pestle), "S ", " S", valueOf('S'), Blocks.stone);
 		
 		GameRegistry.addSmelting(KitchenItems.raw_bacon, new ItemStack(KitchenItems.bacon, 1, 0), 3.0F);
 		GameRegistry.addSmelting(KitchenItems.flour, new ItemStack(KitchenItems.toast, 2, 0), 3.0F);
