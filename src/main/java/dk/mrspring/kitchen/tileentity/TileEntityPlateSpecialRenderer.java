@@ -63,7 +63,7 @@ public class TileEntityPlateSpecialRenderer extends TileEntitySpecialRenderer
 					if (itemStack.getItem() instanceof ItemSandwich)
 						this.renderSadwich(itemStack);
 					else
-						this.renderItem(itemStack, itemx, itemy + 1.3, itemz - 0.225F);
+						this.renderItem(itemStack, itemx, itemy + 2.1, itemz - 0.225F);
 				}
 			}
 		}

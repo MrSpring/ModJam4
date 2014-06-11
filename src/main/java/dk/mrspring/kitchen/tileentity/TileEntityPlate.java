@@ -51,6 +51,7 @@ public class TileEntityPlate extends TileEntity
 				else // TODO Add pizza, casserole, etc.
 				{
 					ItemStack item = itemStack.copy();
+					item.stackSize = 1;
 					double x = (this.random.nextDouble() - 0.5) / 8;
 					double y = this.prevYPos + 0.1;
 					this.prevYPos -= 0.025;
@@ -82,21 +83,27 @@ public class TileEntityPlate extends TileEntity
 	public ItemStack removeTopItem()
 	{
 		int index = this.items.size();
-		ItemStack item = this.items.get(index);
 
-		if (item != null)
-			if (item.getItem() != null)
-			{
-				item.stackTagCompound.removeTag("PlatePosition");
-				this.items.remove(index);
+		if (index != 0)
+		{
+			ItemStack item = this.items.get(index - 1);
 
-				if (this.isFull)
-					this.isFull = false;
+			if (item != null)
+				if (item.getItem() != null)
+				{
+					item.stackTagCompound.removeTag("PlatePosition");
+					this.items.remove(index - 1);
 
-				return item;
-			}
+					if (this.isFull)
+						this.isFull = false;
+
+					return item;
+				}
+				else
+					return null;
 			else
 				return null;
+		}
 		else
 			return null;
 	}
