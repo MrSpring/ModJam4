@@ -19,6 +19,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -35,7 +36,7 @@ public class Kitchen
 	public static CommonProxy proxy;
 	
 	public CreativeTabs tab;
-	
+
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event)
 	{

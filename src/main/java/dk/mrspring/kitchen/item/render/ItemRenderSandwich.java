@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.item.render;
 
+import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.item.ItemSandwichable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
@@ -27,6 +28,7 @@ public class ItemRenderSandwich implements IItemRenderer
 		{
 		case EQUIPPED: return true;
 		case EQUIPPED_FIRST_PERSON: return true;
+		case ENTITY: return true;
 		default: return false;
 		}
 	}
