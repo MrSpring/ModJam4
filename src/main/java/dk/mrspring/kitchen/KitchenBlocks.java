@@ -13,4 +13,5 @@ public class KitchenBlocks
 	public static final Block wild_tomato = new BlockWildTomato();
 	public static final Block wild_lettuce = new BlockWildLettuce();
 	public static final Block oven = new BlockOven();
+	public static final Block plate = new BlockPlate();
 }

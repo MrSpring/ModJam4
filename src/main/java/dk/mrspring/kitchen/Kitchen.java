@@ -12,6 +12,7 @@ import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import dk.mrspring.kitchen.tileentity.TileEntityOven;
+import dk.mrspring.kitchen.tileentity.TileEntityPlate;
 import dk.mrspring.kitchen.world.gen.WorldGenWildLettuce;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -49,6 +50,7 @@ public class Kitchen
 		
 		GameRegistry.registerTileEntity(TileEntityBoard.class, "tileEntityBoard");
 		GameRegistry.registerTileEntity(TileEntityOven.class, "tileEntityOven");
+		GameRegistry.registerTileEntity(TileEntityPlate.class, "tileEntityPlate");
 		
 		BlockBase.load();
 		ItemBase.load();
