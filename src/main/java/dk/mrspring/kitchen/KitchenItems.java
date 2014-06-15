@@ -1,19 +1,12 @@
 package dk.mrspring.kitchen;
 
+import dk.mrspring.kitchen.item.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.item.ItemBase;
-import dk.mrspring.kitchen.item.ItemKnife;
-import dk.mrspring.kitchen.item.ItemLettuce;
-import dk.mrspring.kitchen.item.ItemMandP;
-import dk.mrspring.kitchen.item.ItemSandwich;
-import dk.mrspring.kitchen.item.ItemSandwichBread;
-import dk.mrspring.kitchen.item.ItemSandwichable;
-import dk.mrspring.kitchen.item.ItemTomato;
 import dk.mrspring.kitchen.model.ModelBaconCooked;
 import dk.mrspring.kitchen.model.ModelBaconRaw;
 import dk.mrspring.kitchen.model.ModelBreadSliceBottom;
@@ -45,6 +38,7 @@ public class KitchenItems
 	public static final Item cheese = new ItemFood(3, false).setUnlocalizedName("cheese").setTextureName(ModInfo.modid + ":cheese").setCreativeTab(Kitchen.instance.tab);
 	public static final ItemSandwichable cheese_slice = new ItemSandwichable("cheese_slice", true, 3);
     public static final Item burnt_meat = new ItemFood(1, false).setUnlocalizedName("burnt_meat").setTextureName(ModInfo.modid + ":burnt_meat").setCreativeTab(Kitchen.instance.tab);
+	public static final Item dough_burger_bun = new ItemDough("burger_bun");
 	
 	private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
 	{
