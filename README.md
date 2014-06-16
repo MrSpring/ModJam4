@@ -6,4 +6,4 @@ My entry in the 4th Mod Jam
 Download
 ========
 The mod is now available for download!
-Download here: http://mcp.ocean-labs.de/modjam/projects.php?type=Mod
+Download here: http://www.minecraftforum.net/topic/2716088-
