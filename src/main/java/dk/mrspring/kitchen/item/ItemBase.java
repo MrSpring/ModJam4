@@ -6,10 +6,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.model.ModelBaconCooked;
-import dk.mrspring.kitchen.model.ModelBaconRaw;
-import dk.mrspring.kitchen.model.ModelBreadSliceBottom;
-import dk.mrspring.kitchen.model.ModelBreadSliceTop;
 
 public class ItemBase extends Item
 {
@@ -55,6 +51,5 @@ public class ItemBase extends Item
 		registerItem(KitchenItems.cheese);
 		registerItem(KitchenItems.cheese_slice);
 		registerItem(KitchenItems.burnt_meat);
-		registerItem(KitchenItems.dough_burger_bun);
 	}
 }

@@ -3,7 +3,6 @@ package dk.mrspring.kitchen.block;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.tileentity.TileEntityPlate;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -64,7 +63,7 @@ public class BlockPlate extends BlockContainer
 			{
 				ItemStack item = new ItemStack(this, 1, 0);
 				NBTTagCompound plateCompound = new NBTTagCompound();
-				tileEntityPlate.writeToNBT(plateCompound);
+				tileEntityPlate.writeItemsToNBT(plateCompound);
 				item.setTagInfo("PlateData", plateCompound);
 				world.setBlockToAir(x, y, z);
 				world.spawnEntityInWorld(new EntityItem(world, x, y, z, item));
@@ -86,7 +85,7 @@ public class BlockPlate extends BlockContainer
 			if (itemStack.getTagCompound().getTag("PlateData") != null)
 			{
 				TileEntityPlate tileEntityPlate = (TileEntityPlate) world.getTileEntity(x, y, z);
-				tileEntityPlate.readFromNBT((NBTTagCompound) itemStack.getTagCompound().getTag("PlateData"));
+				tileEntityPlate.readItemsFromNBT((NBTTagCompound) itemStack.getTagCompound().getTag("PlateData"));
 			}
 	}
 

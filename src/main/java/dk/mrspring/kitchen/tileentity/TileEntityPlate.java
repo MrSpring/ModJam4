@@ -14,8 +14,7 @@ import java.util.Random;
 
 public class TileEntityPlate extends TileEntity
 {
-	protected ArrayList<ItemStack> items = new ArrayList<ItemStack>();
-	protected double prevYPos = 0.0;
+	protected ArrayList<ItemStack> items = new ArrayList<>();
 	protected boolean isFull = false;
 	protected Random random = new Random();
 
@@ -30,15 +29,6 @@ public class TileEntityPlate extends TileEntity
 					{
 						ItemStack item = itemStack.copy();
 						item.stackSize = 1;
-						double x = 0.0;
-						double y = this.prevYPos + 0.1;
-						this.prevYPos -= 0.025;
-						double z = 0.0;
-						NBTTagCompound posCompound = new NBTTagCompound();
-						posCompound.setDouble("X", x);
-						posCompound.setDouble("Y", y);
-						posCompound.setDouble("Z", z);
-						item.setTagInfo("PlatePosition", posCompound);
 
 						this.items.add(item);
 						this.isFull = true;
@@ -52,16 +42,6 @@ public class TileEntityPlate extends TileEntity
 				{
 					ItemStack item = itemStack.copy();
 					item.stackSize = 1;
-					double x = (this.random.nextDouble() - 0.5) / 8;
-					double y = this.prevYPos + 0.1;
-					this.prevYPos -= 0.025;
-					double z = (this.random.nextDouble() - 0.5) / 8;
-					NBTTagCompound posCompound = new NBTTagCompound();
-					posCompound.setDouble("X", x);
-					posCompound.setDouble("Y", y);
-					posCompound.setDouble("Z", z);
-
-					item.setTagInfo("PlatePosition", posCompound);
 
 					this.items.add(item);
 					System.out.println(" Returning true when checking normal Item!");
@@ -91,7 +71,6 @@ public class TileEntityPlate extends TileEntity
 			if (item != null)
 				if (item.getItem() != null)
 				{
-					item.stackTagCompound.removeTag("PlatePosition");
 					this.items.remove(index - 1);
 
 					if (this.isFull)
@@ -117,30 +96,37 @@ public class TileEntityPlate extends TileEntity
 	public void writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
+		this.writeItemsToNBT(compound);
+		compound.setBoolean("IsFull", this.isFull);
+	}
 
+	public void writeItemsToNBT(NBTTagCompound compound)
+	{
 		NBTTagList itemList = new NBTTagList();
-
-		for (int i = 0; i < this.items.size(); ++i)
+		for (ItemStack item : this.items)
 		{
-			if (this.items.get(i) != null)
+			if (item != null)
 			{
 				NBTTagCompound itemCompound = new NBTTagCompound();
-				itemCompound = this.items.get(i).writeToNBT(itemCompound);
+				itemCompound = item.writeToNBT(itemCompound);
 				itemList.appendTag(itemCompound);
 			}
 		}
-
 		compound.setTag("Items", itemList);
-		compound.setBoolean("IsFull", this.isFull);
-		compound.setDouble("LastY", this.prevYPos);
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
+		this.readItemsFromNBT(compound);
+		this.isFull = compound.getBoolean("IsFull");
+	}
 
+	public void readItemsFromNBT(NBTTagCompound compound)
+	{
 		NBTTagList itemList = compound.getTagList("Items", 10);
+		this.items = new ArrayList<>();
 
 		for(int i = 0; i < itemList.tagCount(); ++i)
 		{
@@ -151,9 +137,6 @@ public class TileEntityPlate extends TileEntity
 				this.items.add(itemStack);
 			}
 		}
-
-		this.isFull = compound.getBoolean("IsFull");
-		this.prevYPos = compound.getDouble("LastY");
 	}
 
 	@Override

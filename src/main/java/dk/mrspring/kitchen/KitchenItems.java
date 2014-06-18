@@ -38,8 +38,7 @@ public class KitchenItems
 	public static final Item cheese = new ItemFood(3, false).setUnlocalizedName("cheese").setTextureName(ModInfo.modid + ":cheese").setCreativeTab(Kitchen.instance.tab);
 	public static final ItemSandwichable cheese_slice = new ItemSandwichable("cheese_slice", true, 3);
     public static final Item burnt_meat = new ItemFood(1, false).setUnlocalizedName("burnt_meat").setTextureName(ModInfo.modid + ":burnt_meat").setCreativeTab(Kitchen.instance.tab);
-	public static final Item dough_burger_bun = new ItemDough("burger_bun");
-	
+
 	private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
 	{
 		ItemSandwich sandwich = new ItemSandwich();
@@ -48,11 +47,11 @@ public class KitchenItems
 		ItemStack basicSandwich = new ItemStack(sandwich, 1, 0);
 		
 		NBTTagList layersList = new NBTTagList();
-		
-		for (int i = 0; i < layers.length; ++i)
+
+		for (ItemStack layer : layers)
 		{
 			NBTTagCompound layerCompound = new NBTTagCompound();
-			layers[i].writeToNBT(layerCompound);
+			layer.writeToNBT(layerCompound);
 			layersList.appendTag(layerCompound);
 		}
 		

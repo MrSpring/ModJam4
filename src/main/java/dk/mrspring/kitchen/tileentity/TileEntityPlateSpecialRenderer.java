@@ -48,23 +48,16 @@ public class TileEntityPlateSpecialRenderer extends TileEntitySpecialRenderer
 
 		GL11.glRotatef(metadata * (45F), 0.0F, 1.0F, 0.0F);
 
+		this.yItemOffset = 0;
+
 		for(ItemStack itemStack : ((TileEntityPlate) var1).getItemsAsArray())
 		{
 			if (itemStack != null)
 			{
-				NBTTagCompound positionCompound = (NBTTagCompound) itemStack.getTagCompound().getTag("PlatePosition");
-				if (positionCompound != null)
-				{
-					double itemx, itemy, itemz;
-					itemx = positionCompound.getDouble("X");
-					itemy = positionCompound.getDouble("Y");
-					itemz = positionCompound.getDouble("Z");
-
-					if (itemStack.getItem() instanceof ItemSandwich)
-						this.renderSadwich(itemStack);
-					else
-						this.renderItem(itemStack, itemx, itemy + 2.1, itemz - 0.225F);
-				}
+				if (itemStack.getItem() instanceof ItemSandwich)
+					this.renderSadwich(itemStack);
+				else
+				{ this.renderItem(itemStack, 0, this.yItemOffset + 1.4, -0.225F); this.yItemOffset -= 0.03; }
 			}
 		}
 

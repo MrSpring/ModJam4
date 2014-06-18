@@ -4,5 +4,5 @@ public class ModInfo
 {
 	public static final String modid = "kitchen";
 	public static final String name = "Kitchen";
-	public static final String version = "1.2.0";
+	public static final String version = "1.2.0PRE";
 }
