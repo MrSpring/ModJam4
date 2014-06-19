@@ -22,7 +22,7 @@ public class ModConfig
 		// Getting the Knife Recipe from the config
         knifeRecipe = config.get("Recipes", "Knife Recipes - 0: Default Recipe, 1: Iron Torch Recipe, 2: Stick next to Iron Recipe, 3: Custom Recipe", 0).getInt(0);
 		// Custom Knife Recipe
-		customKnifeRecipe = config.get("Recipes", "Custom Knife Recipe - I: Iron Ingot, S: Stick, B: Blank spaces. This is the exact layout in the crafting table!", new String[] { "I  ", "S  ", "S  " }).getStringList();
+		customKnifeRecipe = config.get("Recipes", "Custom Knife Recipe - I: Iron Ingot, S: Stick, Any other characters will be seen as blank spots. This is the exact layout in the crafting table!", new String[] { "BBI", "BIB", "SBB" }).getStringList();
 
 		// Closes the config, and saves the changes made
         config.save();
