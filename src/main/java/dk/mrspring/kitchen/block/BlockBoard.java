@@ -101,15 +101,9 @@ public class BlockBoard extends BlockContainer
 						NBTTagCompound comboCompound = new NBTTagCompound();
 						byte combo = 0;
 
-                        System.out.println(" Checking Combos! Combo array length: " + SandwichCombo.combos.length);
-
 						for (int i = 1; i < SandwichCombo.combos.length && SandwichCombo.combos[i] != null; ++i)
-						{
-                            System.out.println(" Checking if Sandwich matches combo: " + SandwichCombo.combos[i].getUnlocalizedName());
-
 							if (SandwichCombo.combos[i].matches(item))
 								combo = (byte) i;
-						}
 						
 						comboCompound.setByte("Id", combo);
 						item.setTagInfo("Combo", comboCompound);

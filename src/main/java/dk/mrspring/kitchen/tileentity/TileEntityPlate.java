@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class TileEntityPlate extends TileEntity
 {
-	protected ArrayList<ItemStack> items = new ArrayList<>();
+	protected ArrayList<ItemStack> items = new ArrayList<ItemStack>();
 	protected boolean isFull = false;
 	protected Random random = new Random();
 
@@ -119,7 +119,7 @@ public class TileEntityPlate extends TileEntity
 	public void readItemsFromNBT(NBTTagCompound compound)
 	{
 		NBTTagList itemList = compound.getTagList("Items", 10);
-		this.items = new ArrayList<>();
+		this.items = new ArrayList<ItemStack>();
 
 		for(int i = 0; i < itemList.tagCount(); ++i)
 		{

@@ -23,6 +23,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
+import java.util.ArrayList;
+
 import static java.lang.Character.valueOf;
 
 @Mod(modid = ModInfo.modid, name = ModInfo.name, version = ModInfo.version)
@@ -83,6 +85,7 @@ public class Kitchen
 
 		// Cutting Board recipe
 		GameRegistry.addRecipe(new ShapedOreRecipe(KitchenBlocks.board, "SPS", valueOf('S'), "slabWood", valueOf('P'), Blocks.wooden_pressure_plate));
+		// Oven recipe
 		GameRegistry.addRecipe(new ItemStack(KitchenBlocks.oven, 1, 0), "III", "ICI", "IFI", valueOf('I'), new ItemStack(Items.iron_ingot), valueOf('C'), new ItemStack(Items.coal), valueOf('F'), new ItemStack(Items.flint_and_steel));
 		// Tile recipe
         GameRegistry.addRecipe(new ItemStack(KitchenBlocks.tiles, 2), "IB", "CC", "CC", valueOf('I'), new ItemStack(Items.dye, 1, 0), valueOf('B'), new ItemStack(Items.dye, 1, 15), valueOf('C'), Items.clay_ball);
@@ -114,6 +117,30 @@ public class Kitchen
             case 0: GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "I ", " S", valueOf('S'), "stickWood", valueOf('I'), Items.iron_ingot)); break;	// Default recipe
             case 1: GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "I", "S", valueOf('S'), "stickWood", valueOf('I'), Items.iron_ingot)); break;	// Iron Torch recipe
             case 2: GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "IS", valueOf('S'), "stickWood", valueOf('I'), Items.iron_ingot)); break;		// Horizontal recipe
+			case 3:
+			{
+				ModLogger.print(ModLogger.INFO, "Registering custom Knife recipe...");
+
+				ArrayList<String> lines = new ArrayList<String>();
+
+				for(String line : ModConfig.customKnifeRecipe)
+				{
+					if (!line.equals("BBB"))
+						lines.add(line);
+				}
+
+				ArrayList<Object> recipe = new ArrayList<Object>();
+
+				recipe.addAll(lines);
+				recipe.add(valueOf('I'));
+				recipe.add(Items.iron_ingot);
+				recipe.add(valueOf('S'));
+				recipe.add("stickWood");
+
+				GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, recipe.toArray()));
+
+				break;
+			}
 																																									//
             default: GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "I ", " S", valueOf('S'), "stickWood", valueOf('I'), Items.iron_ingot)); break;	// Default recipe
         }																																							//
