@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.block;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.tileentity.TileEntityPlate;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,8 +15,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+
 public class BlockPlate extends BlockContainer
 {
+	TileEntityPlate tileEntityPlate;
+
 	public BlockPlate()
 	{
 		super(Material.anvil);
@@ -26,6 +31,32 @@ public class BlockPlate extends BlockContainer
 		this.setBlockBounds(0.0F + (2 * 0.0635F), 0.0F, 0.0F + (2 * 0.0635F), 1.0F - (2 * 0.0635F), (3 * 0.0625F), 1.0F - (2 * 0.0635F));
 
 		this.setCreativeTab(Kitchen.instance.tab);
+
+		this.setTickRandomly(true);
+		this.setHardness(4.0F);
+	}
+
+	@Override
+	public void onBlockPreDestroy(World p_149725_1_, int p_149725_2_, int p_149725_3_, int p_149725_4_, int p_149725_5_)
+	{
+		this.tileEntityPlate = (TileEntityPlate) p_149725_1_.getTileEntity(p_149725_2_, p_149725_3_, p_149725_4_);
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
+	{
+		ArrayList<ItemStack> toReturn = new ArrayList<ItemStack>();
+
+		if (this.tileEntityPlate != null)
+			for (ItemStack item : this.tileEntityPlate.getItemsAsArray())
+			{
+				if (item != null)
+					toReturn.add(item);
+			}
+
+		toReturn.add(new ItemStack(this, 1, 0));
+
+		return toReturn;
 	}
 
 	@Override

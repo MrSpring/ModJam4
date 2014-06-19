@@ -28,7 +28,6 @@ public class ItemRenderSandwich implements IItemRenderer
 		{
 		case EQUIPPED: return true;
 		case EQUIPPED_FIRST_PERSON: return true;
-		case ENTITY: return true;
 		default: return false;
 		}
 	}

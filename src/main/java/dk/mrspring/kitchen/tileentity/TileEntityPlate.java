@@ -22,8 +22,19 @@ public class TileEntityPlate extends TileEntity
 	{
 		if (itemStack != null)
 			if (itemStack.getItem() != null)
-			{
 				if (itemStack.getItem() instanceof ItemSandwich)
+					if (!this.isFull && this.items.size() == 0)
+					{
+						ItemStack item = itemStack.copy();
+						item.stackSize = 1;
+
+						this.items.add(item);
+						this.isFull = true;
+						itemStack = null;
+						return true;
+					} else
+						return false;
+				else // TODO Add pizza, casserole, etc.
 				{
 					if (!this.isFull)
 					{
@@ -31,33 +42,15 @@ public class TileEntityPlate extends TileEntity
 						item.stackSize = 1;
 
 						this.items.add(item);
-						this.isFull = true;
-						--itemStack.stackSize;
 						return true;
 					}
 					else
 						return false;
 				}
-				else // TODO Add pizza, casserole, etc.
-				{
-					ItemStack item = itemStack.copy();
-					item.stackSize = 1;
-
-					this.items.add(item);
-					System.out.println(" Returning true when checking normal Item!");
-					return true;
-				}
-			}
 			else
-			{
-				System.out.println(" Returning false when null checking Item!");
 				return false;
-			}
 		else
-		{
-			System.out.println(" Returning false when null checking ItemStack!");
 			return false;
-		}
 	}
 
 	public ItemStack removeTopItem()
