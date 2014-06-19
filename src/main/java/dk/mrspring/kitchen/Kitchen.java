@@ -39,22 +39,27 @@ public class Kitchen
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event)
 	{
+		// Loading the Config
         ModConfig.load(new Configuration(event.getSuggestedConfigurationFile()));
 
+		// Initializing the Creative Tab
 		instance.tab = new CreativeTabs("tabKitchen")
 		{
 			@Override
 			public Item getTabIconItem()
 				{ return KitchenItems.basic_sandwich.getItem(); }
 		};
-		
+
+		// Registering Tile Entities
 		GameRegistry.registerTileEntity(TileEntityBoard.class, "tileEntityBoard");
 		GameRegistry.registerTileEntity(TileEntityOven.class, "tileEntityOven");
 		GameRegistry.registerTileEntity(TileEntityPlate.class, "tileEntityPlate");
 
+		// Loading Blocks and Items
 		BlockBase.load();
 		ItemBase.load();
-		
+
+		// Registering renderers
 		proxy.registerRenderers();
 	}
 	
@@ -63,10 +68,13 @@ public class Kitchen
 	{
 		ModLogger.print(ModLogger.INFO, "Loading Combos...");
 
+		// Loading Combos
         SandwichCombo.load();
 
+		// Adding Tomatoes to the grass drop list
 		MinecraftForge.addGrassSeed(new ItemStack(KitchenItems.tomato), 10);
 
+		// Registering the Lettuce world generator
 		GameRegistry.registerWorldGenerator(new WorldGenWildLettuce(), 1);
 
 		/**

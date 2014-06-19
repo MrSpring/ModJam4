@@ -5,6 +5,7 @@ tile.board.name=Cutting Board
 tile.tomato_crop.name=Tomato Plant
 tile.lettuce_crop.name=Lettuce Crop
 tile.oven.name=Oven
+tile.plate.name=Plate
 
 item.knife.name=Knife
 item.bacon_raw.name=Raw Bacon
@@ -30,7 +31,6 @@ item.chicken_leg.name=Chicken Leg
 item.cheese.name=Cheese
 item.cheese_slice.name=Cheese Slice
 item.burnt_meat.name=Burnt Meat
-item.dough_burger_bun.name=Burger Bun Dough
 
 combo.big_mac.name=There is Only One!
 combo.blt.name=The Good ol' BLT

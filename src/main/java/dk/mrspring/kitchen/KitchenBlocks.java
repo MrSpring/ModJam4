@@ -6,6 +6,7 @@ import net.minecraft.block.material.Material;
 
 public class KitchenBlocks
 {
+	// All the block variables
 	public static final Block tiles = new BlockBase(Material.iron, "tiles", true);
 	public static final Block board = new BlockBoard();
 	public static final Block tomato_crop = new BlockTomatoCrop();

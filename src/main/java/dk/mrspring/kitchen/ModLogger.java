@@ -5,10 +5,12 @@ import java.util.Date;
 
 public class ModLogger
 {
+	// Integers used to choose which type of message to Log
 	public static final int INFO = 0;
 	public static final int WARNING = 1;
 	public static final int ERROR = 2;
 
+	// Prints a message to the console, obj used if the message is an error and an exception has to be logged
 	public static void print(int type, String message, Object... obj)
 	{
 		String time = new SimpleDateFormat("HH:mm:ss").format(new Date());

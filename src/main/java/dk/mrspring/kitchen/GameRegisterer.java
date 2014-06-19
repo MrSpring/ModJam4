@@ -3,9 +3,15 @@ package dk.mrspring.kitchen;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.item.ItemBlock;
 
 public class GameRegisterer
 {
+	public static void registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name)
+	{
+		GameRegistry.registerBlock(block, itemBlock, name);
+	}
+
 	public static void registerBlock(Block block, String name)
 	{
 		GameRegistry.registerBlock(block, name);

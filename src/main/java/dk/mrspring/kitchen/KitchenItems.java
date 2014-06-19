@@ -14,12 +14,14 @@ import dk.mrspring.kitchen.model.ModelBreadSliceTop;
 
 public class KitchenItems
 {
+	// All the Item variables
 	public static final Item knife = new ItemKnife().setMaxStackSize(1);
 	public static final Item mortar_and_pestle = new ItemMandP().setMaxStackSize(1);
 	public static final Item mortar = new ItemBase("mortar", true);
 	public static final Item pestle = new ItemBase("pestle", true);
 	public static final ItemSandwichable raw_bacon = new ItemSandwichable("bacon_raw", true, 1).setCustomModel(new ModelBaconRaw(), new ModelBaconRaw(), 1, 1);
 	public static final ItemSandwichBread bread_slice = (ItemSandwichBread) new ItemSandwichBread("bread_slice", true).setCustomModel(new ModelBreadSliceTop(), new ModelBreadSliceBottom(), 3, 2);
+	// The basic sandwich ItemStack. It's used as the icon fot the creative tab
 	public static ItemStack basic_sandwich = getSandwichItemStackWithNBTTags(new ItemStack[] { new ItemStack(bread_slice, 1, 0), new ItemStack(raw_bacon, 1, 0), new ItemStack(bread_slice, 1, 0) });
 	public static final Item tomato = new ItemTomato();
 	public static final Item lettuce = new ItemLettuce();
@@ -39,6 +41,7 @@ public class KitchenItems
 	public static final ItemSandwichable cheese_slice = new ItemSandwichable("cheese_slice", true, 3);
     public static final Item burnt_meat = new ItemFood(1, false).setUnlocalizedName("burnt_meat").setTextureName(ModInfo.modid + ":burnt_meat").setCreativeTab(Kitchen.instance.tab);
 
+	// Pre-loads the sandwich ItemStack with some NBT-Data.
 	private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
 	{
 		ItemSandwich sandwich = new ItemSandwich();
