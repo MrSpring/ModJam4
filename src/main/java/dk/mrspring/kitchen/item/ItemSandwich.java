@@ -54,59 +54,72 @@ public class ItemSandwich extends ItemFood
 	@Override
 	protected void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
 	{
-        byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Id");
+		if (par1ItemStack.stackTagCompound != null)
+		{
+			byte combo = par1ItemStack.stackTagCompound.getCompoundTag("Combo").getByte("Id");
 
-        if (combo != 0)
-	    	if (SandwichCombo.combos[(int) combo] != null)
-	    		SandwichCombo.combos[(int) combo].onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
-	    	else
-	    		super.onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
+			if (combo != 0)
+				if (SandwichCombo.combos[(int) combo] != null)
+					SandwichCombo.combos[(int) combo].onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
+				else
+					super.onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
+		}
 	}
 	
 	@Override
 	public int func_150905_g(ItemStack item)
 	{
 		int healAmount = 0;
-		
-		NBTTagList layersList = item.stackTagCompound.getTagList("SandwichLayers", 10);
 
-        if (layersList != null)
-        {
-            for (int i = 0; i < layersList.tagCount(); ++i)
-            {
-                NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
-                healAmount += ((ItemSandwichable) ItemStack.loadItemStackFromNBT(layerCompound).getItem()).getHealAmount();
-            }
+		if (item.stackTagCompound != null)
+		{
+			NBTTagList layersList = item.stackTagCompound.getTagList("SandwichLayers", 10);
 
-            byte combo = item.getTagCompound().getCompoundTag("Combo").getByte("Id");
+			if (layersList != null)
+			{
+				for (int i = 0; i < layersList.tagCount(); ++i)
+				{
+					NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
+					healAmount += ((ItemSandwichable) ItemStack.loadItemStackFromNBT(layerCompound).getItem()).getHealAmount();
+				}
 
-            if (SandwichCombo.combos[(int) combo] != null)
-                healAmount += SandwichCombo.combos[(int) combo].getExtraHeal();
+				byte combo = item.getTagCompound().getCompoundTag("Combo").getByte("Id");
 
-            return healAmount;
-        }
-        else
-            return healAmount;
+				if (SandwichCombo.combos[(int) combo] != null)
+					healAmount += SandwichCombo.combos[(int) combo].getExtraHeal();
+
+				return healAmount;
+			}
+			else
+				return healAmount;
+		}
+		else
+			return healAmount;
 	}
 	
 	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
 	{
-		NBTTagList layersList = par1ItemStack.stackTagCompound.getTagList("SandwichLayers", 10);
+		if (par1ItemStack.stackTagCompound != null)
+		{
+			NBTTagList layersList = par1ItemStack.stackTagCompound.getTagList("SandwichLayers", 10);
 
-        if (layersList != null)
-        {
-            for (int i = 0; i < layersList.tagCount(); ++i)
-            {
-                NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
-                par3List.add(StatCollector.translateToLocal(ItemStack.loadItemStackFromNBT(layerCompound).getDisplayName()));
-            }
+			if (layersList != null)
+			{
+				for (int i = 0; i < layersList.tagCount(); ++i)
+				{
+					NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
+					par3List.add(StatCollector.translateToLocal(ItemStack.loadItemStackFromNBT(layerCompound).getDisplayName()));
+				}
 
-            byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Id");
+				byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Id");
 
-            if (combo != 0)
-                if (SandwichCombo.combos[(int) combo] != null)
-                    SandwichCombo.combos[(int) combo].addCustomInfo(par3List);
-        }
+				if (combo != 0)
+					if (SandwichCombo.combos[(int) combo] != null)
+						SandwichCombo.combos[(int) combo].addCustomInfo(par3List);
+			}
+		}
+		else
+			super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
 	}
 }
