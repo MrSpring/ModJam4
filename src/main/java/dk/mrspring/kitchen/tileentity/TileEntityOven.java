@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.tileentity;
 
+import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenItems;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFood;
@@ -167,20 +168,25 @@ public class TileEntityOven extends TileEntity
 
 	public boolean canCookItems()
 	{
-		boolean foundIncompatible = false;
-		boolean foundNonNull = false;
+		boolean foundCompatible = false;
 
 		for(ItemStack item : this.ovenItems)
-			if (item != null)
-				if (item.getItem() != null)
-					if (FurnaceRecipes.smelting().getSmeltingResult(item) != null)
-						if (!(FurnaceRecipes.smelting().getSmeltingResult(item).getItem() instanceof ItemFood))
-							foundIncompatible = true;
-						else foundNonNull = true;
-					else
-						foundIncompatible = true;
+        {
+            if (item != null)
+                if (FurnaceRecipes.smelting().getSmeltingResult(item) != null)
+                    if (FurnaceRecipes.smelting().getSmeltingResult(item).getItem() instanceof ItemFood)
+                        foundCompatible = true;
+                    else ;
+                else
+                {
+                    ItemStack temp = item.copy();
+                    temp.stackSize = 1;
+                    if (Kitchen.customOvenRecipes[0].contains(temp))
+                        foundCompatible = true;
+                }
+        }
 
-		return foundNonNull && !foundIncompatible;
+		return foundCompatible;
 	}
 
 	public void setOpen()
