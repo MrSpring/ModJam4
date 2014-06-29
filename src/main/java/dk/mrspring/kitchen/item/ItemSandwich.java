@@ -54,9 +54,9 @@ public class ItemSandwich extends ItemFood
 	@Override
 	protected void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
 	{
-		if (par1ItemStack.stackTagCompound != null)
+		if (par1ItemStack.getTagCompound() != null)
 		{
-			byte combo = par1ItemStack.stackTagCompound.getCompoundTag("Combo").getByte("Id");
+			byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Id");
 
 			if (combo != 0)
 				if (SandwichCombo.combos[(int) combo] != null)
@@ -71,9 +71,9 @@ public class ItemSandwich extends ItemFood
 	{
 		int healAmount = 0;
 
-		if (item.stackTagCompound != null)
+		if (item.getTagCompound().hasKey("SandwichLayers"))
 		{
-			NBTTagList layersList = item.stackTagCompound.getTagList("SandwichLayers", 10);
+			NBTTagList layersList = item.getTagCompound().getTagList("SandwichLayers", 10);
 
 			if (layersList != null)
 			{
@@ -100,9 +100,9 @@ public class ItemSandwich extends ItemFood
 	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
 	{
-		if (par1ItemStack.stackTagCompound != null)
+		if (par1ItemStack.getTagCompound().hasKey("SandwichLayers"))
 		{
-			NBTTagList layersList = par1ItemStack.stackTagCompound.getTagList("SandwichLayers", 10);
+			NBTTagList layersList = par1ItemStack.getTagCompound().getTagList("SandwichLayers", 10);
 
 			if (layersList != null)
 			{

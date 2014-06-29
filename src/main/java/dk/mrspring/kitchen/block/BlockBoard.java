@@ -6,6 +6,7 @@ import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.item.ItemSandwichable;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,28 +21,23 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
+import java.util.Random;
 
 public class BlockBoard extends BlockContainer
 {
-	TileEntityBoard tEntity;
-	
 	public BlockBoard()
 	{
 		super(Material.wood);
 		
 		this.setBlockName("board");
 		this.setBlockTextureName("minecraft:planks_oak");
-		this.setTickRandomly(true);
 		
 		this.setCreativeTab(Kitchen.instance.tab);
 		
 		this.setStepSound(soundTypeWood);
 		this.setHardness(2.0F);
 	}
-	
-	
-	
+
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer activator, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
 	{
@@ -128,28 +124,39 @@ public class BlockBoard extends BlockContainer
 	{
 		return null;
 	}
-	
-	@Override
-	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
-	{
-		ArrayList<ItemStack> toReturn = new ArrayList<ItemStack>();
-		
-		for (int i = 0; i < this.tEntity.getLayers().length && this.tEntity.getLayers()[i] != null; ++i)
-		{
-			toReturn.add(this.tEntity.getLayers()[i]);
-		}
 
-		toReturn.add(new ItemStack(this, 1, 0));
-		
-		return toReturn;
-	}
-	
-	@Override
-	public void onBlockPreDestroy(World p_149725_1_, int p_149725_2_, int p_149725_3_, int p_149725_4_, int p_149725_5_)
-	{
-		super.onBlockPreDestroy(p_149725_1_, p_149725_2_, p_149725_3_, p_149725_4_, p_149725_5_);
-		this.tEntity = (TileEntityBoard) p_149725_1_.getTileEntity(p_149725_2_, p_149725_3_, p_149725_4_);
-	}
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_)
+    {
+        TileEntityBoard tileEntityBoard = (TileEntityBoard) world.getTileEntity(x, y, z);
+
+        if (tileEntityBoard != null)
+        {
+            ItemStack[] stacks = tileEntityBoard.getLayers();
+
+            for (ItemStack item : stacks)
+            {
+                if (item != null)
+                {
+                    Random random = new Random();
+
+                    float xRandPos = random.nextFloat() * 0.8F + 0.1F;
+                    float yRandPos = random.nextFloat() * 0.8F + 0.1F;
+                    float zRandPos = random.nextFloat() * 0.8F + 0.1F;
+
+                    EntityItem entityItem = new EntityItem(world, x + xRandPos, y + yRandPos, z + zRandPos, item);
+
+                    entityItem.motionX = random.nextGaussian() * 0.05F;
+                    entityItem.motionY = random.nextGaussian() * 0.05F + 0.2F;
+                    entityItem.motionZ = random.nextGaussian() * 0.05F;
+
+                    world.spawnEntityInWorld(entityItem);
+                }
+            }
+        }
+
+        super.breakBlock(world, x, y, z, block, p_149749_6_);
+    }
 	
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)

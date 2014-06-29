@@ -15,13 +15,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class BlockOven extends BlockContainer
 {
-	TileEntityOven tileEntityOven;
-
 	public BlockOven()
 	{
 		super(Material.iron);
@@ -36,30 +33,40 @@ public class BlockOven extends BlockContainer
 		this.setStepSound(Block.soundTypePiston);
 	}
 
-	@Override
-	public void onBlockPreDestroy(World p_149725_1_, int p_149725_2_, int p_149725_3_, int p_149725_4_, int p_149725_5_)
-	{
-		this.tileEntityOven = (TileEntityOven) p_149725_1_.getTileEntity(p_149725_2_, p_149725_3_, p_149725_4_);
-	}
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_)
+    {
+        TileEntityOven tileEntityBoard = (TileEntityOven) world.getTileEntity(x, y, z);
 
-	@Override
-	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
-	{
-		ArrayList<ItemStack> toReturn = new ArrayList<ItemStack>();
+        if (tileEntityBoard != null)
+        {
+            ItemStack[] stacks = tileEntityBoard.getOvenItems();
 
-		if (this.tileEntityOven != null)
-			for (ItemStack item : this.tileEntityOven.getOvenItems())
-			{
-				if (item != null)
-					toReturn.add(item);
-			}
+            for (ItemStack item : stacks)
+            {
+                if (item != null)
+                {
+                    Random random = new Random();
 
-		toReturn.add(new ItemStack(this, 1, 0));
+                    float xRandPos = random.nextFloat() * 0.8F + 0.1F;
+                    float yRandPos = random.nextFloat() * 0.8F + 0.1F;
+                    float zRandPos = random.nextFloat() * 0.8F + 0.1F;
 
-		return toReturn;
-	}
+                    EntityItem entityItem = new EntityItem(world, x + xRandPos, y + yRandPos, z + zRandPos, item);
 
-	@Override
+                    entityItem.motionX = random.nextGaussian() * 0.05F;
+                    entityItem.motionY = random.nextGaussian() * 0.05F + 0.2F;
+                    entityItem.motionZ = random.nextGaussian() * 0.05F;
+
+                    world.spawnEntityInWorld(entityItem);
+                }
+            }
+        }
+
+        super.breakBlock(world, x, y, z, block, p_149749_6_);
+    }
+
+    @Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer activator, int side, float p_149727_7_, float p_149727_8_, float p_149727_9_)
 	{
 		world.markBlockForUpdate(x, y, z);
