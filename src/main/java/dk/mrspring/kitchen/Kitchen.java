@@ -65,62 +65,21 @@ public class Kitchen
 
 		// Registering renderers
 		proxy.registerRenderers();
-
-        if (ModConfig.customOvenRecipesResults.length == ModConfig.customOvenRecipes.length)
-        {
-            ArrayList<ItemStack> input = new ArrayList<ItemStack>();
-            ArrayList<ItemStack> output = new ArrayList<ItemStack>();
-
-            for (int i = 0; i < ModConfig.customOvenRecipes.length; ++i)
-            {
-                ItemStack[] recipe = new ItemStack[2];
-
-                String modId = "minecraft";
-                String itemName;
-
-                if (ModConfig.customOvenRecipes[i].contains(":"))
-                {
-                    modId = ModConfig.customOvenRecipes[i].split(":")[0];
-                    itemName = ModConfig.customOvenRecipes[i].split(":")[1];
-                }
-                else
-                    itemName = ModConfig.customOvenRecipes[i];
-
-                ItemStack inputStack = GameRegistry.findItemStack(modId, itemName, 1);
-
-
-                if (ModConfig.customOvenRecipesResults[i].contains(":"))
-                {
-                    modId = ModConfig.customOvenRecipesResults[i].split(":")[0];
-                    itemName = ModConfig.customOvenRecipesResults[i].split(":")[1];
-                }
-                else
-                    itemName = ModConfig.customOvenRecipesResults[i];
-
-                ItemStack outputStack = GameRegistry.findItemStack(modId, itemName, 1);
-
-                input.add(inputStack);
-                output.add(outputStack);
-            }
-
-            customOvenRecipes[0] = input;
-            customOvenRecipes[1] = output;
-        }
-        else
-            ModLogger.print(ModLogger.WARNING, "Unable to load custom Oven recipes. One list is bigger than the other! Oven Recipes: " + ModConfig.customOvenRecipes.length + ", Oven Reipces Results: " + ModConfig.customOvenRecipesResults.length);
-	}
+    }
 	
 	@EventHandler
 	public static void init(FMLInitializationEvent event)
 	{
 		ModLogger.print(ModLogger.INFO, "Loading Combos...");
-
 		// Loading Combos
         SandwichCombo.load();
 
+        ModLogger.print(ModLogger.INFO, "Loading Custom Oven recipes...");
+        // Loading Custom Oven recipes
+        OvenRecipes.load();
+
 		// Adding Tomatoes to the grass drop list
 		MinecraftForge.addGrassSeed(new ItemStack(KitchenItems.tomato), 10);
-
 		// Registering the Lettuce world generator
 		GameRegistry.registerWorldGenerator(new WorldGenWildLettuce(), 1);
 

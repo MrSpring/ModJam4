@@ -38,53 +38,56 @@ public class TileEntityOven extends TileEntity
 
 		if (itemStack != null)
 			if (itemStack.getItem() != null)
-				if (FurnaceRecipes.smelting().getSmeltingResult(itemStack) != null)
-				{
-					if (FurnaceRecipes.smelting().getSmeltingResult(itemStack).getItem() instanceof ItemFood)
-					{
-						ItemStack item = itemStack.copy();
-						item.stackSize = 1;
+            {
+                ItemStack temp = itemStack.copy();
+                temp.stackSize = 1;
 
-						boolean returning = false;
+                if (FurnaceRecipes.smelting().getSmeltingResult(itemStack) != null || Kitchen.customOvenRecipes[0].contains(temp))
+                {
+                    if (FurnaceRecipes.smelting().getSmeltingResult(itemStack).getItem() instanceof ItemFood)
+                    {
+                        ItemStack item = itemStack.copy();
+                        item.stackSize = 1;
 
-						for (int i = 0; i < this.ovenItems.length; ++i)
-						{
-							if (this.ovenItems[i] == null)
-							{
-								this.ovenItems[i] = item;
-								returning = true;
-								break;
-							} else
-							{
-								if (this.ovenItems[i].getItem() == item.getItem())
-								{
-									if (this.ovenItems[i].stackSize < 4)
-									{
-										this.ovenItems[i].stackSize++;
-										returning = true;
-										break;
-									}
-								}
-							}
-						}
+                        boolean returning = false;
 
-						if (returning)
-						{
-							--itemStack.stackSize;
-							return true;
-						} else
-							return false;
-					} else
-						return false;
-				}
-				else if (itemStack.getItem() == Items.coal && !this.hasCoal())
-				{
-					this.hasCoal = true;
-					--itemStack.stackSize;
-					return true;
-				}
-				else
-					return false;
+                        for (int i = 0; i < this.ovenItems.length; ++i)
+                        {
+                            if (this.ovenItems[i] == null)
+                            {
+                                this.ovenItems[i] = item;
+                                returning = true;
+                                break;
+                            } else
+                            {
+                                if (this.ovenItems[i].getItem() == item.getItem())
+                                {
+                                    if (this.ovenItems[i].stackSize < 4)
+                                    {
+                                        this.ovenItems[i].stackSize++;
+                                        returning = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (returning)
+                        {
+                            --itemStack.stackSize;
+                            return true;
+                        } else
+                            return false;
+                    } else
+                        return false;
+                } else if (itemStack.getItem() == Items.coal && !this.hasCoal())
+                {
+                    this.hasCoal = true;
+                    --itemStack.stackSize;
+                    return true;
+                } else
+                    return false;
+            }
 			else
 				return false;
 		else
@@ -210,9 +213,23 @@ public class TileEntityOven extends TileEntity
 			{
 				if (this.ovenItems[i].getItem() != null)
 				{
-					int stackSize = this.ovenItems[i].stackSize;
-					this.ovenItems[i] = FurnaceRecipes.smelting().getSmeltingResult(this.ovenItems[i]);
-					this.ovenItems[i].stackSize = stackSize;
+                    if (FurnaceRecipes.smelting().getSmeltingResult(this.ovenItems[i]) != null)
+                    {
+                        int stackSize = this.ovenItems[i].stackSize;
+                        this.ovenItems[i] = FurnaceRecipes.smelting().getSmeltingResult(this.ovenItems[i]);
+                        this.ovenItems[i].stackSize = stackSize;
+                    }
+                    else
+                    {
+                        int stackSize = this.ovenItems[i].stackSize;
+
+                        ItemStack temp = this.ovenItems[i].copy();
+                        temp.stackSize = 1;
+
+                        int index = Kitchen.customOvenRecipes[0].indexOf(temp);
+                        this.ovenItems[i] = Kitchen.customOvenRecipes[1].get(index);
+                        this.ovenItems[i].stackSize = stackSize;
+                    }
 				}
 			}
 		}
