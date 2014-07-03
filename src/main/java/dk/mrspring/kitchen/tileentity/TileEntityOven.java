@@ -1,7 +1,7 @@
 package dk.mrspring.kitchen.tileentity;
 
-import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenItems;
+import dk.mrspring.kitchen.OvenRecipes;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -39,12 +39,21 @@ public class TileEntityOven extends TileEntity
 		if (itemStack != null)
 			if (itemStack.getItem() != null)
             {
-                ItemStack temp = itemStack.copy();
-                temp.stackSize = 1;
-
-                if (FurnaceRecipes.smelting().getSmeltingResult(itemStack) != null || Kitchen.customOvenRecipes[0].contains(temp))
-                {
+                if (FurnaceRecipes.smelting().getSmeltingResult(itemStack) != null)
                     if (FurnaceRecipes.smelting().getSmeltingResult(itemStack).getItem() instanceof ItemFood)
+                        return this.forceAddItemStack(itemStack);
+
+                if (OvenRecipes.getCookingResult(itemStack) != null)
+                    return this.forceAddItemStack(itemStack);
+
+                if (itemStack.getItem() == Items.coal)
+                    return this.forceAddItemStack(itemStack);
+
+                return false;
+
+                /*if (FurnaceRecipes.smelting().getSmeltingResult(itemStack) != null)
+                {
+                    if (FurnaceRecipes.smelting().getSmeltingResult(itemStack).getItem() instanceof ItemFood || )
                     {
                         ItemStack item = itemStack.copy();
                         item.stackSize = 1;
@@ -85,14 +94,51 @@ public class TileEntityOven extends TileEntity
                     this.hasCoal = true;
                     --itemStack.stackSize;
                     return true;
-                } else
-                    return false;
+                } else if (OvenRecipes.getCookingResult(itemStack) != null)
+                    return false;*/
             }
 			else
 				return false;
 		else
 			return false;
 	}
+
+    private boolean forceAddItemStack(ItemStack itemStack)
+    {
+        ItemStack temp = itemStack.copy();
+        temp.stackSize = 1;
+
+        // Checks if the ItemStack's item is coal. If so, then add it and subtract one from itemStack.stackSize.
+        if (itemStack.getItem() == Items.coal && !this.hasCoal)
+        {
+            this.hasCoal = true;
+            --itemStack.stackSize;
+            return true;
+        }
+
+        for (int i = 0; i < this.ovenItems.length; ++i)
+        {
+            if (this.ovenItems[i] != null)
+            {
+                // If itemStacks item equals the Item in i slot, than increase its stackSize an decrease itemStacks. Do nothing if they don't.
+                if (itemStack.isItemEqual(this.ovenItems[i]) && this.ovenItems[i].stackSize < 4)
+                {
+                    ++this.ovenItems[i].stackSize;
+                    --itemStack.stackSize;
+                    return true;
+                }
+            } else
+            {
+                // Sets i slot to itemStack if it's null or its stackSize is 0.
+                this.ovenItems[i] = itemStack.copy();
+                this.ovenItems[i].stackSize = 1;
+                --itemStack.stackSize;
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 	@Override
 	public void updateEntity()
@@ -176,17 +222,14 @@ public class TileEntityOven extends TileEntity
 		for(ItemStack item : this.ovenItems)
         {
             if (item != null)
+            {
                 if (FurnaceRecipes.smelting().getSmeltingResult(item) != null)
                     if (FurnaceRecipes.smelting().getSmeltingResult(item).getItem() instanceof ItemFood)
                         foundCompatible = true;
-                    else ;
-                else
-                {
-                    ItemStack temp = item.copy();
-                    temp.stackSize = 1;
-                    if (Kitchen.customOvenRecipes[0].contains(temp))
-                        foundCompatible = true;
-                }
+
+                if (OvenRecipes.getCookingResult(item) != null)
+                    foundCompatible = true;
+            }
         }
 
 		return foundCompatible;
@@ -219,15 +262,11 @@ public class TileEntityOven extends TileEntity
                         this.ovenItems[i] = FurnaceRecipes.smelting().getSmeltingResult(this.ovenItems[i]);
                         this.ovenItems[i].stackSize = stackSize;
                     }
-                    else
+
+                    if (OvenRecipes.getCookingResult(this.ovenItems[i]) != null)
                     {
                         int stackSize = this.ovenItems[i].stackSize;
-
-                        ItemStack temp = this.ovenItems[i].copy();
-                        temp.stackSize = 1;
-
-                        int index = Kitchen.customOvenRecipes[0].indexOf(temp);
-                        this.ovenItems[i] = Kitchen.customOvenRecipes[1].get(index);
+                        this.ovenItems[i] = OvenRecipes.getCookingResult(this.ovenItems[i]);
                         this.ovenItems[i].stackSize = stackSize;
                     }
 				}

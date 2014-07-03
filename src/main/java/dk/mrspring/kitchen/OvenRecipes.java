@@ -74,8 +74,25 @@ public class OvenRecipes
         }
     }
 
-    public static ArrayList<ItemStack> getArrayFromStringList(String[] list)
+    /***
+     *
+     * @param itemStack The ItemStack to get result of.
+     * @return Returns the result of the item stack when cooked in the Oven. Returns null when nothing was found
+     */
+    public static ItemStack getCookingResult(ItemStack itemStack)
+    {
+        for (int i = 0; i < customOvenRecipes[0].size(); i++)
+        {
+            ItemStack stack = customOvenRecipes[0].get(i);
+            if (itemStack.isItemEqual(stack))
+                return customOvenRecipes[1].get(i);
+        }
+
+        return null;
+    }
+
+    /*public static ArrayList<ItemStack> getArrayFromStringList(String[] list)
     {
 
-    }
+    }*/
 }
