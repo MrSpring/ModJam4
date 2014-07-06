@@ -5,9 +5,9 @@ import net.minecraftforge.common.config.Configuration;
 public class ModConfig
 {
     // Default Custom Oven recipe - Input
-    public static String[] defaultCustomOvenRecipe = new String[] { "kitchen:raw_roast_beef", "kitchen:raw_chicken_fillet", "kitchen:raw_bacon" };
+    public static String[] defaultCustomOvenRecipe = new String[] { "kitchen:raw_roast_beef", "kitchen:raw_chicken_fillet_raw", "kitchen:raw_bacon" };
     // Default Custom Oven recipe - Output
-    public static String[] defaultCustomOvenRecipeResults = new String[] { "kitchen:roast_beef", "kitchen:chicken_fillet", "kitchen:bacon" };
+    public static String[] defaultCustomOvenRecipeResults = new String[] { "kitchen:roast_beef", "kitchen:chicken_fillet_cooked", "kitchen:bacon_cooked" };
 
 	// The lettuce spawn rate
     public static int lettuceSpawnRate;
