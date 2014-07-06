@@ -5,7 +5,7 @@ import net.minecraftforge.common.config.Configuration;
 public class ModConfig
 {
     // Default Custom Oven recipe - Input
-    public static String[] defaultCustomOvenRecipe = new String[] { "kitchen:raw_roast_beef", "kitchen:raw_chicken_fillet_raw", "kitchen:raw_bacon" };
+    public static String[] defaultCustomOvenRecipes = new String[] { "kitchen:raw_roast_beef", "kitchen:chicken_fillet_raw", "kitchen:bacon_raw" };
     // Default Custom Oven recipe - Output
     public static String[] defaultCustomOvenRecipeResults = new String[] { "kitchen:roast_beef", "kitchen:chicken_fillet_cooked", "kitchen:bacon_cooked" };
 
@@ -18,7 +18,7 @@ public class ModConfig
     // Oven custom recipes
     public static String[] customOvenRecipes;
     // Oven custom recipes Results
-    public static String[] customOvenRecipesResults;
+    public static String[] customOvenRecipeResults;
     // Whether to display debug info in the Console
     public static boolean showDebug;
 
@@ -31,8 +31,8 @@ public class ModConfig
         lettuceSpawnRate = config.get("WorldGen", "Lettuce Spawn percentage - How big a chance lettuce has to spawn per chunk, 0 to disable", 10).getInt();
         knifeRecipe = config.get("Recipes", "Knife Recipes - 0: Default Recipe, 1: Iron Torch Recipe, 2: Stick next to Iron Recipe, 3: Custom Recipe", 0).getInt(0);
 		customKnifeRecipe = config.get("Recipes", "Custom Knife Recipe - I: Iron Ingot, S: Stick, Any other characters will be seen as blank spots. This is the exact layout in the crafting table!", new String[] { "BBI", "BIB", "SBB" }).getStringList();
-        customOvenRecipes = config.get("Recipes", "Custom Oven Recipes - The name of the Item to be able to cook in the Oven", defaultCustomOvenRecipe).getStringList();
-        customOvenRecipesResults = config.get("Recipes", "Custom Oven Recipes Results - The name of the result Item, when it's cooked in the Oven.", defaultCustomOvenRecipeResults).getStringList();
+        customOvenRecipes = config.get("Recipes", "Custom Oven Recipes - The name of the Item to be able to cook in the Oven", defaultCustomOvenRecipes).getStringList();
+        customOvenRecipeResults = config.get("Recipes", "Custom Oven Recipes Results - The name of the result Item, when it's cooked in the Oven.", defaultCustomOvenRecipeResults).getStringList();
         showDebug = config.get("Misc", "Show Debug info in Console", false).getBoolean(false);
 
 		// Closes the config, and saves the changes made

@@ -14,63 +14,32 @@ public class OvenRecipes
 
     public static void load()
     {
-        if (ModConfig.customOvenRecipes.length == ModConfig.customOvenRecipesResults.length)
+        if (ModConfig.customOvenRecipes.length == ModConfig.customOvenRecipeResults.length)
         {
-            ArrayList<ItemStack> input = new ArrayList<ItemStack>();
-            ArrayList<ItemStack> output = new ArrayList<ItemStack>();
+            ArrayList<ItemStack> input = getArrayFromStringList(ModConfig.customOvenRecipes, "Custom Oven Recipes Input");
+            ArrayList<ItemStack> output = getArrayFromStringList(ModConfig.customOvenRecipeResults, "Custom Oven Recipes Output");
 
-            for (int i = 0; i < ModConfig.customOvenRecipes.length; ++i)
+            if (input.size() == output.size())
             {
-                String modId = "minecraft";
-                String itemName;
-
-                System.out.println(" Input:");
-
-                if (ModConfig.customOvenRecipes[i].contains(":"))
-                {
-                    modId = ModConfig.customOvenRecipes[i].split(":")[0];
-                    itemName = ModConfig.customOvenRecipes[i].split(":")[1];
-
-                    ModLogger.print(ModLogger.DEBUG, " ModID: " + modId);
-                    ModLogger.print(ModLogger.DEBUG, " Item Name: " + itemName);
-                } else
-                    itemName = ModConfig.customOvenRecipes[i];
-
-                ItemStack inputStack = GameRegistry.findItemStack(modId, itemName, 1);
-                ModLogger.print(ModLogger.DEBUG, " Returned ItemStack Display Name: " + inputStack.getDisplayName());
-
-
-                System.out.println(" Output:");
-
-                if (ModConfig.customOvenRecipesResults[i].contains(":"))
-                {
-                    modId = ModConfig.customOvenRecipesResults[i].split(":")[0];
-                    itemName = ModConfig.customOvenRecipesResults[i].split(":")[1];
-
-                    ModLogger.print(ModLogger.DEBUG, "  ModID: " + modId);
-                    ModLogger.print(ModLogger.DEBUG, "  Item Name: " + itemName);
-                } else
-                    itemName = ModConfig.customOvenRecipesResults[i];
-
-                ItemStack outputStack = GameRegistry.findItemStack(modId, itemName, 1);
-                System.out.println(" Returned ItemStack Display Name: " + outputStack.getDisplayName());
-
-                System.out.println("");
-                System.out.println("");
-
-                input.add(inputStack);
-                output.add(outputStack);
+                customOvenRecipes[0] = input;
+                customOvenRecipes[1] = output;
             }
+            else
+            {
+                ModLogger.print(ModLogger.INFO, "Unable to load Custom oven recipes! Loading defaults.");
+                ModLogger.print(ModLogger.DEBUG, "Some of the Items it was trying to load has wrong names. Correct this issue to load custom recipes!");
 
-            customOvenRecipes[0] = input;
-            customOvenRecipes[1] = output;
+                customOvenRecipes[0] = getArrayFromStringList(ModConfig.defaultCustomOvenRecipes, "Default Oven Recipes Input");
+                customOvenRecipes[1] = getArrayFromStringList(ModConfig.defaultCustomOvenRecipeResults, "Default Oven Recipes Output");
+            }
         }
         else
         {
             ModLogger.print(ModLogger.INFO, "Unable to load Custom oven recipes! Loading defaults.");
-            ModLogger.print(ModLogger.DEBUG, "One of the list were bigger than the other! Input length: " + ModConfig.customOvenRecipes.length + ", Output length: " + ModConfig.customOvenRecipesResults.length);
+            ModLogger.print(ModLogger.DEBUG, "One of the list were bigger than the other! Input length: " + ModConfig.customOvenRecipes.length + ", Output length: " + ModConfig.customOvenRecipeResults.length);
 
-
+            customOvenRecipes[0] = getArrayFromStringList(ModConfig.defaultCustomOvenRecipes, "Default Oven Recipes Input");
+            customOvenRecipes[1] = getArrayFromStringList(ModConfig.defaultCustomOvenRecipeResults, "Default Oven Recipes Output");
         }
     }
 
@@ -91,8 +60,32 @@ public class OvenRecipes
         return null;
     }
 
-    /*public static ArrayList<ItemStack> getArrayFromStringList(String[] list)
+    public static ArrayList<ItemStack> getArrayFromStringList(String[] list, String type)
     {
+        ArrayList<ItemStack> itemStackArrayList = new ArrayList<ItemStack>();
 
-    }*/
+        for (String aList : list)
+        {
+            String modId = "minecraft";
+            String itemName;
+
+            if (aList.contains(":"))
+            {
+                modId = aList.split(":")[0];
+                itemName = aList.split(":")[1];
+            } else
+                itemName = aList;
+
+            ItemStack stack = GameRegistry.findItemStack(modId, itemName, 1);
+            if (stack != null)
+            {
+                ModLogger.print(ModLogger.DEBUG, "Adding " + stack.getDisplayName() + " to '" + type + "'.");
+                itemStackArrayList.add(stack);
+            }
+            else
+                ModLogger.print(ModLogger.DEBUG, "Unable to add ItemStack to '" + type + "', it returned null. ModID: " + modId + ", name: " + itemName + ".");
+        }
+
+        return itemStackArrayList;
+    }
 }
