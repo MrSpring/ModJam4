@@ -30,7 +30,7 @@ import static java.lang.Character.valueOf;
 @Mod(modid = ModInfo.modid, name = ModInfo.name, version = ModInfo.version)
 public class Kitchen
 {
-    public static ArrayList<ItemStack>[] customOvenRecipes = new ArrayList[2];
+    public static ArrayList[] customOvenRecipes = new ArrayList[2];
 
 	@Instance(ModInfo.modid)
 	public static Kitchen instance;
