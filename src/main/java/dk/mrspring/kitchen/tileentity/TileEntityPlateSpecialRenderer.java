@@ -130,7 +130,7 @@ public class TileEntityPlateSpecialRenderer extends TileEntitySpecialRenderer
 		GL11.glTranslated(xOffset, yOffset, zOffset);
 
 		if (((ItemSandwichable) item.getItem()).hasCustomModel)
-			if (!isTop)
+			if (isTop)
 				{ ((ItemSandwichable) item.getItem()).getBottomModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) item.getItem()).modelBottomHeight * 0.033D); }
 			else
 				{ ((ItemSandwichable) item.getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) item.getItem()).modelTopHeight * 0.033D); }

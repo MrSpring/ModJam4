@@ -3,7 +3,6 @@ package dk.mrspring.kitchen.model;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import org.lwjgl.opengl.GL11;
 
 public class ModelOven extends ModelBase
 {
@@ -155,23 +154,23 @@ public class ModelOven extends ModelBase
 		Bottom.render(f5);
 		Back.render(f5);
 
+        LidBottom.rotateAngleX = (lidAngle * 1.25F);
     	LidBottom.render(f5);
-		LidBottom.rotateAngleX = (lidAngle * 1.25F);
 
+        LidTop.rotateAngleX = (lidAngle * 1.25F);
     	LidTop.render(f5);
-		LidTop.rotateAngleX = (lidAngle * 1.25F);
 
+        LidRight.rotateAngleX = (lidAngle * 1.25F);
     	LidRight.render(f5);
-		LidRight.rotateAngleX = (lidAngle * 1.25F);
 
+        LidLeft.rotateAngleX = (lidAngle * 1.25F);
     	LidLeft.render(f5);
-		LidLeft.rotateAngleX = (lidAngle * 1.25F);
 
+        LidWindow.rotateAngleX = (lidAngle * 1.25F);
     	LidWindow.render(f5);
-		LidWindow.rotateAngleX = (lidAngle * 1.25F);
 
+        LidHandle.rotateAngleX = (lidAngle * 1.25F) ;
     	LidHandle.render(f5);
-		LidHandle.rotateAngleX = (lidAngle * 1.25F) ;
 
     	Top1.render(f5);
     	Top2.render(f5);

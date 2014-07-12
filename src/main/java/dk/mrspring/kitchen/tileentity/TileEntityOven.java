@@ -13,8 +13,6 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
-import java.util.Random;
-
 public class TileEntityOven extends TileEntity
 {
 	protected ItemStack[] ovenItems = new ItemStack[4];
@@ -143,19 +141,16 @@ public class TileEntityOven extends TileEntity
 	@Override
 	public void updateEntity()
 	{
-		if (this.lidAngle == 0)
-			new Random().nextFloat();
-
-		if (this.isOpen())
-		{
-			if (this.lidAngle + 0.1F < 1.0)
-				this.lidAngle += 0.1F;
-		}
-		else
-		{
-			if (this.lidAngle - 0.1F > 0.0)
-				this.lidAngle -= 0.1F;
-		}
+        if (this.isOpen())
+        {
+            if (this.lidAngle + 0.1F < 1.0)
+                this.lidAngle += 0.1F;
+        }
+        else
+        {
+            if (this.lidAngle - 0.1F > 0.0)
+                this.lidAngle -= 0.1F;
+        }
 
 		if (!this.isOpen() && this.hasCoal)
 			if (!this.isCooking)
