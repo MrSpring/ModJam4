@@ -32,7 +32,7 @@ public class TileEntityKitchenCabinetSpecialRenderer extends TileEntitySpecialRe
 
         Minecraft.getMinecraft().renderEngine.bindTexture(this.texture);
 
-        model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, 0.5F);
+        model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, 0.0F);
 
         GL11.glPopMatrix();
     }
