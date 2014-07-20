@@ -44,56 +44,12 @@ public class TileEntityOven extends TileEntity
                 if (OvenRecipes.getCookingResult(itemStack) != null)
                     return this.forceAddItemStack(itemStack);
 
-                if (itemStack.getItem() == Items.coal)
-                    return this.forceAddItemStack(itemStack);
-
-                return false;
-
-                /*if (FurnaceRecipes.smelting().getSmeltingResult(itemStack) != null)
-                {
-                    if (FurnaceRecipes.smelting().getSmeltingResult(itemStack).getItem() instanceof ItemFood || )
-                    {
-                        ItemStack item = itemStack.copy();
-                        item.stackSize = 1;
-
-                        boolean returning = false;
-
-                        for (int i = 0; i < this.ovenItems.length; ++i)
-                        {
-                            if (this.ovenItems[i] == null)
-                            {
-                                this.ovenItems[i] = item;
-                                returning = true;
-                                break;
-                            } else
-                            {
-                                if (this.ovenItems[i].getItem() == item.getItem())
-                                {
-                                    if (this.ovenItems[i].stackSize < 4)
-                                    {
-                                        this.ovenItems[i].stackSize++;
-                                        returning = true;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-
-                        if (returning)
-                        {
-                            --itemStack.stackSize;
-                            return true;
-                        } else
-                            return false;
-                    } else
-                        return false;
-                } else if (itemStack.getItem() == Items.coal && !this.hasCoal())
+                if (itemStack.getItem() == Items.coal && !this.hasCoal())
                 {
                     this.hasCoal = true;
-                    --itemStack.stackSize;
                     return true;
-                } else if (OvenRecipes.getCookingResult(itemStack) != null)
-                    return false;*/
+                }
+                return false;
             }
 			else
 				return false;
@@ -106,19 +62,10 @@ public class TileEntityOven extends TileEntity
         ItemStack temp = itemStack.copy();
         temp.stackSize = 1;
 
-        // Checks if the ItemStack's item is coal. If so, then add it and subtract one from itemStack.stackSize.
-        if (itemStack.getItem() == Items.coal && !this.hasCoal)
-        {
-            this.hasCoal = true;
-            --itemStack.stackSize;
-            return true;
-        }
-
         for (int i = 0; i < this.ovenItems.length; ++i)
         {
             if (this.ovenItems[i] != null)
             {
-                // If itemStacks item equals the Item in i slot, than increase its stackSize an decrease itemStacks. Do nothing if they don't.
                 if (itemStack.isItemEqual(this.ovenItems[i]) && this.ovenItems[i].stackSize < 4)
                 {
                     ++this.ovenItems[i].stackSize;
@@ -127,7 +74,6 @@ public class TileEntityOven extends TileEntity
                 }
             } else
             {
-                // Sets i slot to itemStack if it's null or its stackSize is 0.
                 this.ovenItems[i] = itemStack.copy();
                 this.ovenItems[i].stackSize = 1;
                 --itemStack.stackSize;
