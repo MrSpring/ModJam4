@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.combo;
 
-import dk.mrspring.kitchen.ModLogger;
+import dk.mrspring.kitchen.event.sandwich.CreeperSandwichEvent;
+import dk.mrspring.kitchen.event.sandwich.OnSandwichEatenEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -19,6 +20,7 @@ public class SandwichCombo
     protected String name = "default";
     protected EnumRarity rarity = EnumRarity.common;
     protected int extraHeal = 0;
+    protected OnSandwichEatenEvent onSandwichEatenEvent = new OnSandwichEatenEvent("DEFAULT");
 
     public static SandwichCombo[] combos = new SandwichCombo[16];
 
@@ -37,6 +39,7 @@ public class SandwichCombo
     public static SandwichCombo retro_roast_beef;
     public static SandwichCombo smart_chicken;
     public static SandwichCombo veggie;
+    public static SandwichCombo creeper;
 
     public static void load()
     {
@@ -46,6 +49,7 @@ public class SandwichCombo
         retro_roast_beef = new SandwichCombo(4, "rrb", EnumRarity.uncommon).setComboLayers(new String[] { "bread_slice", "roast_beef", "roast_beef", "tomato_slice", "lettuce_leaf", "bread_slice" }).setExtraHeal(3);
         smart_chicken = new SandwichCombo(5, "smart_chicken", EnumRarity.uncommon).setComboLayers(new String[] { "toast", "chicken_fillet_cooked", "tomato_slice", "lettuce_leaf", "toast" });
         veggie = new SandwichCombo(6, "veggie", EnumRarity.rare).setComboLayers(new String[] { "bread_slice", "carrot_slice", "lettuce_leaf", "tomato_slice", "cheese_slice", "bread_slice" });
+        creeper = new SandwichCombo(7, "creeper", EnumRarity.epic).setComboLayers(new String[] { "bread_slice", "bread_slice", "lettuce_leaf", "lettuce_leaf", "creeper_slice" }).registerOnEatenEvent(new CreeperSandwichEvent());
     }
 
     public SandwichCombo setName(String name)
@@ -91,12 +95,18 @@ public class SandwichCombo
 
     public void onFoodEaten(ItemStack itemStack, World world, EntityPlayer player)
     {
-
+        this.onSandwichEatenEvent.onFoodEaten(itemStack, world, player);
     }
 
     public SandwichCombo setExtraHeal(int extraHeal)
     {
         this.extraHeal = extraHeal;
+        return this;
+    }
+
+    public SandwichCombo registerOnEatenEvent(OnSandwichEatenEvent event)
+    {
+        this.onSandwichEatenEvent = event;
         return this;
     }
 

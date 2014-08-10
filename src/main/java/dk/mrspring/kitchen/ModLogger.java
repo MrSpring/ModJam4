@@ -12,7 +12,7 @@ public class ModLogger
     public static final int DEBUG = 3;
 
 	// Prints a message to the console, obj used if the message is an error and an exception has to be logged
-	public static void print(int type, String message, Object... obj)
+	public static void print(int type, String message, Object obj)
 	{
 		String time = new SimpleDateFormat("HH:mm:ss").format(new Date());
 
@@ -23,11 +23,11 @@ public class ModLogger
 				break;
 			case WARNING:
 				System.out.println("[" + time + "] [TheKitchenMod/WARNING]: " + message);
-				if (obj[0] != null && obj[0] instanceof Exception) ((Exception) obj[0]).printStackTrace();
+				if (obj != null && obj instanceof Exception) ((Exception) obj).printStackTrace();
 				break;
 			case ERROR:
 				System.err.println("[" + time + "] [TheKitchenMod/ERROR]: " + message);
-				if (obj[0] != null && obj[0] instanceof Exception) ((Exception) obj[0]).printStackTrace();
+				if (obj != null && obj instanceof Exception) ((Exception) obj).printStackTrace();
 				break;
             case DEBUG:
                 if (ModConfig.showDebug)

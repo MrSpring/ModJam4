@@ -26,8 +26,8 @@ public class OvenRecipes
             }
             else
             {
-                ModLogger.print(ModLogger.INFO, "Unable to load Custom oven recipes! Loading defaults.");
-                ModLogger.print(ModLogger.DEBUG, "Some of the Items it was trying to load has wrong names. Correct this issue to load custom recipes!");
+                ModLogger.print(ModLogger.INFO, "Unable to load Custom oven recipes! Loading defaults.", null);
+                ModLogger.print(ModLogger.DEBUG, "Some of the Items it was trying to load has wrong names. Correct this issue to load custom recipes!", null);
 
                 customOvenRecipes[0] = getArrayFromStringList(ModConfig.defaultCustomOvenRecipes, "Default Oven Recipes Input");
                 customOvenRecipes[1] = getArrayFromStringList(ModConfig.defaultCustomOvenRecipeResults, "Default Oven Recipes Output");
@@ -35,8 +35,8 @@ public class OvenRecipes
         }
         else
         {
-            ModLogger.print(ModLogger.INFO, "Unable to load Custom oven recipes! Loading defaults.");
-            ModLogger.print(ModLogger.DEBUG, "One of the list were bigger than the other! Input length: " + ModConfig.customOvenRecipes.length + ", Output length: " + ModConfig.customOvenRecipeResults.length);
+            ModLogger.print(ModLogger.INFO, "Unable to load Custom oven recipes! Loading defaults.", null);
+            ModLogger.print(ModLogger.DEBUG, "One of the list were bigger than the other! Input length: " + ModConfig.customOvenRecipes.length + ", Output length: " + ModConfig.customOvenRecipeResults.length, null);
 
             customOvenRecipes[0] = getArrayFromStringList(ModConfig.defaultCustomOvenRecipes, "Default Oven Recipes Input");
             customOvenRecipes[1] = getArrayFromStringList(ModConfig.defaultCustomOvenRecipeResults, "Default Oven Recipes Output");
@@ -79,11 +79,11 @@ public class OvenRecipes
             ItemStack stack = GameRegistry.findItemStack(modId, itemName, 1);
             if (stack != null)
             {
-                ModLogger.print(ModLogger.DEBUG, "Adding " + stack.getDisplayName() + " to '" + type + "'.");
+                ModLogger.print(ModLogger.DEBUG, "Adding " + stack.getDisplayName() + " to '" + type + "'.", null);
                 itemStackArrayList.add(stack);
             }
             else
-                ModLogger.print(ModLogger.DEBUG, "Unable to add ItemStack to '" + type + "', it returned null. ModID: " + modId + ", name: " + itemName + ".");
+                ModLogger.print(ModLogger.DEBUG, "Unable to add ItemStack to '" + type + "', it returned null. ModID: " + modId + ", name: " + itemName + ".", null);
         }
 
         return itemStackArrayList;

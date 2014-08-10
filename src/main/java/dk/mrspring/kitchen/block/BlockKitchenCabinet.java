@@ -5,7 +5,10 @@ import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.tileentity.TileEntityKitchenCabinet;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 /**
@@ -24,6 +27,16 @@ public class BlockKitchenCabinet extends BlockContainer
         this.setResistance(5.0F);
 
         this.setCreativeTab(Kitchen.instance.tab);
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
+    {
+        int rotation = (MathHelper.floor_double((double) (p_149689_5_.rotationYaw * 8.0F / 360.0F) + 0.5D) & 7);
+        super.onBlockPlacedBy(world, x, y, z, p_149689_5_, p_149689_6_);
+        System.out.println(" Metadata: " + rotation);
+
+        world.setBlockMetadataWithNotify(x, y, z, rotation, 0);
     }
 
     @Override

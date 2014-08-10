@@ -16,6 +16,7 @@ public class ModelKitchenCabinet extends ModelBase
     ModelRenderer leftDoor;
     ModelRenderer leftKnob;
     ModelRenderer rightKnob;
+    ModelRenderer cornerPiece;
 
     public ModelKitchenCabinet()
     {
@@ -58,26 +59,31 @@ public class ModelKitchenCabinet extends ModelBase
         rightKnob.setTextureSize(64, 64);
         rightKnob.mirror = true;
         setRotation(rightKnob, 0F, 0F, 0F);
+        cornerPiece = new ModelRenderer(this, 15, 0);
+        cornerPiece.addBox(0F, 0F, 0F, 14, 13, 2);
+        cornerPiece.setRotationPoint(-6F, 11F, -8F);
+        cornerPiece.setTextureSize(64, 64);
+        cornerPiece.mirror = true;
+        setRotation(cornerPiece, 0F, 0F, 0F);
     }
 
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, float doorAngle)
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, boolean corner)
     {
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
         base.render(f5);
         top.render(f5);
 
-        rightDoor.rotateAngleY = -doorAngle;
-        rightDoor.render(f5);
-
-        leftDoor.rotateAngleY = doorAngle;
-        leftDoor.render(f5);
-
-        leftKnob.rotateAngleY = doorAngle;
-        leftKnob.render(f5);
-
-        rightKnob.rotateAngleY = -doorAngle;
-        rightKnob.render(f5);
+        if (!corner)
+        {
+            rightDoor.render(f5);
+            leftDoor.render(f5);
+            leftKnob.render(f5);
+            rightKnob.render(f5);
+        } else
+        {
+            cornerPiece.render(f5);
+        }
     }
 
     private void setRotation(ModelRenderer model, float x, float y, float z)
