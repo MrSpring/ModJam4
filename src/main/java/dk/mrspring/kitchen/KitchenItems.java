@@ -41,6 +41,7 @@ public class KitchenItems
 	public static final ItemSandwichable cheese_slice = new ItemSandwichable("cheese_slice", true, 3);
     public static final Item burnt_meat = new ItemFood(1, false).setUnlocalizedName("burnt_meat").setTextureName(ModInfo.modid + ":burnt_meat").setCreativeTab(Kitchen.instance.tab);
     public static final Item sliced_creeper = new ItemSandwichable("creeper_slice", true, 2);
+    public static final Item cup = new ItemCup();
 
 	// Pre-loads the sandwich ItemStack with some NBT-Data.
 	private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)

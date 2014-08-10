@@ -16,5 +16,4 @@ public class KitchenBlocks
 	public static final Block oven = new BlockOven();
 	public static final Block plate = new BlockPlate();
     public static final Block kitchen_cabinet = new BlockKitchenCabinet();
-    public static final Block cup = new BlockCup();
 }
