@@ -1,6 +1,9 @@
 package dk.mrspring.kitchen;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import dk.mrspring.kitchen.entity.EntityCup;
+import dk.mrspring.kitchen.entity.RenderCup;
 import dk.mrspring.kitchen.item.render.ItemRenderSandwich;
 import dk.mrspring.kitchen.tileentity.*;
 import net.minecraftforge.client.IItemRenderer;
@@ -15,7 +18,8 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOven.class, new TileEntityOvenSpecialRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPlate.class, new TileEntityPlateSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityKitchenCabinet.class, new TileEntityKitchenCabinetSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCup.class, new TileEntityCupSpecialRenderer());
+
+        RenderingRegistry.registerEntityRenderingHandler(EntityCup.class, new RenderCup());
 
 		MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("sandwich"), (IItemRenderer) new ItemRenderSandwich());
 	}
