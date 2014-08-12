@@ -21,6 +21,8 @@ public class ModConfig
     public static String[] customOvenRecipeResults;
     // Whether to display debug info in the Console
     public static boolean showDebug;
+    // Whether to show debug information when hovering over items in-game
+    public static boolean showItemDebug;
 
 	// Loads the config file and the variables
     public static void load(Configuration config)
@@ -34,6 +36,7 @@ public class ModConfig
         customOvenRecipes = config.get("Recipes", "Custom Oven Recipes - The name of the Item to be able to cook in the Oven", defaultCustomOvenRecipes).getStringList();
         customOvenRecipeResults = config.get("Recipes", "Custom Oven Recipes Results - The name of the result Item, when it's cooked in the Oven.", defaultCustomOvenRecipeResults).getStringList();
         showDebug = config.get("Misc", "Show Debug info in Console", false).getBoolean(false);
+        showItemDebug = config.get("Misc", "Show Debug item info when hovering over items in-game", false).getBoolean(false);
 
 		// Closes the config, and saves the changes made
         config.save();

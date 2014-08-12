@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.item;
 
+import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import net.minecraft.entity.player.EntityPlayer;
@@ -96,8 +97,33 @@ public class ItemSandwich extends ItemFood
 		else
 			return healAmount;
 	}
-	
-	@Override
+
+    /*@Override
+    public float func_150906_h(ItemStack item)
+    {
+        float saturation;
+        List<String> types = new ArrayList<String>();
+
+        if (item.getTagCompound().hasKey("SandwichLayers"))
+        {
+            NBTTagList layersList = item.getTagCompound().getTagList("SandwichLayers", 10);
+
+            if (layersList != null)
+            {
+                for (int i = 0; i < layersList.tagCount(); ++i)
+                {
+                    NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
+                    if (!types.contains(ItemStack.loadItemStackFromNBT(layerCompound).getUnlocalizedName()))
+                        types.add(ItemStack.loadItemStackFromNBT(layerCompound).getUnlocalizedName());
+                }
+            }
+        }
+
+        saturation = types.size();
+        return saturation / 5;
+    }*/
+
+    @Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
 	{
 		if (par1ItemStack.getTagCompound().hasKey("SandwichLayers"))
@@ -118,6 +144,13 @@ public class ItemSandwich extends ItemFood
 					if (SandwichCombo.combos[(int) combo] != null)
 						SandwichCombo.combos[(int) combo].addCustomInfo(par3List);
 			}
+
+            if (ModConfig.showItemDebug)
+            {
+                par3List.add("");
+                par3List.add("Heal Amount: " + String.valueOf(this.func_150905_g(par1ItemStack)));
+                par3List.add("Saturation: " + String.valueOf(this.func_150906_h(par1ItemStack)));
+            }
 		}
 		else
 			super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);

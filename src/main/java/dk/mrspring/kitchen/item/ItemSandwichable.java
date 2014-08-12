@@ -1,8 +1,12 @@
 package dk.mrspring.kitchen.item;
 
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.item.Item;
+import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+
+import java.util.List;
 
 public class ItemSandwichable extends ItemBase
 {
@@ -12,6 +16,7 @@ public class ItemSandwichable extends ItemBase
 	private ModelBase topModel;
 	public int modelBottomHeight = 1;
 	public int modelTopHeight = 1;
+    public boolean showSandwichableInformation = true;
 	
 	public ItemSandwichable(String name, String textureName, boolean useCreativeTab, int healAmount)
 	{
@@ -24,8 +29,33 @@ public class ItemSandwichable extends ItemBase
 	{
 		this(name, ModInfo.modid + ":" + name, useCreativeTab, healAmount);
 	}
-	
-	public int getHealAmount()
+
+    public ItemSandwichable disableInformation()
+    {
+        this.showSandwichableInformation = false;
+        return this;
+    }
+
+    @Override
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    {
+        if (this.showSandwichableInformation)
+            par3List.add("Sandwichable");
+
+        if (ModConfig.showItemDebug)
+        {
+            par3List.add("Heal Amount: " + String.valueOf(this.getHealAmount()));
+            par3List.add("Has Custom Model: " + String.valueOf(this.hasCustomModel));
+
+            if (this.hasCustomModel)
+            {
+                par3List.add("Top Model Height: " + String.valueOf(this.modelTopHeight));
+                par3List.add("Bottom Model Height: " + String.valueOf(this.modelBottomHeight));
+            }
+        }
+    }
+
+    public int getHealAmount()
 	{
 		return this.healOnEaten;
 	}
