@@ -63,7 +63,8 @@ public class Kitchen
 		GameRegistry.registerTileEntity(TileEntityPlate.class, "tileEntityPlate");
         GameRegistry.registerTileEntity(TileEntityKitchenCabinet.class, "tileEntityKitchenCabinet");
 
-        EntityRegistry.registerModEntity(EntityCup.class, "entityCup", 0, instance, 10, 10, true);
+        EntityRegistry.registerGlobalEntityID(EntityCup.class, "entityCup", EntityRegistry.findGlobalUniqueEntityId());
+        EntityRegistry.registerModEntity(EntityCup.class, "entityCup", 1, instance, 250, 1, true);
 
 		// Loading Blocks and Items
 		BlockBase.load();

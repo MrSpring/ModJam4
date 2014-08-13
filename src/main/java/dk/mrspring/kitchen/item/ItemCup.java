@@ -2,7 +2,6 @@ package dk.mrspring.kitchen.item;
 
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.cup.Liquid;
 import dk.mrspring.kitchen.entity.EntityCup;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
@@ -33,6 +32,6 @@ public class ItemCup extends Item
     {
         // TODO Create Cup entity, transfer liquid NBT tags to it.
         System.out.println(" Creating custom entity!");
-        return EntityCup.createCupEntity(world, location.posX, location.posY, location.posZ, Liquid.WATER, 90);
+        return new EntityCup(world, location.posX, location.posY, location.posZ);
     }
 }
