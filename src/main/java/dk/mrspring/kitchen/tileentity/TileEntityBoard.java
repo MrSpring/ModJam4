@@ -1,23 +1,44 @@
 package dk.mrspring.kitchen.tileentity;
 
-import dk.mrspring.kitchen.item.ItemSandwichBread;
-import dk.mrspring.kitchen.item.ItemSandwichable;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
+
+import java.util.ArrayList;
 
 public class TileEntityBoard extends TileEntity
 {
-	private ItemStack[] layers = new ItemStack[10];
+    private ArrayList<ItemStack> sandwichLayers = new ArrayList<ItemStack>();
+    protected Type currentType = Type.EMPTY;
+
+    public boolean addItem(ItemStack item)
+    {
+        switch (this.currentType)
+        {
+            case EMPTY:
+            {
+                return false;
+            }
+            default: return false;
+        }
+    }
+
+    public Type identifyType(ItemStack itemStack)
+    {
+        if (itemStack != null)
+            if (itemStack.getItem() != null)
+                return Type.EMPTY;
+        return Type.EMPTY;
+    }
+
+    private enum Type
+    {
+        EMPTY,
+        SANDWICH,
+        CAKE,
+        CUTTING
+    }
+
+	/*private ItemStack[] layers = new ItemStack[10];
 	private ItemStack lastRemoved;
 	int layerIndex = 0;
 	
@@ -124,5 +145,5 @@ public class TileEntityBoard extends TileEntity
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
 	{
 		this.readFromNBT(pkt.func_148857_g());
-	}
+	}*/
 }
