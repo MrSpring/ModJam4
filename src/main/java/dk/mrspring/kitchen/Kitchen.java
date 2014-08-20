@@ -17,6 +17,7 @@ import dk.mrspring.kitchen.tileentity.TileEntityKitchenCabinet;
 import dk.mrspring.kitchen.tileentity.TileEntityOven;
 import dk.mrspring.kitchen.tileentity.TileEntityPlate;
 import dk.mrspring.kitchen.world.gen.WorldGenWildLettuce;
+import dk.mrspring.kitchen.world.gen.WorldGenWildTomato;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -72,6 +73,10 @@ public class Kitchen
 
 		// Registering renderers
 		proxy.registerRenderers();
+
+        // Registering the Lettuce and Tomato world generators
+        GameRegistry.registerWorldGenerator(new WorldGenWildLettuce(), 1);
+        GameRegistry.registerWorldGenerator(new WorldGenWildTomato(), 1);
     }
 	
 	@EventHandler
@@ -87,8 +92,6 @@ public class Kitchen
 
 		// Adding Tomatoes to the grass drop list
 		MinecraftForge.addGrassSeed(new ItemStack(KitchenItems.tomato), 10);
-		// Registering the Lettuce world generator
-		GameRegistry.registerWorldGenerator(new WorldGenWildLettuce(), 1);
 
 		/**
 		 * RECIPES

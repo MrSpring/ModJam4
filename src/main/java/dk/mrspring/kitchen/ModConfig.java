@@ -11,6 +11,8 @@ public class ModConfig
 
 	// The lettuce spawn rate
     public static int lettuceSpawnRate;
+    // The tomato spawn rate
+    public static int tomatoSpawnRate;
 	// Which knife recipe to use
     public static int knifeRecipe;
 	// Custom Knife recipe array
@@ -31,6 +33,7 @@ public class ModConfig
         config.load();
 
         lettuceSpawnRate = config.get("WorldGen", "Lettuce Spawn percentage - How big a chance lettuce has to spawn per chunk, 0 to disable", 10).getInt();
+        tomatoSpawnRate = config.get("WorldGen", "Tomato Spawn percentage - How big a chance tomatos has to spawn per chunk, 0 to disable", 10).getInt();
         knifeRecipe = config.get("Recipes", "Knife Recipes - 0: Default Recipe, 1: Iron Torch Recipe, 2: Stick next to Iron Recipe, 3: Custom Recipe", 0).getInt(0);
 		customKnifeRecipe = config.get("Recipes", "Custom Knife Recipe - I: Iron Ingot, S: Stick, Any other characters will be seen as blank spots. This is the exact layout in the crafting table!", new String[] { "BBI", "BIB", "SBB" }).getStringList();
         customOvenRecipes = config.get("Recipes", "Custom Oven Recipes - The name of the Item to be able to cook in the Oven", defaultCustomOvenRecipes).getStringList();

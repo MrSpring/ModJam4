@@ -10,7 +10,7 @@ public class TileEntityFridge extends TileEntity
 {
 	ItemStack[] itemStacks = new ItemStack[4];
 
-	public boolean addItemStack(ItemStack itemStack)
+	/*public boolean addItemStack(ItemStack itemStack)
 	{
 		for (int i = 0; i < this.itemStacks.length; i++)
 		{
@@ -18,10 +18,5 @@ public class TileEntityFridge extends TileEntity
 				return this.addItemStack(i, itemStack);
 		}
 		return false;
-	}
-
-	public boolean addItemStack(int position, ItemStack itemStack)
-	{
-
-	}
+	}*/
 }
