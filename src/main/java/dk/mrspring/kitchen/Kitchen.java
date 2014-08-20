@@ -16,8 +16,7 @@ import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import dk.mrspring.kitchen.tileentity.TileEntityKitchenCabinet;
 import dk.mrspring.kitchen.tileentity.TileEntityOven;
 import dk.mrspring.kitchen.tileentity.TileEntityPlate;
-import dk.mrspring.kitchen.world.gen.WorldGenWildLettuce;
-import dk.mrspring.kitchen.world.gen.WorldGenWildTomato;
+import dk.mrspring.kitchen.world.gen.WorldGenWildPlant;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -74,9 +73,8 @@ public class Kitchen
 		// Registering renderers
 		proxy.registerRenderers();
 
-        // Registering the Lettuce and Tomato world generators
-        GameRegistry.registerWorldGenerator(new WorldGenWildLettuce(), 1);
-        GameRegistry.registerWorldGenerator(new WorldGenWildTomato(), 1);
+        // Registers the Plant generator
+        GameRegistry.registerWorldGenerator(new WorldGenWildPlant(), 1);
     }
 	
 	@EventHandler
