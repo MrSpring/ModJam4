@@ -65,7 +65,7 @@ public class Kitchen
 
         EntityRegistry.registerGlobalEntityID(EntityCup.class, "entityCup", EntityRegistry.findGlobalUniqueEntityId());
         EntityRegistry.registerModEntity(EntityCup.class, "entityCup", 1, instance, 250, 1, true);
-
+//
 		// Loading Blocks and Items
 		BlockBase.load();
 		ItemBase.load();
