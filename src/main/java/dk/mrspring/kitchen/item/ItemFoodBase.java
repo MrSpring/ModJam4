@@ -26,7 +26,7 @@ public class ItemFoodBase extends ItemFood
         super(healAmount, canHealWolf);
 
         this.setUnlocalizedName(name);
-        this.setTextureName(name);
+        this.setTextureName(textureName);
 
         this.setCreativeTab(Kitchen.instance.tab);
     }
