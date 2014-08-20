@@ -7,7 +7,6 @@ import dk.mrspring.kitchen.model.ModelBaconRaw;
 import dk.mrspring.kitchen.model.ModelBreadSliceBottom;
 import dk.mrspring.kitchen.model.ModelBreadSliceTop;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -39,7 +38,7 @@ public class KitchenItems
 	public static final Item chicken_leg = new ItemFoodBase("chicken_leg", 4, true);
 	public static final Item cheese = new ItemFoodBase("cheese", 3);
 	public static final ItemSandwichable cheese_slice = new ItemSandwichable("cheese_slice", true, 3);
-    public static final Item burnt_meat = new ItemFood(1, false).setUnlocalizedName("burnt_meat").setTextureName(ModInfo.modid + ":burnt_meat").setCreativeTab(Kitchen.instance.tab);
+    public static final Item burnt_meat = new ItemFoodBase("burnt_meat", 1);
     public static final Item sliced_creeper = new ItemSandwichable("creeper_slice", false, 2);
     public static final Item cup = new ItemCup();
 
