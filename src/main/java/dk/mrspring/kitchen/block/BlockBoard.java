@@ -15,6 +15,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Random;
 
 public class BlockBoard extends BlockContainer
@@ -131,7 +132,7 @@ public class BlockBoard extends BlockContainer
 
         if (tileEntityBoard != null)
         {
-            ItemStack[] stacks = new ItemStack[2];//tileEntityBoard.getLayers();
+            List<ItemStack> stacks = tileEntityBoard.getAllItems();//tileEntityBoard.getLayers();
 
             for (ItemStack item : stacks)
             {

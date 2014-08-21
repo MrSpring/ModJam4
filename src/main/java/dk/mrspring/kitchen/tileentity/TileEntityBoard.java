@@ -1,9 +1,11 @@
 package dk.mrspring.kitchen.tileentity;
 
+import dk.mrspring.kitchen.item.ItemSandwichable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityBoard extends TileEntity
 {
@@ -22,11 +24,27 @@ public class TileEntityBoard extends TileEntity
         }
     }
 
+    public List<ItemStack> getAllItems()
+    {
+        List<ItemStack> itemStackList = new ArrayList<ItemStack>();
+
+        itemStackList.addAll(this.sandwichLayers);
+
+        return itemStackList;
+    }
+
     public Type identifyType(ItemStack itemStack)
     {
         if (itemStack != null)
+        {
             if (itemStack.getItem() != null)
-                return Type.EMPTY;
+            {
+                if (itemStack.getItem() instanceof ItemSandwichable)
+                    return Type.SANDWICH;
+                else if (itemStack.getItem() instanceof ItemCakeable)
+            }
+        }
+
         return Type.EMPTY;
     }
 
