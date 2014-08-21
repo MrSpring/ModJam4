@@ -26,6 +26,7 @@ public class TileEntityOven extends TileEntity
 
 	protected boolean isOpen = false;
 	protected boolean hasCoal = false;
+    protected boolean isFull = false, isEmpty = true;
 
 	protected float lidAngle = 0;
 
@@ -70,6 +71,7 @@ public class TileEntityOven extends TileEntity
                 {
                     ++this.ovenItems[i].stackSize;
                     --itemStack.stackSize;
+                    this.isEmpty = false;
                     return true;
                 }
             } else
@@ -77,10 +79,14 @@ public class TileEntityOven extends TileEntity
                 this.ovenItems[i] = itemStack.copy();
                 this.ovenItems[i].stackSize = 1;
                 --itemStack.stackSize;
+                if (i == this.ovenItems.length)
+                    this.isFull = true;
+                this.isEmpty = false;
                 return true;
             }
         }
 
+        this.isFull = true;
         return false;
     }
 

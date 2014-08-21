@@ -1,10 +1,6 @@
 package dk.mrspring.kitchen.block;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.combo.SandwichCombo;
-import dk.mrspring.kitchen.item.ItemSandwichable;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -13,14 +9,13 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Random;
 
 public class BlockBoard extends BlockContainer
@@ -42,8 +37,13 @@ public class BlockBoard extends BlockContainer
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer activator, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
 	{
 		TileEntityBoard entity = (TileEntityBoard) world.getTileEntity(x, y, z);
-		
-		if (!world.isRemote)
+
+        if (world.isRemote)
+            return true;
+
+        return false;
+
+		/*if (!world.isRemote)
 		{
 			if (!activator.isSneaking())
 			{
@@ -116,7 +116,7 @@ public class BlockBoard extends BlockContainer
 				else return false;
 			}
 		}
-		else return true;
+		else return true;*/
 	}
 	
 	@Override
@@ -132,7 +132,7 @@ public class BlockBoard extends BlockContainer
 
         if (tileEntityBoard != null)
         {
-            ItemStack[] stacks = tileEntityBoard.getLayers();
+            List<ItemStack> stacks = tileEntityBoard.getAllItems();//tileEntityBoard.getLayers();
 
             for (ItemStack item : stacks)
             {

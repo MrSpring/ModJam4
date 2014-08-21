@@ -10,7 +10,10 @@ import java.util.ArrayList;
  */
 public class OvenRecipes
 {
+    // The list of custom oven recipes. [0] is input, [1] is output.
     static ArrayList<ItemStack>[] customOvenRecipes = new ArrayList[2];
+    // The list of special oven recipes. [0] is input, [1] is output.
+    static ArrayList<ItemStack>[] specialOvenRecipes = new ArrayList[2];
 
     public static void load()
     {
@@ -41,6 +44,8 @@ public class OvenRecipes
             customOvenRecipes[0] = getArrayFromStringList(ModConfig.defaultCustomOvenRecipes, "Default Oven Recipes Input");
             customOvenRecipes[1] = getArrayFromStringList(ModConfig.defaultCustomOvenRecipeResults, "Default Oven Recipes Output");
         }
+
+        // TODO Add special recipes
     }
 
     /***

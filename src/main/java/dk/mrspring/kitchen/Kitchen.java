@@ -12,8 +12,11 @@ import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.entity.EntityCup;
 import dk.mrspring.kitchen.item.ItemBase;
-import dk.mrspring.kitchen.tileentity.*;
-import dk.mrspring.kitchen.world.gen.WorldGenWildLettuce;
+import dk.mrspring.kitchen.tileentity.TileEntityBoard;
+import dk.mrspring.kitchen.tileentity.TileEntityKitchenCabinet;
+import dk.mrspring.kitchen.tileentity.TileEntityOven;
+import dk.mrspring.kitchen.tileentity.TileEntityPlate;
+import dk.mrspring.kitchen.world.gen.WorldGenWildPlant;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -59,7 +62,6 @@ public class Kitchen
 		GameRegistry.registerTileEntity(TileEntityOven.class, "tileEntityOven");
 		GameRegistry.registerTileEntity(TileEntityPlate.class, "tileEntityPlate");
         GameRegistry.registerTileEntity(TileEntityKitchenCabinet.class, "tileEntityKitchenCabinet");
-		GameRegistry.registerTileEntity(TileEntityFridge.class, "tileEntityFridge");
 
         EntityRegistry.registerGlobalEntityID(EntityCup.class, "entityCup", EntityRegistry.findGlobalUniqueEntityId());
         EntityRegistry.registerModEntity(EntityCup.class, "entityCup", 1, instance, 250, 1, true);
@@ -70,6 +72,9 @@ public class Kitchen
 
 		// Registering renderers
 		proxy.registerRenderers();
+
+        // Registers the Plant generator
+        GameRegistry.registerWorldGenerator(new WorldGenWildPlant(), 1);
     }
 	
 	@EventHandler
@@ -85,8 +90,6 @@ public class Kitchen
 
 		// Adding Tomatoes to the grass drop list
 		MinecraftForge.addGrassSeed(new ItemStack(KitchenItems.tomato), 10);
-		// Registering the Lettuce world generator
-		GameRegistry.registerWorldGenerator(new WorldGenWildLettuce(), 1);
 
 		/**
 		 * RECIPES
@@ -99,34 +102,39 @@ public class Kitchen
 		// Tile recipe
         GameRegistry.addRecipe(new ItemStack(KitchenBlocks.tiles, 2), "IB", "CC", "CC", valueOf('I'), new ItemStack(Items.dye, 1, 0), valueOf('B'), new ItemStack(Items.dye, 1, 15), valueOf('C'), Items.clay_ball);
 
+        // Basic knife ItemStack to allow the recipe to be used with a knife, no matter the damage value
+        ItemStack knife_stack = new ItemStack(KitchenItems.knife, 1, Short.MAX_VALUE);
+
 		/**
 		 * Knife recipes
 		 */
-        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.raw_bacon, 3), new ItemStack(KitchenItems.knife), new ItemStack(Items.porkchop));
-        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.tomato_slice, 4), new ItemStack(KitchenItems.knife), new ItemStack(KitchenItems.tomato));
-        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.lettuce_leaf, 2), new ItemStack(KitchenItems.knife), new ItemStack(KitchenItems.lettuce));
-        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.carrot_slice, 2), new ItemStack(KitchenItems.knife), new ItemStack(Items.carrot));
-        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.potato_slice, 3), new ItemStack(KitchenItems.knife), new ItemStack(Items.potato));
-        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.bread_slice, 2), new ItemStack(KitchenItems.knife), new ItemStack(Items.bread));
-        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.raw_roast_beef, 2), new ItemStack(KitchenItems.knife), new ItemStack(Items.beef));
-        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.raw_chicken_fillet, 4), new ItemStack(KitchenItems.knife), new ItemStack(Items.chicken));
-        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.chicken_leg, 2), new ItemStack(KitchenItems.knife), new ItemStack(Items.cooked_chicken));
-        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.cheese_slice, 2), new ItemStack(KitchenItems.knife), new ItemStack(KitchenItems.cheese));
-        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.sliced_creeper, 1), new ItemStack(KitchenItems.knife), new ItemStack(Items.skull, 1, 4));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.raw_bacon, 3), knife_stack, new ItemStack(Items.porkchop));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.tomato_slice, 4), knife_stack, new ItemStack(KitchenItems.tomato));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.lettuce_leaf, 2), knife_stack, new ItemStack(KitchenItems.lettuce));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.carrot_slice, 2), knife_stack, new ItemStack(Items.carrot));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.potato_slice, 3), knife_stack, new ItemStack(Items.potato));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.bread_slice, 2), knife_stack, new ItemStack(Items.bread));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.raw_roast_beef, 2), knife_stack, new ItemStack(Items.beef));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.raw_chicken_fillet, 4), knife_stack, new ItemStack(Items.chicken));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.chicken_leg, 2), knife_stack, new ItemStack(Items.cooked_chicken));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.cheese_slice, 2), knife_stack, new ItemStack(KitchenItems.cheese));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.sliced_creeper, 1), knife_stack, new ItemStack(Items.skull, 1, 4));
 
         // Cheese recipe
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.cheese, 2), new ItemStack(Items.milk_bucket));
-
+        // Mortar and Pestle recipe
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.mortar_and_pestle, 1), new ItemStack(KitchenItems.mortar), new ItemStack(KitchenItems.pestle));
 
+        // Mortar and Pestle separate recipes
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.mortar), "S S", " S ", valueOf('S'), Blocks.stone);
 		GameRegistry.addRecipe(new ItemStack(KitchenItems.pestle), "S ", " S", valueOf('S'), Blocks.stone);
 
+        // Knife recipe. 0: default, 1: Iron torch, 2: Vertical, 3: Custom recipe
         switch (ModConfig.knifeRecipe)
         {
-            case 0: GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "I ", " S", valueOf('S'), "stickWood", valueOf('I'), Items.iron_ingot)); break;
-            case 1: GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "I", "S", valueOf('S'), "stickWood", valueOf('I'), Items.iron_ingot)); break;
-            case 2: GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "IS", valueOf('S'), "stickWood", valueOf('I'), Items.iron_ingot)); break;
+            case 0: GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "I ", " S", valueOf('S'), "stickWood", valueOf('I'), Items.iron_ingot)); break; // Registers Normal recipe
+            case 1: GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "I", "S", valueOf('S'), "stickWood", valueOf('I'), Items.iron_ingot)); break; // Registers Iron Torch recipe
+            case 2: GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "IS", valueOf('S'), "stickWood", valueOf('I'), Items.iron_ingot)); break; // Registers Vertical recipe
 			case 3:
 			{
 				ModLogger.print(ModLogger.INFO, "Registering custom Knife recipe...", null);
@@ -135,23 +143,26 @@ public class Kitchen
 
 				for(String line : ModConfig.customKnifeRecipe)
 				{
+                    // Add the line to the list, if it's not blank
 					if (!line.equals("BBB"))
 						lines.add(line);
 				}
 
 				ArrayList<Object> recipe = new ArrayList<Object>();
 
+                // Adds the information to the list, formatting it just like in the normal GameRegistry.addRecipe method
 				recipe.addAll(lines);
 				recipe.add(valueOf('I'));
 				recipe.add(Items.iron_ingot);
 				recipe.add(valueOf('S'));
 				recipe.add("stickWood");
 
+                // Registers the recipe by converting the list to an array
 				GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, recipe.toArray()));
 
 				break;
 			}
-																																									//
+            // Registers the Basic recipe if the number is higher than 3, or lower than 0
             default: GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "I ", " S", valueOf('S'), "stickWood", valueOf('I'), Items.iron_ingot)); break;	// Default recipe
         }																																							//
 																																									//
