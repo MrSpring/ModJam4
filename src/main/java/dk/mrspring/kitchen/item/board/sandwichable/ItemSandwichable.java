@@ -102,4 +102,10 @@ public class ItemSandwichable extends ItemBase implements IBoardable
     {
         return false;
     }
+
+    @Override
+    public void onAddedToBoard(NBTTagCompound specialTagInfo, ItemStack item)
+    {
+
+    }
 }

@@ -15,6 +15,7 @@ public class TileEntityBoard extends TileEntity
 {
     protected ArrayList<ItemStack> boardItemStacks = new ArrayList<ItemStack>();
     protected Type currentType = Type.EMPTY;
+    // The special info tag, used to store right-click event stuff. Gets cleared whenever a new Item is added to the List.
     protected NBTTagCompound specialTagInfo = new NBTTagCompound();
 
     /***
@@ -47,6 +48,8 @@ public class TileEntityBoard extends TileEntity
                     --item.stackSize;
                     boardItemStacks.add(temp);
                     this.currentType = itemStackType;
+                    this.specialTagInfo = new NBTTagCompound();
+                    ((IBoardable) temp.getItem()).onAddedToBoard(this.specialTagInfo, temp);
                     return true;
                 } else break;
             }
@@ -58,6 +61,9 @@ public class TileEntityBoard extends TileEntity
                     temp.stackSize = 1;
                     --item.stackSize;
                     boardItemStacks.add(temp);
+                    this.currentType = itemStackType;
+                    this.specialTagInfo = new NBTTagCompound();
+                    ((IBoardable) temp.getItem()).onAddedToBoard(this.specialTagInfo, temp);
                     return true;
                 } else break;
             }
@@ -69,6 +75,9 @@ public class TileEntityBoard extends TileEntity
                     temp.stackSize = 1;
                     --item.stackSize;
                     boardItemStacks.add(temp);
+                    this.currentType = itemStackType;
+                    this.specialTagInfo = new NBTTagCompound();
+                    ((IBoardable) temp.getItem()).onAddedToBoard(this.specialTagInfo, temp);
                     return true;
                 } else return false;
             }

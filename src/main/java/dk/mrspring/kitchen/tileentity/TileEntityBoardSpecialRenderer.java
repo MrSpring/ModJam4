@@ -2,7 +2,6 @@ package dk.mrspring.kitchen.tileentity;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import dk.mrspring.kitchen.item.board.sandwichable.ISandwichable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -12,10 +11,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import org.lwjgl.opengl.GL11;
 
+import java.util.List;
+
 @SideOnly(Side.CLIENT)
 public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 {
-	private ItemStack[] layers;
+	private List<ItemStack> layers;
 	private double yItemOffset = 0.0D;
 	
 	@Override
@@ -29,7 +30,7 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 		
 		TileEntityBoard tileEntity = (TileEntityBoard) var1;
 		
-		this.layers = tileEntity.getLayers();
+		this.layers = tileEntity.getAllItems();
 		
 		for (int i = 0; i < this.layers.length; ++i)
 		{
@@ -46,7 +47,7 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 			
 			GL11.glTranslated(xOffset, yOffset, zOffset);
 			
-			if (((ISandwichable) this.layers[i].getItem()).hasCustomModel)
+			/*if (((ISandwichable) this.layers[i].getItem()).hasCustomModel)
 				if (i + 1 < this.layers.length)
 					if (this.layers[i + 1] != null)
 						{ ((ISandwichable) this.layers[i].getItem()).getBottomModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ISandwichable) this.layers[i].getItem()).modelBottomHeight * 0.03D); }
@@ -54,7 +55,7 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 						{ ((ISandwichable) this.layers[i].getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ISandwichable) this.layers[i].getItem()).modelTopHeight * 0.03D); }
 				else
 				{ ((ISandwichable) this.layers[i].getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ISandwichable) this.layers[i].getItem()).modelTopHeight * 0.03D); }
-			else
+			else*/
 			{
 				EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
 				itemEntity.hoverStart = 0.0F;
@@ -66,4 +67,11 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 			
 		GL11.glPopMatrix();
 	}
+
+    enum RenderType
+    {
+        DEFAULT,
+        SPECIAL,
+        SIMPLE_MODEL
+    }
 }

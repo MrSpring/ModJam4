@@ -53,4 +53,10 @@ public class ItemCakeable extends ItemBase implements IBoardable
     {
         return false;
     }
+
+    @Override
+    public void onAddedToBoard(NBTTagCompound specialTagInfo, ItemStack item)
+    {
+
+    }
 }
