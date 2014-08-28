@@ -1,7 +1,8 @@
 package dk.mrspring.kitchen.tileentity;
 
-import dk.mrspring.kitchen.item.board.cakeable.ICakeable;
-import dk.mrspring.kitchen.item.board.sandwichable.ISandwichable;
+import dk.mrspring.kitchen.ModConfig;
+import dk.mrspring.kitchen.item.board.cakeable.ItemCakeable;
+import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
@@ -10,48 +11,94 @@ import java.util.List;
 
 public class TileEntityBoard extends TileEntity
 {
-    private ArrayList<ItemStack> sandwichLayers = new ArrayList<ItemStack>();
+    private ArrayList<ItemStack> boardItemStacks = new ArrayList<ItemStack>();
     protected Type currentType = Type.EMPTY;
 
+    /***
+     * Adds the ItemStack to the List, if the board is empty, of the ItemStack fits into the current type.
+     *
+     * @param item The ItemStack to add.
+     * @return Returns true if the ItemStack was successfully added, false if not.
+     */
     public boolean addItem(ItemStack item)
     {
+        Type itemStackType = this.identifyType(item);
         switch (this.currentType)
         {
             case EMPTY:
             {
-                return false;
+                if (itemStackType != Type.UNKNOWN && itemStackType != Type.EMPTY)
+                {
+                    ItemStack temp = item.copy();
+                    temp.stackSize = 1;
+                    --item.stackSize;
+                    boardItemStacks.add(temp);
+                    this.currentType = itemStackType;
+                    return true;
+                } else break;
             }
+            case SANDWICH:
+            {
+                if (itemStackType == Type.SANDWICH && boardItemStacks.size() + 1 < ModConfig.maxSandwichLayers)
+                {
+                    ItemStack temp = item.copy();
+                    temp.stackSize = 1;
+                    --item.stackSize;
+                    boardItemStacks.add(temp);
+                    return true;
+                } else break;
+            }
+            case CAKE:
+            {
+                if (itemStackType == Type.CAKE)
+                {
+
+                }
+            }
+            case CUTTING:
+                break;
             default: return false;
         }
+
+        return false;
     }
 
+    /***
+     * @return Returns all the ItemStacks currently being held by the board.
+     */
     public List<ItemStack> getAllItems()
     {
-        List<ItemStack> itemStackList = new ArrayList<ItemStack>();
-
-        itemStackList.addAll(this.sandwichLayers);
-
-        return itemStackList;
+        return this.boardItemStacks;
     }
 
+    /***
+     * Identifies the ItemStack parsed through. Used to determine if the ItemStack can be added to the board.
+     *
+     * @param itemStack The ItemStack to identify.
+     * @return Returns the type the ItemStack is of. EMPTY if the ItemStack is null, UNKNOWN if it doesn't match any type.
+     */
     public Type identifyType(ItemStack itemStack)
     {
         if (itemStack != null)
         {
             if (itemStack.getItem() != null)
             {
-                if (itemStack.getItem() instanceof ISandwichable)
+                if (itemStack.getItem() instanceof ItemSandwichable)
                     return Type.SANDWICH;
-                else if (itemStack.getItem() instanceof ICakeable)
+                else if (itemStack.getItem() instanceof ItemCakeable)
                     return Type.CAKE;
-            }
-        }
+            } else return Type.EMPTY;
+        } else return Type.EMPTY;
 
-        return Type.EMPTY;
+        return Type.UNKNOWN;
     }
 
+    /***
+     * Enum Type, used to identify what's on the board, and if an ItemStack if of that Type.
+     */
     private enum Type
     {
+        UNKNOWN,
         EMPTY,
         SANDWICH,
         CAKE,

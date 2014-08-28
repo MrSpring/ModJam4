@@ -31,7 +31,7 @@ public class KitchenItems
 	public static final Item potato_slice = new ItemSandwichable("potato_slice", true, 2);
 	public static final Item carrot_slice = new ItemSandwichable("carrot_slice", true, 2);
 	public static final Item flour = new ItemBase("flour", true);
-	public static final Item toast = new ItemSandwichBread("toast", true).setIsBread();
+	public static final Item toast = new ItemSandwichable("toast", true, 0).setIsBread();
 	public static final Item raw_roast_beef = new ItemSandwichable("raw_roast_beef", ModInfo.modid + ":beef_slice", true, 1);
 	public static final Item roast_beef = new ItemSandwichable("roast_beef", true, 4);
 	public static final Item raw_chicken_fillet = new ItemSandwichable("chicken_fillet_raw", true, 1);
