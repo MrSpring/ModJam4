@@ -1,8 +1,10 @@
-package dk.mrspring.kitchen.item;
+package dk.mrspring.kitchen.item.board.cakeable;
 
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.item.ItemBase;
+import dk.mrspring.kitchen.item.board.IBoardable;
 
-public class ItemCakeable extends ItemBase
+public class ItemCakeable extends ItemBase implements IBoardable
 {
     protected int healAmount;
 

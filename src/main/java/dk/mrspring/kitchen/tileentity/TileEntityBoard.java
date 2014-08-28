@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.tileentity;
 
-import dk.mrspring.kitchen.item.ItemSandwichable;
+import dk.mrspring.kitchen.item.board.cakeable.ICakeable;
+import dk.mrspring.kitchen.item.board.sandwichable.ISandwichable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
@@ -39,9 +40,10 @@ public class TileEntityBoard extends TileEntity
         {
             if (itemStack.getItem() != null)
             {
-                if (itemStack.getItem() instanceof ItemSandwichable)
+                if (itemStack.getItem() instanceof ISandwichable)
                     return Type.SANDWICH;
-                else if (itemStack.getItem() instanceof ItemCakeable)
+                else if (itemStack.getItem() instanceof ICakeable)
+                    return Type.CAKE;
             }
         }
 

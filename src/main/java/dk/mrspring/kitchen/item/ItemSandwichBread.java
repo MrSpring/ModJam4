@@ -1,8 +1,9 @@
 package dk.mrspring.kitchen.item;
 
+import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichable;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
-import dk.mrspring.kitchen.ModInfo;
 
 public class ItemSandwichBread extends ItemSandwichable
 {

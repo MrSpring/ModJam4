@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.item;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.combo.SandwichCombo;
+import dk.mrspring.kitchen.item.board.sandwichable.ISandwichable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemFood;
@@ -40,16 +41,10 @@ public class ItemSandwich extends ItemFood
                 if (combo != 0)
                     if (SandwichCombo.combos[(int) combo] != null)
                         return SandwichCombo.combos[(int) combo].getRarity();
-                    else
-                        return EnumRarity.common;
-                else
-                    return EnumRarity.common;
             }
-            else
-                return EnumRarity.common;
         }
-        else
-            return EnumRarity.common;
+
+        return EnumRarity.common;
 	}
 	
 	@Override
@@ -81,21 +76,17 @@ public class ItemSandwich extends ItemFood
 				for (int i = 0; i < layersList.tagCount(); ++i)
 				{
 					NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
-					healAmount += ((ItemSandwichable) ItemStack.loadItemStackFromNBT(layerCompound).getItem()).getHealAmount();
+					healAmount += ((ISandwichable) ItemStack.loadItemStackFromNBT(layerCompound).getItem()).getHealAmount();
 				}
 
 				byte combo = item.getTagCompound().getCompoundTag("Combo").getByte("Id");
 
 				if (SandwichCombo.combos[(int) combo] != null)
 					healAmount += SandwichCombo.combos[(int) combo].getExtraHeal();
-
-				return healAmount;
 			}
-			else
-				return healAmount;
 		}
-		else
-			return healAmount;
+
+        return healAmount;
 	}
 
     /*@Override
