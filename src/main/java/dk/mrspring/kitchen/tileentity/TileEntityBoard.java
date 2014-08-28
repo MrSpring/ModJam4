@@ -1,9 +1,11 @@
 package dk.mrspring.kitchen.tileentity;
 
 import dk.mrspring.kitchen.ModConfig;
+import dk.mrspring.kitchen.item.board.IBoardable;
 import dk.mrspring.kitchen.item.board.cakeable.ItemCakeable;
 import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichable;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
 import java.util.ArrayList;
@@ -11,17 +13,28 @@ import java.util.List;
 
 public class TileEntityBoard extends TileEntity
 {
-    private ArrayList<ItemStack> boardItemStacks = new ArrayList<ItemStack>();
+    protected ArrayList<ItemStack> boardItemStacks = new ArrayList<ItemStack>();
     protected Type currentType = Type.EMPTY;
+    protected NBTTagCompound specialTagInfo = new NBTTagCompound();
 
     /***
-     * Adds the ItemStack to the List, if the board is empty, of the ItemStack fits into the current type.
+     * Adds the ItemStack to the List, if the board is empty, or the ItemStack fits into the current type.
      *
      * @param item The ItemStack to add.
      * @return Returns true if the ItemStack was successfully added, false if not.
      */
     public boolean addItem(ItemStack item)
     {
+        if (item == null)
+            return false;
+
+        if (!(item.getItem() instanceof IBoardable))
+            return false;
+
+        if (((IBoardable) this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem()).hasSpecialRightClick(this.specialTagInfo))
+            if (((IBoardable) this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem()).onRightClicked(this.specialTagInfo, item))
+                return true;
+
         Type itemStackType = this.identifyType(item);
         switch (this.currentType)
         {
@@ -52,11 +65,17 @@ public class TileEntityBoard extends TileEntity
             {
                 if (itemStackType == Type.CAKE)
                 {
-
-                }
+                    ItemStack temp = item.copy();
+                    temp.stackSize = 1;
+                    --item.stackSize;
+                    boardItemStacks.add(temp);
+                    return true;
+                } else return false;
             }
             case CUTTING:
-                break;
+            {
+
+            }
             default: return false;
         }
 

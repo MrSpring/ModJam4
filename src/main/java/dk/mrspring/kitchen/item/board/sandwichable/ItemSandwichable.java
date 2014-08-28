@@ -7,6 +7,7 @@ import dk.mrspring.kitchen.item.board.IBoardable;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.List;
 
@@ -88,5 +89,17 @@ public class ItemSandwichable extends ItemBase implements IBoardable
     {
         this.isBread = true;
         return this;
+    }
+
+    @Override
+    public boolean hasSpecialRightClick(NBTTagCompound specialTagInfo)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean onRightClicked(NBTTagCompound specialTagInfo, ItemStack item)
+    {
+        return false;
     }
 }
