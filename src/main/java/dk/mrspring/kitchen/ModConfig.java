@@ -23,6 +23,8 @@ public class ModConfig
     public static boolean showDebug;
     // Whether to show debug information when hovering over items in-game
     public static boolean showItemDebug;
+    // The maximum height of a Sandwich
+    public static int maxSandwichLayers;
 
 	// Loads the config file and the variables
     public static void load(Configuration config)
@@ -37,6 +39,7 @@ public class ModConfig
         customOvenRecipeResults = config.get("Recipes", "Custom Oven Recipes Results - The name of the result Item, when it's cooked in the Oven.", defaultCustomOvenRecipeResults).getStringList();
         showDebug = config.get("Misc", "Show Debug info in Console", false).getBoolean(false);
         showItemDebug = config.get("Misc", "Show Debug item info when hovering over items in-game", false).getBoolean(false);
+        maxSandwichLayers = config.get("Misc", "Max layers in a Sandwich. A lot of layers may start to lag your game. Default: 10", 10).getInt(10);
 
 		// Closes the config, and saves the changes made
         config.save();
