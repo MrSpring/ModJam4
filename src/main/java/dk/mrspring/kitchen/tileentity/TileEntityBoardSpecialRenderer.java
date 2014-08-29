@@ -44,7 +44,6 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 
                     this.renderItem(itemStack, .5, .145 + ((yItemOffset * 0.0625) * .7), .33D, i, layers, specialCompound);
                     yItemOffset += ((IBoardable) itemStack.getItem()).getRenderHeight(null, i, itemStack, layers);
-                    System.out.println(" Y Offset: " + yItemOffset);
                 }
         }
 
