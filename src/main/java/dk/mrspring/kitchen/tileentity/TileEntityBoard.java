@@ -28,6 +28,8 @@ public class TileEntityBoard extends TileEntity
     {
         if (item == null)
             return false;
+		else if (item.getItem() == null)
+			return false;
 
         if (!(item.getItem() instanceof IBoardable))
             return false;
