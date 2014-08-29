@@ -30,8 +30,6 @@ public class TileEntityBoard extends TileEntity
      */
     public boolean addItem(ItemStack item)
     {
-        System.out.println(" Size is " + this.boardItemStacks.size());
-
         if (this.boardItemStacks.size() != 0)
             if (((IBoardable) this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem()).hasSpecialRightClick(this.specialTagInfo))
                 if (((IBoardable) this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem()).onRightClicked(this.specialTagInfo, item))
