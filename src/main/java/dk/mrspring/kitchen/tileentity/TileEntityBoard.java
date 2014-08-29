@@ -6,6 +6,10 @@ import dk.mrspring.kitchen.item.board.cakeable.ItemCakeable;
 import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 import java.util.ArrayList;
@@ -26,17 +30,20 @@ public class TileEntityBoard extends TileEntity
      */
     public boolean addItem(ItemStack item)
     {
+        System.out.println(" Size is " + this.boardItemStacks.size());
+
+        if (this.boardItemStacks.size() != 0)
+            if (((IBoardable) this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem()).hasSpecialRightClick(this.specialTagInfo))
+                if (((IBoardable) this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem()).onRightClicked(this.specialTagInfo, item))
+                    return true;
+
         if (item == null)
             return false;
-		else if (item.getItem() == null)
-			return false;
+        else if (item.getItem() == null)
+            return false;
 
         if (!(item.getItem() instanceof IBoardable))
             return false;
-
-        if (((IBoardable) this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem()).hasSpecialRightClick(this.specialTagInfo))
-            if (((IBoardable) this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem()).onRightClicked(this.specialTagInfo, item))
-                return true;
 
         Type itemStackType = this.identifyType(item);
         switch (this.currentType)
@@ -45,42 +52,51 @@ public class TileEntityBoard extends TileEntity
             {
                 if (itemStackType != Type.UNKNOWN && itemStackType != Type.EMPTY)
                 {
-                    ItemStack temp = item.copy();
-                    temp.stackSize = 1;
-                    --item.stackSize;
-                    boardItemStacks.add(temp);
-                    this.currentType = itemStackType;
-                    this.specialTagInfo = new NBTTagCompound();
-                    ((IBoardable) temp.getItem()).onAddedToBoard(this.specialTagInfo, temp);
-                    return true;
+                    if (((IBoardable)item.getItem()).canAddOnTop(this.specialTagInfo, item, null))
+                    {
+                        ItemStack temp = item.copy();
+                        temp.stackSize = 1;
+                        --item.stackSize;
+                        boardItemStacks.add(temp);
+                        this.currentType = itemStackType;
+                        this.specialTagInfo = new NBTTagCompound();
+                        ((IBoardable) temp.getItem()).onAddedToBoard(this.specialTagInfo, temp);
+                        return true;
+                    } else return false;
                 } else break;
             }
             case SANDWICH:
             {
                 if (itemStackType == Type.SANDWICH && boardItemStacks.size() + 1 < ModConfig.maxSandwichLayers)
                 {
-                    ItemStack temp = item.copy();
-                    temp.stackSize = 1;
-                    --item.stackSize;
-                    boardItemStacks.add(temp);
-                    this.currentType = itemStackType;
-                    this.specialTagInfo = new NBTTagCompound();
-                    ((IBoardable) temp.getItem()).onAddedToBoard(this.specialTagInfo, temp);
-                    return true;
+                    if (((IBoardable)item.getItem()).canAddOnTop(this.specialTagInfo, item, this.boardItemStacks.get(this.boardItemStacks.size() - 1)))
+                    {
+                        ItemStack temp = item.copy();
+                        temp.stackSize = 1;
+                        --item.stackSize;
+                        boardItemStacks.add(temp);
+                        this.currentType = itemStackType;
+                        this.specialTagInfo = new NBTTagCompound();
+                        ((IBoardable) temp.getItem()).onAddedToBoard(this.specialTagInfo, temp);
+                        return true;
+                    } else return false;
                 } else break;
             }
             case CAKE:
             {
                 if (itemStackType == Type.CAKE)
                 {
-                    ItemStack temp = item.copy();
-                    temp.stackSize = 1;
-                    --item.stackSize;
-                    boardItemStacks.add(temp);
-                    this.currentType = itemStackType;
-                    this.specialTagInfo = new NBTTagCompound();
-                    ((IBoardable) temp.getItem()).onAddedToBoard(this.specialTagInfo, temp);
-                    return true;
+                    if (((IBoardable)item.getItem()).canAddOnTop(this.specialTagInfo, item, null))
+                    {
+                        ItemStack temp = item.copy();
+                        temp.stackSize = 1;
+                        --item.stackSize;
+                        boardItemStacks.add(temp);
+                        this.currentType = itemStackType;
+                        this.specialTagInfo = new NBTTagCompound();
+                        ((IBoardable) temp.getItem()).onAddedToBoard(this.specialTagInfo, temp);
+                        return true;
+                    } else return false;
                 } else return false;
             }
             case CUTTING:
@@ -121,6 +137,58 @@ public class TileEntityBoard extends TileEntity
         } else return Type.EMPTY;
 
         return Type.UNKNOWN;
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound p_145841_1_)
+    {
+        super.writeToNBT(p_145841_1_);
+
+        NBTTagList list = new NBTTagList();
+
+        for (ItemStack item : this.boardItemStacks)
+        {
+            NBTTagCompound itemCompound = new NBTTagCompound();
+            list.appendTag(item.writeToNBT(itemCompound));
+        }
+
+        p_145841_1_.setTag("Items", list);
+        p_145841_1_.setTag("SpecialTag", this.specialTagInfo);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound p_145839_1_)
+    {
+        super.readFromNBT(p_145839_1_);
+
+        this.boardItemStacks = new ArrayList<ItemStack>();
+        this.currentType = Type.EMPTY;
+
+        NBTTagList list = p_145839_1_.getTagList("Items", 10);
+
+        if (list != null)
+            for (int i = 0; i < list.tagCount(); i++)
+            {
+                NBTTagCompound itemCompound = list.getCompoundTagAt(i);
+                ItemStack item = ItemStack.loadItemStackFromNBT(itemCompound);
+                this.addItem(item);
+            }
+
+        this.specialTagInfo = p_145839_1_.getCompoundTag("SpecialTag");
+    }
+
+    @Override
+    public Packet getDescriptionPacket()
+    {
+        NBTTagCompound compound = new NBTTagCompound();
+        this.writeToNBT(compound);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+    {
+        this.readFromNBT(pkt.func_148857_g());
     }
 
     /***

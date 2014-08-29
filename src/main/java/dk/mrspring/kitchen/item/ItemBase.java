@@ -29,6 +29,7 @@ public class ItemBase extends Item
 	public static void load()
 	{
 		registerItem(KitchenItems.knife);
+        registerItem(KitchenItems.butter_knife);
 		registerItem(KitchenItems.mortar_and_pestle);
 		registerItem(KitchenItems.mortar);
 		registerItem(KitchenItems.pestle);
@@ -54,5 +55,7 @@ public class ItemBase extends Item
 		registerItem(KitchenItems.burnt_meat);
         registerItem(KitchenItems.sliced_creeper);
         registerItem(KitchenItems.cup);
+        registerItem(KitchenItems.board_analyzer);
+        registerItem(KitchenItems.butter);
 	}
 }

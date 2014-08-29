@@ -2,12 +2,12 @@ package dk.mrspring.kitchen;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.item.*;
+import dk.mrspring.kitchen.item.board.ItemBoardAnalyzer;
+import dk.mrspring.kitchen.item.board.sandwichable.ItemButter;
 import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichBread;
 import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichable;
 import dk.mrspring.kitchen.model.ModelBaconCooked;
 import dk.mrspring.kitchen.model.ModelBaconRaw;
-import dk.mrspring.kitchen.model.ModelBreadSliceBottom;
-import dk.mrspring.kitchen.model.ModelBreadSliceTop;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,7 +16,8 @@ import net.minecraft.nbt.NBTTagList;
 public class KitchenItems
 {
 	// All the Item variables
-	public static final Item knife = new ItemKnife().setMaxStackSize(1);
+	public static final Item knife = new ItemKnife("knife").setMaxStackSize(1);
+    public static final Item butter_knife = new ItemKnife("butter_knife").setMaxDamage(1);
 	public static final Item mortar_and_pestle = new ItemMandP().setMaxStackSize(1);
 	public static final Item mortar = new ItemBase("mortar", true);
 	public static final Item pestle = new ItemBase("pestle", true);
@@ -43,6 +44,8 @@ public class KitchenItems
     public static final Item burnt_meat = new ItemFoodBase("burnt_meat", 1);
     public static final Item sliced_creeper = new ItemSandwichable("creeper_slice", false, 2);
     public static final Item cup = new ItemCup();
+    public static final Item board_analyzer = new ItemBoardAnalyzer();
+    public static final Item butter = new ItemButter("butter");
 
 	// Pre-loads the sandwich ItemStack with some NBT-Data.
 	private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)

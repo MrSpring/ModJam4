@@ -101,4 +101,10 @@ public class ItemSandwichable extends ItemBase implements IBoardable
 	{
 		return modelHeight;
 	}
+
+    @Override
+    public boolean canAddOnTop(NBTTagCompound specialTagInfo, ItemStack toAdd, ItemStack topItem)
+    {
+        return true;
+    }
 }

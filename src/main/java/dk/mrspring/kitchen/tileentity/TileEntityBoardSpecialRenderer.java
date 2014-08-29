@@ -2,12 +2,12 @@ package dk.mrspring.kitchen.tileentity;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dk.mrspring.kitchen.item.board.IBoardable;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import org.lwjgl.opengl.GL11;
 
@@ -16,30 +16,34 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 {
-	private List<ItemStack> layers;
-	private int yItemOffset = 0;
-	
-	@Override
+    @Override
 	public void renderTileEntityAt(TileEntity var1, double x, double y, double z, float var8)
 	{
-		this.yItemOffset = 0;
+        int yItemOffset = 0;
 		
 		GL11.glPushMatrix();
 		
 		GL11.glTranslated(x, y, z);
 		
 		TileEntityBoard tileEntity = (TileEntityBoard) var1;
-		
-		this.layers = tileEntity.getAllItems();
 
-		for (ItemStack itemStack : this.layers)
-		{
-			if (itemStack != null)
-				if (itemStack.getItem() != null)
-				{
+        List<ItemStack> layers = tileEntity.getAllItems();
 
-				}
-		}
+        for (int i = 0; i < layers.size(); i++)
+        {
+            ItemStack itemStack = layers.get(i);
+            if (itemStack != null)
+                if (itemStack.getItem() != null)
+                {
+                    NBTTagCompound specialCompound = new NBTTagCompound();
+                    if (i == layers.size() - 1)
+                        specialCompound = tileEntity.specialTagInfo;
+
+                    this.renderItem(itemStack, .5, .145 + ((yItemOffset * 0.0625) * .7), .33D, i, layers, specialCompound);
+                    yItemOffset += ((IBoardable) itemStack.getItem()).getRenderHeight(null, i, itemStack, layers);
+                    System.out.println(" Y Offset: " + yItemOffset);
+                }
+        }
 
 		/*for (int i = 0; i < this.layers.size(); ++i)
 		{
@@ -50,11 +54,18 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 		GL11.glPopMatrix();
 	}
 	
-	private void renderItem(ItemStack item, double xOffset, double yOffset, double zOffset, int i)
+	private void renderItem(ItemStack item, double xOffset, double yOffset, double zOffset, int index, List<ItemStack> items, NBTTagCompound specialInfo)
 	{
 		GL11.glPushMatrix();
 			
 			GL11.glTranslated(xOffset, yOffset, zOffset);
+
+            ModelBase model = ((IBoardable) item.getItem()).getModel(specialInfo, index, item, items);
+
+            if (model != null)
+            {
+                model.render(Minecraft.getMinecraft().renderViewEntity, 0F, 0F, 0F, 0F, 0F, 0.0625F);
+            }
 			
 			/*if (((ISandwichable) this.layers[i].getItem()).hasCustomModel)
 				if (i + 1 < this.layers.length)

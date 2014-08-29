@@ -19,9 +19,9 @@ public class TileEntityFridgeSpecialRenderer extends TileEntitySpecialRenderer
 	{
 		TileEntityFridge tileEntity = (TileEntityFridge) var1;
 
-		System.out.println(" Rendering: " + tileEntity.getItemStack(0).getDisplayName());
+		/*System.out.println(" Rendering: " + tileEntity.getItemStack(0).getDisplayName());
 		double d = .2;
-		this.renderItem(tileEntity.getItemStack(0), -d, 1.6, -d - 0.2);
+		this.renderItem(tileEntity.getItemStack(0), -d, 1.6, -d - 0.2);*/
 	}
 
 	private void renderItem(ItemStack item, double xOffset, double yOffset, double zOffset)

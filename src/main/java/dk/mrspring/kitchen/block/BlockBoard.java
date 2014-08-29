@@ -1,16 +1,19 @@
 package dk.mrspring.kitchen.block;
 
 import dk.mrspring.kitchen.Kitchen;
+import dk.mrspring.kitchen.item.board.ItemBoardAnalyzer;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -38,10 +41,34 @@ public class BlockBoard extends BlockContainer
 	{
 		TileEntityBoard entity = (TileEntityBoard) world.getTileEntity(x, y, z);
 
+        if (activator.getCurrentEquippedItem() != null && !world.isRemote)
+            if (activator.getCurrentEquippedItem().getItem() instanceof ItemBoardAnalyzer)
+            {
+                List<ItemStack> itemStacks = entity.getAllItems();
+
+                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Items on Board:"));
+
+                for (ItemStack item : itemStacks)
+                {
+                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("- " + item.getDisplayName()));
+                }
+                return true;
+            }
+
         if (world.isRemote)
             return true;
 
-        return false;
+        if (!activator.isSneaking())
+        {
+            if (activator.getCurrentEquippedItem() != null)
+                if (entity.addItem(activator.getCurrentEquippedItem()))
+                {
+                    world.markBlockForUpdate(x, y, z);
+                    return false;
+                }
+        }
+
+        return true;
 
 		/*if (!world.isRemote)
 		{

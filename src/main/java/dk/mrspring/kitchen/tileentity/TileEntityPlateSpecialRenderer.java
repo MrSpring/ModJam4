@@ -2,7 +2,6 @@ package dk.mrspring.kitchen.tileentity;
 
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.item.ItemSandwich;
-import dk.mrspring.kitchen.item.board.sandwichable.ISandwichable;
 import dk.mrspring.kitchen.model.ModelPlate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -129,7 +128,7 @@ public class TileEntityPlateSpecialRenderer extends TileEntitySpecialRenderer
 
 		GL11.glTranslated(xOffset, yOffset, zOffset);
 
-		if (((ISandwichable) item.getItem()).hasCustomModel)
+		/*if (((ISandwichable) item.getItem()).hasCustomModel)
 			if (isTop)
 				{ ((ISandwichable) item.getItem()).getBottomModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ISandwichable) item.getItem()).modelBottomHeight * 0.033D); }
 			else
@@ -142,7 +141,7 @@ public class TileEntityPlateSpecialRenderer extends TileEntitySpecialRenderer
 			GL11.glRotatef(180, 0, 1, 1);
 			RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 			RenderItem.renderInFrame = false;
-		}
+		}*/
 
 		GL11.glPopMatrix();
 	}

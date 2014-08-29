@@ -35,7 +35,7 @@ public class BlockFridge extends BlockContainer
 				if (player.getCurrentEquippedItem().getItem() != null)
 				{
 					TileEntityFridge tileEntity = (TileEntityFridge) world.getTileEntity(x, y, z);
-					return tileEntity.addItemStack(player.getCurrentEquippedItem());
+					return false; //tileEntity.addItemStack(player.getCurrentEquippedItem());
 				} else return true;
 			else return true;
 		else return true;

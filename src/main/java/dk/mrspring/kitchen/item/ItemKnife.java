@@ -4,9 +4,9 @@ import net.minecraft.item.ItemStack;
 
 public class ItemKnife extends ItemBase
 {
-	public ItemKnife()
+	public ItemKnife(String name)
 	{
-		super("knife", true);
+		super(name, true);
 		
 		this.setContainerItem(this);
         this.setMaxDamage(15);

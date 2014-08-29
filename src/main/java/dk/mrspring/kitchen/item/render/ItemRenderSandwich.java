@@ -1,12 +1,9 @@
 package dk.mrspring.kitchen.item.render;
 
-import dk.mrspring.kitchen.item.board.sandwichable.ISandwichable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -137,7 +134,7 @@ public class ItemRenderSandwich implements IItemRenderer
 		
 			GL11.glTranslated(xOffset, yOffset, zOffset);
 			
-			if (((ISandwichable) this.items[i].getItem()).hasCustomModel)
+			/*if (((ISandwichable) this.items[i].getItem()).hasCustomModel)
 				if (i + 1 < this.items.length)
 					if (this.items[i + 1] != null)
 						{ ((ISandwichable) this.items[i].getItem()).getBottomModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ISandwichable) this.items[i].getItem()).modelBottomHeight * 0.033D); }
@@ -153,7 +150,7 @@ public class ItemRenderSandwich implements IItemRenderer
 				GL11.glRotatef(180, 0, 1, 1);
 				RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 				RenderItem.renderInFrame = false;
-			}
+			}*/
 			
 		GL11.glPopMatrix();
 	}
