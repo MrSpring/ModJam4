@@ -1,7 +1,10 @@
 package dk.mrspring.kitchen.item.board;
 
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.util.List;
 
 public interface IBoardable
 {
@@ -26,4 +29,22 @@ public interface IBoardable
      * @param item The Item that was added to the board. Metadata, tags and other stuff can be salvaged if needed.
      */
     public void onAddedToBoard(NBTTagCompound specialTagInfo, ItemStack item);
+
+	/***
+	 * @param specialTagInfo Used to determine model based on special info. Is null if item is not the top-most model.
+	 * @param itemIndex The index the Item has in the list.
+	 * @param item The ItemStack being rendered.
+	 * @param itemStacks Item currently being held by the Board. Use to make models special if another layer is on top of the current one.
+	 * @return Returns the model for rendering the Item on the board. Null is it has no model.
+	 */
+	public ModelBase getModel(NBTTagCompound specialTagInfo, int itemIndex, ItemStack item, List<ItemStack> itemStacks);
+
+	/***
+	 * @param specialTagInfo Used to determine model's height based on special info. Is null if item is not the top-most model.
+	 * @param itemIndex The index the Item has in the list.
+	 * @param item The ItemStack being rendered.
+	 * @param itemStacks Item currently being held by the Board. Use to make model heights special if another layer is on top of the current one.
+	 * @return Returns the height of the model. Return 1 for normal Item.
+	 */
+	public int getRenderHeight(NBTTagCompound specialTagInfo, int itemIndex, ItemStack item, List<ItemStack> itemStacks);
 }

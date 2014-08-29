@@ -2,6 +2,7 @@ package dk.mrspring.kitchen;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.item.*;
+import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichBread;
 import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichable;
 import dk.mrspring.kitchen.model.ModelBaconCooked;
 import dk.mrspring.kitchen.model.ModelBaconRaw;
@@ -19,15 +20,15 @@ public class KitchenItems
 	public static final Item mortar_and_pestle = new ItemMandP().setMaxStackSize(1);
 	public static final Item mortar = new ItemBase("mortar", true);
 	public static final Item pestle = new ItemBase("pestle", true);
-	public static final Item raw_bacon = new ItemSandwichable("bacon_raw", true, 1).setCustomModel(new ModelBaconRaw(), new ModelBaconRaw(), 1, 1);
-	public static final Item bread_slice = new ItemSandwichable("bread_slice", true, 0).setCustomModel(new ModelBreadSliceTop(), new ModelBreadSliceBottom(), 3, 2).setIsBread();
+	public static final Item raw_bacon = new ItemSandwichable("bacon_raw", true, 1).setModel(new ModelBaconRaw(), 1);
+	public static final Item bread_slice = new ItemSandwichBread("bread_slice");
 	// The basic sandwich ItemStack. It's used as the icon fot the creative tab
 	public static ItemStack basic_sandwich = getSandwichItemStackWithNBTTags(new ItemStack[] { new ItemStack(bread_slice, 1, 0), new ItemStack(raw_bacon, 1, 0), new ItemStack(bread_slice, 1, 0) });
 	public static final Item tomato = new ItemFoodBase("tomato", 2);
 	public static final Item lettuce = new ItemFoodBase("lettuce", 2);
 	public static final Item tomato_slice = new ItemSandwichable("tomato_slice", true, 1);
 	public static final Item lettuce_leaf = new ItemSandwichable("lettuce_leaf", true, 2);
-	public static final Item bacon = new ItemSandwichable("bacon_cooked", true, 4).setCustomModel(new ModelBaconCooked(), new ModelBaconCooked(), 2, 2);
+	public static final Item bacon = new ItemSandwichable("bacon_cooked", true, 4).setModel(new ModelBaconCooked(), 2);
 	public static final Item potato_slice = new ItemSandwichable("potato_slice", true, 2);
 	public static final Item carrot_slice = new ItemSandwichable("carrot_slice", true, 2);
 	public static final Item flour = new ItemBase("flour", true);

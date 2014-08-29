@@ -3,8 +3,11 @@ package dk.mrspring.kitchen.item.board.cakeable;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.item.board.IBoardable;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.util.List;
 
 public class ItemCakeable extends ItemBase implements IBoardable
 {
@@ -59,4 +62,10 @@ public class ItemCakeable extends ItemBase implements IBoardable
     {
 
     }
+
+	@Override
+	public ModelBase getModel(NBTTagCompound specialTagInfo, int itemIndex, ItemStack item, List<ItemStack> itemStacks)
+	{
+		return null;
+	}
 }

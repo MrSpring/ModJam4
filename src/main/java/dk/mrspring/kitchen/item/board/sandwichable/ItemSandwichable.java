@@ -14,13 +14,11 @@ import java.util.List;
 public class ItemSandwichable extends ItemBase implements IBoardable
 {
 	private int healOnEaten = 1;
-	public boolean hasCustomModel;
-	private ModelBase bottomModel;
-	private ModelBase topModel;
-	public int modelBottomHeight = 1;
+	public int modelHeight = 1;
 	public int modelTopHeight = 1;
     public boolean showSandwichableInformation = true;
     public boolean isBread = false;
+	public ModelBase model;
 	
 	public ItemSandwichable(String name, String textureName, boolean useCreativeTab, int healAmount)
 	{
@@ -49,13 +47,7 @@ public class ItemSandwichable extends ItemBase implements IBoardable
         if (ModConfig.showItemDebug)
         {
             par3List.add("Heal Amount: " + String.valueOf(this.getHealAmount()));
-            par3List.add("Has Custom Model: " + String.valueOf(this.hasCustomModel));
-
-            if (this.hasCustomModel)
-            {
-                par3List.add("Top Model Height: " + String.valueOf(this.modelTopHeight));
-                par3List.add("Bottom Model Height: " + String.valueOf(this.modelBottomHeight));
-            }
+            par3List.add("Has Custom Model: " + String.valueOf(this.model != null));
         }
     }
 
@@ -64,24 +56,11 @@ public class ItemSandwichable extends ItemBase implements IBoardable
 		return this.healOnEaten;
 	}
 	
-	public ModelBase getBottomModel()
+	public ItemSandwichable setModel(ModelBase model, int modelHeight)
 	{
-		return this.bottomModel;
-	}
-	
-	public ModelBase getTopModel()
-	{
-		return this.topModel;
-	}
-	
-	public ItemSandwichable setCustomModel(ModelBase top, ModelBase bottom, int modelTopHeight, int modelBottomHeight)
-	{
-		this.hasCustomModel = true;
-		this.topModel = top;
-		this.bottomModel = bottom;
-		this.modelBottomHeight = modelBottomHeight;
-		this.modelTopHeight = modelTopHeight;
-		
+		this.model = model;
+		this.modelHeight = modelHeight;
+
 		return this;
 	}
 
@@ -108,4 +87,18 @@ public class ItemSandwichable extends ItemBase implements IBoardable
     {
 
     }
+
+	@Override
+	public ModelBase getModel(NBTTagCompound specialTagInfo, int itemIndex, ItemStack item, List<ItemStack> itemStacks)
+	{
+		if (model != null)
+			return model;
+		else return null;
+	}
+
+	@Override
+	public int getRenderHeight(NBTTagCompound specialTagInfo, int itemIndex, ItemStack item, List<ItemStack> itemStacks)
+	{
+		return modelHeight;
+	}
 }
