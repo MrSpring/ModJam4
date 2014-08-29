@@ -1,8 +1,12 @@
-package dk.mrspring.kitchen.item;
+package dk.mrspring.kitchen.item.board.cakeable;
 
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.item.ItemBase;
+import dk.mrspring.kitchen.item.board.IBoardable;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
-public class ItemCakeable extends ItemBase
+public class ItemCakeable extends ItemBase implements IBoardable
 {
     protected int healAmount;
 
@@ -36,5 +40,23 @@ public class ItemCakeable extends ItemBase
     public int getHealAmount()
     {
         return healAmount;
+    }
+
+    @Override
+    public boolean hasSpecialRightClick(NBTTagCompound specialTagInfo)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean onRightClicked(NBTTagCompound specialTagInfo, ItemStack item)
+    {
+        return false;
+    }
+
+    @Override
+    public void onAddedToBoard(NBTTagCompound specialTagInfo, ItemStack item)
+    {
+
     }
 }

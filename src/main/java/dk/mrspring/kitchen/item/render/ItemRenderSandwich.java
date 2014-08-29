@@ -1,7 +1,6 @@
 package dk.mrspring.kitchen.item.render;
 
-import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.item.ItemSandwichable;
+import dk.mrspring.kitchen.item.board.sandwichable.ISandwichable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -138,14 +137,14 @@ public class ItemRenderSandwich implements IItemRenderer
 		
 			GL11.glTranslated(xOffset, yOffset, zOffset);
 			
-			if (((ItemSandwichable) this.items[i].getItem()).hasCustomModel)
+			if (((ISandwichable) this.items[i].getItem()).hasCustomModel)
 				if (i + 1 < this.items.length)
 					if (this.items[i + 1] != null)
-						{ ((ItemSandwichable) this.items[i].getItem()).getBottomModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) this.items[i].getItem()).modelBottomHeight * 0.033D); }
+						{ ((ISandwichable) this.items[i].getItem()).getBottomModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ISandwichable) this.items[i].getItem()).modelBottomHeight * 0.033D); }
 					else
-						{ ((ItemSandwichable) this.items[i].getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) this.items[i].getItem()).modelTopHeight * 0.033D); }
+						{ ((ISandwichable) this.items[i].getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ISandwichable) this.items[i].getItem()).modelTopHeight * 0.033D); }
 				else 
-					{ ((ItemSandwichable) this.items[i].getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) this.items[i].getItem()).modelTopHeight * 0.033D); }
+					{ ((ISandwichable) this.items[i].getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ISandwichable) this.items[i].getItem()).modelTopHeight * 0.033D); }
 			else
 			{
 				EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);

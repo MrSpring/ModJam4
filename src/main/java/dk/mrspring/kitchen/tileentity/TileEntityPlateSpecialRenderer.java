@@ -2,7 +2,7 @@ package dk.mrspring.kitchen.tileentity;
 
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.item.ItemSandwich;
-import dk.mrspring.kitchen.item.ItemSandwichable;
+import dk.mrspring.kitchen.item.board.sandwichable.ISandwichable;
 import dk.mrspring.kitchen.model.ModelPlate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -129,11 +129,11 @@ public class TileEntityPlateSpecialRenderer extends TileEntitySpecialRenderer
 
 		GL11.glTranslated(xOffset, yOffset, zOffset);
 
-		if (((ItemSandwichable) item.getItem()).hasCustomModel)
+		if (((ISandwichable) item.getItem()).hasCustomModel)
 			if (isTop)
-				{ ((ItemSandwichable) item.getItem()).getBottomModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) item.getItem()).modelBottomHeight * 0.033D); }
+				{ ((ISandwichable) item.getItem()).getBottomModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ISandwichable) item.getItem()).modelBottomHeight * 0.033D); }
 			else
-				{ ((ItemSandwichable) item.getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) item.getItem()).modelTopHeight * 0.033D); }
+				{ ((ISandwichable) item.getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ISandwichable) item.getItem()).modelTopHeight * 0.033D); }
 		else
 		{
 			EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);

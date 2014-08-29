@@ -1,14 +1,17 @@
-package dk.mrspring.kitchen.item;
+package dk.mrspring.kitchen.item.board.sandwichable;
 
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.item.ItemBase;
+import dk.mrspring.kitchen.item.board.IBoardable;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.List;
 
-public class ItemSandwichable extends ItemBase
+public class ItemSandwichable extends ItemBase implements IBoardable
 {
 	private int healOnEaten = 1;
 	public boolean hasCustomModel;
@@ -17,6 +20,7 @@ public class ItemSandwichable extends ItemBase
 	public int modelBottomHeight = 1;
 	public int modelTopHeight = 1;
     public boolean showSandwichableInformation = true;
+    public boolean isBread = false;
 	
 	public ItemSandwichable(String name, String textureName, boolean useCreativeTab, int healAmount)
 	{
@@ -80,4 +84,28 @@ public class ItemSandwichable extends ItemBase
 		
 		return this;
 	}
+
+    public ItemSandwichable setIsBread()
+    {
+        this.isBread = true;
+        return this;
+    }
+
+    @Override
+    public boolean hasSpecialRightClick(NBTTagCompound specialTagInfo)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean onRightClicked(NBTTagCompound specialTagInfo, ItemStack item)
+    {
+        return false;
+    }
+
+    @Override
+    public void onAddedToBoard(NBTTagCompound specialTagInfo, ItemStack item)
+    {
+
+    }
 }
