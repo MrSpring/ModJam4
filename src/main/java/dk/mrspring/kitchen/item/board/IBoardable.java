@@ -46,7 +46,7 @@ public interface IBoardable
 	 * @param itemStacks Item currently being held by the Board. Use to make model heights special if another layer is on top of the current one.
 	 * @return Returns the height of the model. Return 1 for normal Item.
 	 */
-	public int getRenderHeight(NBTTagCompound specialTagInfo, int itemIndex, ItemStack item, List<ItemStack> itemStacks);
+	public double getRenderHeight(NBTTagCompound specialTagInfo, int itemIndex, ItemStack item, List<ItemStack> itemStacks);
 
     /***
      * @param specialTagInfo The special tag info of the bellow item.

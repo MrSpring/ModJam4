@@ -4,7 +4,6 @@ import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.model.butter.ModelButter0;
 import dk.mrspring.kitchen.model.butter.ModelButter1;
 import dk.mrspring.kitchen.model.butter.ModelButter2;
-import dk.mrspring.kitchen.model.butter.ModelButter3;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,7 +12,7 @@ import java.util.List;
 
 public class ItemButter extends ItemSandwichable
 {
-    ModelBase[] models = new ModelBase[] { new ModelButter0(), new ModelButter1(), new ModelButter2(), new ModelButter3() };
+    ModelBase[] models = new ModelBase[] { new ModelButter0(), new ModelButter1(), new ModelButter2() };
 
     public ItemButter(String name)
     {
@@ -34,7 +33,7 @@ public class ItemButter extends ItemSandwichable
     @Override
     public void onAddedToBoard(NBTTagCompound specialTagInfo, ItemStack item)
     {
-        specialTagInfo.setInteger("RightClickCount", 3);
+        specialTagInfo.setInteger("RightClickCount", 2);
     }
 
     @Override
@@ -45,6 +44,17 @@ public class ItemButter extends ItemSandwichable
                 return true;
 
         return false;
+    }
+
+    @Override
+    public double getRenderHeight(NBTTagCompound specialTagInfo, int itemIndex, ItemStack item, List<ItemStack> itemStacks)
+    {
+        if (specialTagInfo != null)
+            if (specialTagInfo.hasKey("RightClickCount"))
+                if (specialTagInfo.getInteger("RightClickCount") != 0)
+                    return 3;
+
+        return 0.5;
     }
 
     @Override

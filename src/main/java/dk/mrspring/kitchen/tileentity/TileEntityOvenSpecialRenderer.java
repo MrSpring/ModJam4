@@ -17,6 +17,7 @@ public class TileEntityOvenSpecialRenderer extends TileEntitySpecialRenderer
     protected ModelOven model;
 	protected ResourceLocation inactiveTexture;
 	protected ResourceLocation activeTexture;
+    double itemHeight = -1.55;
 
 	ItemStack[] itemStacks;
 
@@ -39,6 +40,34 @@ public class TileEntityOvenSpecialRenderer extends TileEntitySpecialRenderer
 
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
 
+        itemStacks = new ItemStack[4];
+
+        itemStacks = tileEntityOven.getOvenItems();
+
+        double d = 0.2;
+
+        GL11.glPushMatrix();
+
+        GL11.glScalef(0.75F, 0.75F, 0.75F);
+
+
+
+        for(int i = 0; i < itemStacks.length; ++i)
+        {
+            if (itemStacks[i] != null)
+            {
+                switch (i)
+                {
+                    case 0: renderItem(itemStacks[i], d, itemHeight, -d - 0.2); break;
+                    case 1: renderItem(itemStacks[i], d, itemHeight, d - 0.2); break;
+                    case 2: renderItem(itemStacks[i], -d, itemHeight, d - 0.2); break;
+                    case 3: renderItem(itemStacks[i], -d, itemHeight, -d - 0.2); break;
+                }
+            }
+        }
+
+        GL11.glPopMatrix();
+
 		if (tileEntityOven.burnTime > 0)
         	Minecraft.getMinecraft().renderEngine.bindTexture(activeTexture);
 		else
@@ -56,28 +85,6 @@ public class TileEntityOvenSpecialRenderer extends TileEntitySpecialRenderer
 
         this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, tileEntityOven.getLidAngle());
         GL11.glPopMatrix();
-
-		itemStacks = new ItemStack[4];
-
-		itemStacks = tileEntityOven.getOvenItems();
-
-		double d = 0.2;
-
-		GL11.glScalef(0.75F, 0.75F, 0.75F);
-
-		for(int i = 0; i < itemStacks.length; ++i)
-		{
-			if (itemStacks[i] != null)
-			{
-				switch (i)
-				{
-					case 0: renderItem(itemStacks[i], d, 1.6, -d - 0.2); break;
-					case 1: renderItem(itemStacks[i], d, 1.6, d - 0.2); break;
-					case 2: renderItem(itemStacks[i], -d, 1.6, d - 0.2); break;
-					case 3: renderItem(itemStacks[i], -d, 1.6, -d - 0.2); break;
-				}
-			}
-		}
 
         GL11.glPopMatrix();
 

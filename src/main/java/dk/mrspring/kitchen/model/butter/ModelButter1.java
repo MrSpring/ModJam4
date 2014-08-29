@@ -31,14 +31,14 @@ public class ModelButter1 extends ModelBase
     textureHeight = 32;
     
       butterbase = new ModelRenderer(this, 0, 0);
-      butterbase.addBox(0F, 0F, 0F, 3, 1, 6);
-      butterbase.setRotationPoint(-2F, 23F, -3F);
+      butterbase.addBox(0F, 0F, 0F, 3, 2, 6);
+      butterbase.setRotationPoint(-2F, 22F, -3F);
       butterbase.setTextureSize(32, 32);
       butterbase.mirror = true;
       setRotation(butterbase, 0F, 0F, 0F);
       butter01 = new ModelRenderer(this, 0, 0);
-      butter01.addBox(0F, 0F, 0F, 2, 1, 2);
-      butter01.setRotationPoint(-3F, 23F, 3F);
+      butter01.addBox(0F, 0F, 0F, 1, 1, 1);
+      butter01.setRotationPoint(-2F, 23F, 3F);
       butter01.setTextureSize(32, 32);
       butter01.mirror = true;
       setRotation(butter01, 0F, 0F, 0F);
@@ -73,14 +73,14 @@ public class ModelButter1 extends ModelBase
       butter06.mirror = true;
       setRotation(butter06, 0F, 0F, 0F);
       butter07 = new ModelRenderer(this, 0, 0);
-      butter07.addBox(0F, 0F, 0F, 3, 1, 4);
-      butter07.setRotationPoint(1F, 23F, -4F);
+      butter07.addBox(0F, 0F, 0F, 3, 1, 3);
+      butter07.setRotationPoint(1F, 23F, -3F);
       butter07.setTextureSize(32, 32);
       butter07.mirror = true;
       setRotation(butter07, 0F, 0F, 0F);
       butter08 = new ModelRenderer(this, 0, 0);
-      butter08.addBox(0F, 0F, 0F, 1, 1, 2);
-      butter08.setRotationPoint(-3F, 23F, -3F);
+      butter08.addBox(0F, 0F, 0F, 1, 2, 1);
+      butter08.setRotationPoint(-3F, 22F, -3F);
       butter08.setTextureSize(32, 32);
       butter08.mirror = true;
       setRotation(butter08, 0F, 0F, 0F);

@@ -24,7 +24,7 @@ public class ItemSandwichBread extends ItemSandwichable
 	}
 
 	@Override
-	public int getRenderHeight(NBTTagCompound specialTagInfo, int itemIndex, ItemStack item, List<ItemStack> itemStacks)
+	public double getRenderHeight(NBTTagCompound specialTagInfo, int itemIndex, ItemStack item, List<ItemStack> itemStacks)
 	{
 		if (itemIndex == itemStacks.size() - 1)
 			return 3;

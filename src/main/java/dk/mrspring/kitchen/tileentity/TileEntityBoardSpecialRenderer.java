@@ -5,7 +5,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.item.board.IBoardable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -19,7 +22,7 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
     @Override
 	public void renderTileEntityAt(TileEntity var1, double x, double y, double z, float var8)
 	{
-        int yItemOffset = 0;
+        double yItemOffset = 0;
 		
 		GL11.glPushMatrix();
 		
@@ -65,6 +68,14 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
             if (model != null)
             {
                 model.render(Minecraft.getMinecraft().renderViewEntity, 0F, 0F, 0F, 0F, 0F, 0.0625F);
+            } else
+            {
+                EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
+                itemEntity.hoverStart = 0.0F;
+                RenderItem.renderInFrame = true;
+                GL11.glRotatef(180, 0, 1, 1);
+                RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+                RenderItem.renderInFrame = false;
             }
 			
 			/*if (((ISandwichable) this.layers[i].getItem()).hasCustomModel)

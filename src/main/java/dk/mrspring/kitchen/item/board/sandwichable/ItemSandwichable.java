@@ -14,7 +14,7 @@ import java.util.List;
 public class ItemSandwichable extends ItemBase implements IBoardable
 {
 	private int healOnEaten = 1;
-	public int modelHeight = 1;
+	public double modelHeight = 1;
 	public int modelTopHeight = 1;
     public boolean showSandwichableInformation = true;
     public boolean isBread = false;
@@ -97,7 +97,7 @@ public class ItemSandwichable extends ItemBase implements IBoardable
 	}
 
 	@Override
-	public int getRenderHeight(NBTTagCompound specialTagInfo, int itemIndex, ItemStack item, List<ItemStack> itemStacks)
+	public double getRenderHeight(NBTTagCompound specialTagInfo, int itemIndex, ItemStack item, List<ItemStack> itemStacks)
 	{
 		return modelHeight;
 	}

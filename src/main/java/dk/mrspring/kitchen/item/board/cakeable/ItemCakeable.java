@@ -70,7 +70,7 @@ public class ItemCakeable extends ItemBase implements IBoardable
 	}
 
     @Override
-    public int getRenderHeight(NBTTagCompound specialTagInfo, int itemIndex, ItemStack item, List<ItemStack> itemStacks)
+    public double getRenderHeight(NBTTagCompound specialTagInfo, int itemIndex, ItemStack item, List<ItemStack> itemStacks)
     {
         return 1;
     }
