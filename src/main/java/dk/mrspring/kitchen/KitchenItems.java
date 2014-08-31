@@ -46,6 +46,7 @@ public class KitchenItems
     public static final Item cup = new ItemCup();
     public static final Item board_analyzer = new ItemBoardAnalyzer();
     public static final Item butter = new ItemButter("butter");
+    public static final Item hand_book = new ItemHandBook("hand_book", true);
 
 	// Pre-loads the sandwich ItemStack with some NBT-Data.
 	private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)

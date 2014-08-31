@@ -17,4 +17,5 @@ public class KitchenBlocks
 	public static final Block plate = new BlockPlate();
     public static final Block kitchen_cabinet = new BlockKitchenCabinet();
 	public static final Block fridge_base = new BlockFridge(true);
+    public static final Block text_test = new BlockTextRenderTest();
 }
