@@ -24,7 +24,9 @@ public class TileEntityBoard extends TileEntity
 
 	public NBTTagCompound getSpecialTagInfo()
 	{
-		return specialTagInfo;
+		if (specialTagInfo != null)
+			return specialTagInfo;
+		else return new NBTTagCompound();
 	}
 
 	/***
@@ -48,9 +50,9 @@ public class TileEntityBoard extends TileEntity
     public boolean addItem(ItemStack item, boolean callEvents)
     {
         if (this.boardItemStacks.size() != 0 && callEvents)
-            if (((IBoardable) this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem()).hasSpecialRightClick(this.specialTagInfo))
+            if (((IBoardable) this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem()).hasSpecialRightClick(this.getSpecialTagInfo()))
 			{
-				((IBoardable) this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem()).onRightClicked(this.specialTagInfo, item);
+				((IBoardable) this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem()).onRightClicked(this.getSpecialTagInfo(), item);
 				return true;
 			}
 
@@ -63,7 +65,25 @@ public class TileEntityBoard extends TileEntity
             return false;
 
         Type itemStackType = this.identifyType(item);
-        switch (this.currentType)
+
+		if (itemStackType == this.currentType || this.currentType == Type.EMPTY)
+		{
+			if (((IBoardable) item.getItem()).canAddOnTop(this.getSpecialTagInfo(), item, this.getTopItem()))
+			{
+				if (this.currentType == Type.EMPTY)
+					this.currentType = itemStackType;
+
+				ItemStack temp = item.copy();
+				temp.stackSize = 1;
+				--item.stackSize;
+				boardItemStacks.add(temp);
+				if (callEvents) ((IBoardable) temp.getItem()).onAddedToBoard(this.getSpecialTagInfo(), temp);
+				return true;
+			}
+			return false;
+		}
+
+        /*switch (this.currentType)
         {
             case EMPTY:
             {
@@ -86,6 +106,7 @@ public class TileEntityBoard extends TileEntity
             {
                 if (itemStackType == Type.SANDWICH && boardItemStacks.size() + 1 < ModConfig.maxSandwichLayers)
                 {
+					ItemStack item =
                     if (((IBoardable)item.getItem()).canAddOnTop(this.specialTagInfo, item, this.boardItemStacks.get(this.boardItemStacks.size() - 1)))
                     {
                         ItemStack temp = item.copy();
@@ -121,17 +142,28 @@ public class TileEntityBoard extends TileEntity
 
             }
             default: return false;
-        }
+        }*/
 
         return false;
     }
 
+
+	public ItemStack getTopItem()
+	{
+		if (this.boardItemStacks.size() != 0)
+			return this.boardItemStacks.get(this.boardItemStacks.size() - 1);
+		else return null;
+	}
+
 	public boolean canRemoveTopMostItem()
 	{
+		if (this.boardItemStacks.size() == 0)
+			return false;
+
 		ItemStack item = this.boardItemStacks.get(this.boardItemStacks.size() - 1);
 		if (item != null)
 		{
-			return ((IBoardable) item.getItem()).canBeRemoved(this.specialTagInfo, item);
+			return ((IBoardable) item.getItem()).canBeRemoved(this.getSpecialTagInfo(), item);
 		} return false;
 	}
 
@@ -140,7 +172,10 @@ public class TileEntityBoard extends TileEntity
 		ItemStack item = this.boardItemStacks.remove(this.boardItemStacks.size() - 1);
 		if (item != null)
 		{
-			if (((IBoardable) item.getItem()).dropItem(this.specialTagInfo, item))
+			if (this.boardItemStacks.size() == 0)
+				this.currentType = Type.EMPTY;
+
+			if (((IBoardable) item.getItem()).dropItem(this.getSpecialTagInfo(), item))
 				return item;
 			else return null;
 		} else return null;
@@ -190,7 +225,7 @@ public class TileEntityBoard extends TileEntity
         }
 
         p_145841_1_.setTag("Items", list);
-        p_145841_1_.setTag("SpecialTag", this.specialTagInfo);
+        p_145841_1_.setTag("SpecialTag", this.getSpecialTagInfo());
     }
 
     @Override

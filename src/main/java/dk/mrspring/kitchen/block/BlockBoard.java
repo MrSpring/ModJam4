@@ -58,7 +58,10 @@ public class BlockBoard extends BlockContainer
             }
 
         if (world.isRemote)
-            return true;
+		{
+			world.markBlockForUpdate(x, y, z);
+			return true;
+		}
 
         if (!activator.isSneaking())
         {

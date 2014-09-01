@@ -50,7 +50,7 @@ public interface IBoardable
     /***
      * @param specialTagInfo The special tag info of the bellow item.
      * @param toAdd The Item that the player is trying to add the board.
-     * @param topItem The top most item, the toAdd will be added on top of this.
+     * @param topItem The top most item, the toAdd will be added on top of.
      * @return Returns true if the Item can be added on top. False if not. See ItemButter for example.
      */
     public boolean canAddOnTop(NBTTagCompound specialTagInfo, ItemStack toAdd, ItemStack topItem);
