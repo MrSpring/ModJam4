@@ -21,4 +21,10 @@ public class ItemKnife extends ItemBase
             return null;
         else return item;
     }
+
+	@Override
+	public boolean doesContainerItemLeaveCraftingGrid(ItemStack par1ItemStack)
+	{
+		return false;
+	}
 }
