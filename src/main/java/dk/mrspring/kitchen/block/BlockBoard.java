@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.block;
 
 import dk.mrspring.kitchen.Kitchen;
+import dk.mrspring.kitchen.item.board.IBoardable;
 import dk.mrspring.kitchen.item.board.ItemBoardAnalyzer;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.block.Block;
@@ -41,6 +42,7 @@ public class BlockBoard extends BlockContainer
 	{
 		TileEntityBoard entity = (TileEntityBoard) world.getTileEntity(x, y, z);
 
+		// Board Analyzer stuff.
         if (activator.getCurrentEquippedItem() != null && !world.isRemote)
             if (activator.getCurrentEquippedItem().getItem() instanceof ItemBoardAnalyzer)
             {
@@ -61,11 +63,26 @@ public class BlockBoard extends BlockContainer
         if (!activator.isSneaking())
         {
             if (activator.getCurrentEquippedItem() != null)
+			{
                 if (entity.addItem(activator.getCurrentEquippedItem()))
                 {
                     world.markBlockForUpdate(x, y, z);
                     return false;
                 }
+			} else
+			{
+				if (entity.canRemoveTopMostItem())
+				{
+					ItemStack itemStack = entity.removeTopMostItem();
+
+					if (itemStack != null)
+					{
+						world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, itemStack));
+						world.markBlockForUpdate(x, y, z);
+						return true;
+					}
+				}
+			}
         }
 
         return true;
@@ -165,19 +182,22 @@ public class BlockBoard extends BlockContainer
             {
                 if (item != null)
                 {
-                    Random random = new Random();
+					if (((IBoardable) item.getItem()).dropItem(tileEntityBoard.getSpecialTagInfo(), item))
+					{
+						Random random = new Random();
 
-                    float xRandPos = random.nextFloat() * 0.8F + 0.1F;
-                    float yRandPos = random.nextFloat() * 0.8F + 0.1F;
-                    float zRandPos = random.nextFloat() * 0.8F + 0.1F;
+						float xRandPos = random.nextFloat() * 0.8F + 0.1F;
+						float yRandPos = random.nextFloat() * 0.8F + 0.1F;
+						float zRandPos = random.nextFloat() * 0.8F + 0.1F;
 
-                    EntityItem entityItem = new EntityItem(world, x + xRandPos, y + yRandPos, z + zRandPos, item);
+						EntityItem entityItem = new EntityItem(world, x + xRandPos, y + yRandPos, z + zRandPos, item);
 
-                    entityItem.motionX = random.nextGaussian() * 0.05F;
-                    entityItem.motionY = random.nextGaussian() * 0.05F + 0.2F;
-                    entityItem.motionZ = random.nextGaussian() * 0.05F;
+						entityItem.motionX = random.nextGaussian() * 0.05F;
+						entityItem.motionY = random.nextGaussian() * 0.05F + 0.2F;
+						entityItem.motionZ = random.nextGaussian() * 0.05F;
 
-                    world.spawnEntityInWorld(entityItem);
+						world.spawnEntityInWorld(entityItem);
+					}
                 }
             }
         }

@@ -79,4 +79,16 @@ public class ItemCakeable extends ItemBase implements IBoardable
     {
         return false;
     }
+
+	@Override
+	public boolean canBeRemoved(NBTTagCompound specialTagInfo, ItemStack toRemove)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean dropItem(NBTTagCompound specialTagInfo, ItemStack removed)
+	{
+		return true;
+	}
 }

@@ -22,6 +22,11 @@ public class TileEntityBoard extends TileEntity
     // The special info tag, used to store right-click event stuff. Gets cleared whenever a new Item is added to the List.
     protected NBTTagCompound specialTagInfo = new NBTTagCompound();
 
+	public NBTTagCompound getSpecialTagInfo()
+	{
+		return specialTagInfo;
+	}
+
 	/***
 	 * Short version of addItem(ItemStack item, boolean callEvents).
 	 *
@@ -132,7 +137,7 @@ public class TileEntityBoard extends TileEntity
 
 	public ItemStack removeTopMostItem()
 	{
-		ItemStack item = this.boardItemStacks.get(this.boardItemStacks.size() - 1);
+		ItemStack item = this.boardItemStacks.remove(this.boardItemStacks.size() - 1);
 		if (item != null)
 		{
 			if (((IBoardable) item.getItem()).dropItem(this.specialTagInfo, item))

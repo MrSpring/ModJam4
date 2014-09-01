@@ -63,7 +63,7 @@ public interface IBoardable
 	public boolean canBeRemoved(NBTTagCompound specialTagInfo, ItemStack toRemove);
 
 	/***
-	 * Gets called when the item is removed from the board, and determines whether the item should be spawned in the World.
+	 * Gets called when the item is removed from the board, or when the Board is destroyed, and determines whether the item should be spawned in the World.
 	 * @param specialTagInfo The special tag info. Null if nothing is stored. Remember to null-check!
 	 * @param removed The removed item. For metadata stuff.
 	 * @return Returns true if the Item should be spawned in the World when it's removed from the Board.
