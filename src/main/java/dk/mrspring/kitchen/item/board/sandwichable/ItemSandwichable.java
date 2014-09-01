@@ -8,14 +8,14 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 
 import java.util.List;
 
 public class ItemSandwichable extends ItemBase implements IBoardable
 {
 	private int healOnEaten = 1;
-	public double modelHeight = 1;
-	public int modelTopHeight = 1;
+	public double modelHeight = 0.7;
     public boolean showSandwichableInformation = true;
     public boolean isBread = false;
 	public ModelBase model;
@@ -42,12 +42,12 @@ public class ItemSandwichable extends ItemBase implements IBoardable
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
         if (this.showSandwichableInformation)
-            par3List.add("Sandwichable");
+            par3List.add(StatCollector.translateToLocal("item_info.sandwichable"));
 
         if (ModConfig.showItemDebug)
         {
-            par3List.add("Heal Amount: " + String.valueOf(this.getHealAmount()));
-            par3List.add("Has Custom Model: " + String.valueOf(this.model != null));
+            par3List.add(StatCollector.translateToLocal("item_info.heal_amount") + ": " + String.valueOf(this.getHealAmount()));
+            par3List.add(StatCollector.translateToLocal("item_info.has_model") + ": " + String.valueOf(this.model != null));
         }
     }
 

@@ -38,3 +38,6 @@ combo.only_bread.name=Kinda Boring...
 combo.rrb.name=Retro Roastbeef
 combo.smart_chicken.name=7-Smart Chicken
 combo.veggie.name=Veggie Sandwich
+
+item_info.heal_amount=Mætning
+item_info.has_model=Har 3D Model
