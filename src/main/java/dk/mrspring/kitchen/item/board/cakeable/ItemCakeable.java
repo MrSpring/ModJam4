@@ -52,9 +52,8 @@ public class ItemCakeable extends ItemBase implements IBoardable
     }
 
     @Override
-    public boolean onRightClicked(NBTTagCompound specialTagInfo, ItemStack item)
+    public void onRightClicked(NBTTagCompound specialTagInfo, ItemStack item)
     {
-        return false;
     }
 
     @Override

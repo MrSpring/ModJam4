@@ -46,6 +46,20 @@ public class ItemButter extends ItemSandwichable
         return false;
     }
 
+	@Override
+	public void onRightClicked(NBTTagCompound specialTagInfo, ItemStack item)
+	{
+		if (item != null)
+			if (item.getItem() != null)
+				if (item.getItem() == KitchenItems.butter_knife)
+				{
+					int clickCount = specialTagInfo.getInteger("RightClickCount");
+					clickCount--;
+					specialTagInfo.removeTag("RightClickCount");
+					specialTagInfo.setInteger("RightClickCount", clickCount);
+				}
+	}
+
     @Override
     public double getRenderHeight(NBTTagCompound specialTagInfo, int itemIndex, ItemStack item, List<ItemStack> itemStacks)
     {
@@ -58,21 +72,6 @@ public class ItemButter extends ItemSandwichable
     }
 
     @Override
-    public boolean onRightClicked(NBTTagCompound specialTagInfo, ItemStack item)
-    {
-        if (item != null)
-            if (item.getItem() != null)
-                if (item.getItem() == KitchenItems.butter_knife)
-                {
-                    int clickCount = specialTagInfo.getInteger("RightClickCount");
-                    clickCount--;
-                    specialTagInfo.setInteger("RightClickCount", clickCount);
-                    return true;
-                }
-        return false;
-    }
-
-    @Override
     public ModelBase getModel(NBTTagCompound specialTagInfo, int itemIndex, ItemStack item, List<ItemStack> itemStacks)
     {
         if (specialTagInfo.hasKey("RightClickCount"))
@@ -81,4 +80,30 @@ public class ItemButter extends ItemSandwichable
 
         return this.models[0];
     }
+
+	@Override
+	public boolean dropItem(NBTTagCompound specialTagInfo, ItemStack removed)
+	{
+		if (specialTagInfo != null)
+		{
+			int rightClickCount = specialTagInfo.getInteger("RightClickCount");
+
+			if (rightClickCount == 2)
+				return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean canBeRemoved(NBTTagCompound specialTagInfo, ItemStack toRemove)
+	{
+		if (specialTagInfo != null)
+		{
+			int rightClickCount = specialTagInfo.getInteger("RightClickCount");
+
+			if (rightClickCount == 0 || rightClickCount == 2)
+				return true;
+		}
+		return false;
+	}
 }

@@ -22,18 +22,32 @@ public class TileEntityBoard extends TileEntity
     // The special info tag, used to store right-click event stuff. Gets cleared whenever a new Item is added to the List.
     protected NBTTagCompound specialTagInfo = new NBTTagCompound();
 
+	/***
+	 * Short version of addItem(ItemStack item, boolean callEvents).
+	 *
+	 * @param item The ItemStack to add.
+	 * @return Returns true if the ItemStack was successfully added, false if not.
+	 */
+	public boolean addItem(ItemStack item)
+	{
+		return this.addItem(item, true);
+	}
+
     /***
      * Adds the ItemStack to the List, if the board is empty, or the ItemStack fits into the current type.
      *
      * @param item The ItemStack to add.
+	 * @param callEvents Whether to call the onRightClicked- and the onAddedToBoardEvent of the items. False when loaded from NBTData.
      * @return Returns true if the ItemStack was successfully added, false if not.
      */
-    public boolean addItem(ItemStack item)
+    public boolean addItem(ItemStack item, boolean callEvents)
     {
-        if (this.boardItemStacks.size() != 0)
+        if (this.boardItemStacks.size() != 0 && callEvents)
             if (((IBoardable) this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem()).hasSpecialRightClick(this.specialTagInfo))
-                if (((IBoardable) this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem()).onRightClicked(this.specialTagInfo, item))
-                    return true;
+			{
+				((IBoardable) this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem()).onRightClicked(this.specialTagInfo, item);
+				return true;
+			}
 
         if (item == null)
             return false;
@@ -58,7 +72,7 @@ public class TileEntityBoard extends TileEntity
                         boardItemStacks.add(temp);
                         this.currentType = itemStackType;
                         this.specialTagInfo = new NBTTagCompound();
-                        ((IBoardable) temp.getItem()).onAddedToBoard(this.specialTagInfo, temp);
+						if (callEvents) ((IBoardable) temp.getItem()).onAddedToBoard(this.specialTagInfo, temp);
                         return true;
                     } else return false;
                 } else break;
@@ -75,7 +89,7 @@ public class TileEntityBoard extends TileEntity
                         boardItemStacks.add(temp);
                         this.currentType = itemStackType;
                         this.specialTagInfo = new NBTTagCompound();
-                        ((IBoardable) temp.getItem()).onAddedToBoard(this.specialTagInfo, temp);
+						if (callEvents) ((IBoardable) temp.getItem()).onAddedToBoard(this.specialTagInfo, temp);
                         return true;
                     } else return false;
                 } else break;
@@ -92,7 +106,7 @@ public class TileEntityBoard extends TileEntity
                         boardItemStacks.add(temp);
                         this.currentType = itemStackType;
                         this.specialTagInfo = new NBTTagCompound();
-                        ((IBoardable) temp.getItem()).onAddedToBoard(this.specialTagInfo, temp);
+                        if (callEvents) ((IBoardable) temp.getItem()).onAddedToBoard(this.specialTagInfo, temp);
                         return true;
                     } else return false;
                 } else return false;
@@ -106,6 +120,26 @@ public class TileEntityBoard extends TileEntity
 
         return false;
     }
+
+	public boolean canRemoveTopMostItem()
+	{
+		ItemStack item = this.boardItemStacks.get(this.boardItemStacks.size() - 1);
+		if (item != null)
+		{
+			return ((IBoardable) item.getItem()).canBeRemoved(this.specialTagInfo, item);
+		} return false;
+	}
+
+	public ItemStack removeTopMostItem()
+	{
+		ItemStack item = this.boardItemStacks.get(this.boardItemStacks.size() - 1);
+		if (item != null)
+		{
+			if (((IBoardable) item.getItem()).dropItem(this.specialTagInfo, item))
+				return item;
+			else return null;
+		} else return null;
+	}
 
     /***
      * @return Returns all the ItemStacks currently being held by the board.
@@ -169,7 +203,7 @@ public class TileEntityBoard extends TileEntity
             {
                 NBTTagCompound itemCompound = list.getCompoundTagAt(i);
                 ItemStack item = ItemStack.loadItemStackFromNBT(itemCompound);
-                this.addItem(item);
+                this.addItem(item, false);
             }
 
         this.specialTagInfo = p_145839_1_.getCompoundTag("SpecialTag");

@@ -77,9 +77,8 @@ public class ItemSandwichable extends ItemBase implements IBoardable
     }
 
     @Override
-    public boolean onRightClicked(NBTTagCompound specialTagInfo, ItemStack item)
+    public void onRightClicked(NBTTagCompound specialTagInfo, ItemStack item)
     {
-        return false;
     }
 
     @Override
@@ -107,4 +106,16 @@ public class ItemSandwichable extends ItemBase implements IBoardable
     {
         return true;
     }
+
+	@Override
+	public boolean canBeRemoved(NBTTagCompound specialTagInfo, ItemStack toRemove)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean dropItem(NBTTagCompound specialTagInfo, ItemStack removed)
+	{
+		return true;
+	}
 }

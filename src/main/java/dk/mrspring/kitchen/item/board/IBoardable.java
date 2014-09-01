@@ -19,9 +19,8 @@ public interface IBoardable
      * Only get's called if hasSpecialRightClick returns true. Handles the right click event. For example: Butter requires you to right-click it multiple times to spread it out on your bread.
      * @param specialTagInfo The special tag info. Add right-click count on this tag to be stored for next right-click, or changing the model in some way.
      * @param item The item being right-clicked with.
-     * @return Returns true if the action took place, false if not.
      */
-    public boolean onRightClicked(NBTTagCompound specialTagInfo, ItemStack item);
+    public void onRightClicked(NBTTagCompound specialTagInfo, ItemStack item);
 
     /***
      * Gets called when the item is added to the board. Add whatever info you need to the NBTTagCompound that you may need in the right-click event.
@@ -55,4 +54,19 @@ public interface IBoardable
      * @return Returns true if the Item can be added on top. False if not. See ItemButter for example.
      */
     public boolean canAddOnTop(NBTTagCompound specialTagInfo, ItemStack toAdd, ItemStack topItem);
+
+	/***
+	 * @param specialTagInfo The special tag info. Null if nothing is stored. Remember to null-check!
+	 * @param toRemove The ItemStack the player is trying to remove. Used for metadata/NBT special stuff.
+	 * @return Returns true if the Item can be removed from the Board.
+	 */
+	public boolean canBeRemoved(NBTTagCompound specialTagInfo, ItemStack toRemove);
+
+	/***
+	 * Gets called when the item is removed from the board, and determines whether the item should be spawned in the World.
+	 * @param specialTagInfo The special tag info. Null if nothing is stored. Remember to null-check!
+	 * @param removed The removed item. For metadata stuff.
+	 * @return Returns true if the Item should be spawned in the World when it's removed from the Board.
+	 */
+	public boolean dropItem(NBTTagCompound specialTagInfo, ItemStack removed);
 }
