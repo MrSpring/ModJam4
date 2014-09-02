@@ -1,6 +1,8 @@
 package dk.mrspring.kitchen.tileentity;
 
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
+import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.item.board.IBoardable;
 import dk.mrspring.kitchen.item.board.cakeable.ItemCakeable;
 import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichable;
@@ -147,6 +149,47 @@ public class TileEntityBoard extends TileEntity
         return false;
     }
 
+	public ItemStack finishItems()
+	{
+		switch (this.currentType)
+		{
+			case EMPTY: return null;
+			case SANDWICH: return this.finishSandwich();
+			case CAKE: return this.finishCake();
+		}
+	}
+
+	private ItemStack finishSandwich()
+	{
+		ItemStack sandwich = KitchenItems.basic_sandwich.copy();
+		sandwich.stackTagCompound = new NBTTagCompound();
+
+		NBTTagList layersList = new NBTTagList();
+
+		for (ItemStack layer : this.boardItemStacks)
+		{
+			NBTTagCompound layerCompound = new NBTTagCompound();
+			layer.writeToNBT(layerCompound);
+			layersList.appendTag(layerCompound);
+		}
+
+		sandwich.setTagInfo("SandwichLayers", layersList);
+
+		NBTTagCompound comboCompound = new NBTTagCompound();
+		byte comboId = 0;
+
+		for (int i = 0; i < SandwichCombo.combos.length; i++)
+		{
+			SandwichCombo combo = SandwichCombo.combos[i];
+			if (combo.matches(sandwich))
+				comboId = (byte) i;
+		}
+	}
+
+	private ItemStack finishCake()
+	{
+
+	}
 
 	public ItemStack getTopItem()
 	{
