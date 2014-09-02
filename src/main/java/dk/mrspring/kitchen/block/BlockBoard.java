@@ -86,7 +86,17 @@ public class BlockBoard extends BlockContainer
 					return true;
 				}
 			}
-        }
+        } else
+		{
+			ItemStack finishedItem = entity.finishItems();
+
+			if (finishedItem != null)
+			{
+				world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, finishedItem));
+				entity.resetBoard();
+				world.markBlockForUpdate(x, y, z);
+			}
+		}
 
         return true;
 

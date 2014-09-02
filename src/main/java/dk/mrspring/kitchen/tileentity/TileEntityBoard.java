@@ -5,6 +5,7 @@ import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.item.board.IBoardable;
 import dk.mrspring.kitchen.item.board.cakeable.ItemCakeable;
+import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichBread;
 import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -149,6 +150,9 @@ public class TileEntityBoard extends TileEntity
         return false;
     }
 
+	/***
+	 * @return Returns the finished item, based on which type the Board is currently holding.
+	 */
 	public ItemStack finishItems()
 	{
 		switch (this.currentType)
@@ -157,10 +161,20 @@ public class TileEntityBoard extends TileEntity
 			case SANDWICH: return this.finishSandwich();
 			case CAKE: return this.finishCake();
 		}
+		return null;
 	}
 
+	/***
+	 * Called if currentState is SANDWICH.
+	 * @return Returns the finished sandwich, null if the sandwich was not made.
+	 */
 	private ItemStack finishSandwich()
 	{
+		if (this.boardItemStacks.size() < 2)
+			return null;
+		if (!(this.boardItemStacks.get(0).getItem() instanceof ItemSandwichBread && this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem() instanceof ItemSandwichBread))
+			return null;
+
 		ItemStack sandwich = KitchenItems.basic_sandwich.copy();
 		sandwich.stackTagCompound = new NBTTagCompound();
 
@@ -168,9 +182,12 @@ public class TileEntityBoard extends TileEntity
 
 		for (ItemStack layer : this.boardItemStacks)
 		{
-			NBTTagCompound layerCompound = new NBTTagCompound();
-			layer.writeToNBT(layerCompound);
-			layersList.appendTag(layerCompound);
+			if (layer != null)
+			{
+				NBTTagCompound layerCompound = new NBTTagCompound();
+				layer.writeToNBT(layerCompound);
+				layersList.appendTag(layerCompound);
+			}
 		}
 
 		sandwich.setTagInfo("SandwichLayers", layersList);
@@ -178,17 +195,35 @@ public class TileEntityBoard extends TileEntity
 		NBTTagCompound comboCompound = new NBTTagCompound();
 		byte comboId = 0;
 
-		for (int i = 0; i < SandwichCombo.combos.length; i++)
+		for (SandwichCombo combo : SandwichCombo.combos)
 		{
-			SandwichCombo combo = SandwichCombo.combos[i];
-			if (combo.matches(sandwich))
-				comboId = (byte) i;
+			if (combo != null)
+				if (combo.matches(sandwich))
+					comboId = (byte) combo.id;
 		}
+
+		comboCompound.setByte("Id", comboId);
+		sandwich.setTagInfo("Combo", comboCompound);
+
+		return sandwich;
 	}
 
 	private ItemStack finishCake()
 	{
+		return null;
+	}
 
+	/***
+	 * Resets the board.
+	 * @return Returns the list of ItemStacks from before the Board was reset.
+	 */
+	public List<ItemStack> resetBoard()
+	{
+		List<ItemStack> oldList = this.boardItemStacks;
+		this.boardItemStacks = new ArrayList<ItemStack>();
+		this.currentType = Type.EMPTY;
+		this.specialTagInfo = new NBTTagCompound();
+		return oldList;
 	}
 
 	public ItemStack getTopItem()

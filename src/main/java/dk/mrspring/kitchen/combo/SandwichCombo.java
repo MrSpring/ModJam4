@@ -21,6 +21,7 @@ public class SandwichCombo
     protected EnumRarity rarity = EnumRarity.common;
     protected int extraHeal = 0;
     protected OnSandwichEatenEvent onSandwichEatenEvent = new OnSandwichEatenEvent("DEFAULT");
+	public int id;
 
     public static SandwichCombo[] combos = new SandwichCombo[16];
 
@@ -28,6 +29,8 @@ public class SandwichCombo
     {
         if (combos[id] == null)
             combos[id] = this;
+
+		this.id = id;
 
         this.setName(localizableName);
         this.setRarity(enumRarity);
