@@ -2,10 +2,10 @@ package dk.mrspring.kitchen.tileentity;
 
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.combo.SandwichCombo;
+import dk.mrspring.kitchen.item.board.CuttingRegistry;
 import dk.mrspring.kitchen.item.board.IBoardable;
 import dk.mrspring.kitchen.item.board.ISandwichable;
 import dk.mrspring.kitchen.item.board.cakeable.ItemCakeable;
-import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichBread;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -282,6 +282,8 @@ public class TileEntityBoard extends TileEntity
                     return Type.SANDWICH;
                 else if (itemStack.getItem() instanceof ItemCakeable)
                     return Type.CAKE;
+                else if (CuttingRegistry.hasOutput(itemStack))
+                    return Type.CUTTING;
             } else return Type.EMPTY;
         } else return Type.EMPTY;
 

@@ -1,7 +1,6 @@
 package dk.mrspring.kitchen.item.board.sandwichable;
 
 import dk.mrspring.kitchen.KitchenItems;
-import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.item.board.ISandwichable;
 import dk.mrspring.kitchen.model.butter.ModelButter0;
 import dk.mrspring.kitchen.model.butter.ModelButter1;
@@ -12,13 +11,13 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.List;
 
-public class ItemButter extends ItemBase implements ISandwichable
+public class ItemButter extends ItemSandwichableBase implements ISandwichable
 {
     ModelBase[] models = new ModelBase[] { new ModelButter0(), new ModelButter1(), new ModelButter2() };
 
     public ItemButter(String name)
     {
-        super(name, true);
+        super(name, true, 1);
     }
 
     @Override
@@ -106,18 +105,6 @@ public class ItemButter extends ItemBase implements ISandwichable
 			if (rightClickCount == 0 || rightClickCount == 2)
 				return true;
 		}
-		return false;
-	}
-
-	@Override
-	public int getHealAmount()
-	{
-		return 1;
-	}
-
-	@Override
-	public boolean isBread()
-	{
 		return false;
 	}
 }
