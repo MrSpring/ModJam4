@@ -1,9 +1,10 @@
 package dk.mrspring.kitchen.item.board.sandwichable;
 
+import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.item.ItemBase;
-import dk.mrspring.kitchen.item.board.IBoardable;
+import dk.mrspring.kitchen.item.board.ISandwichable;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -12,27 +13,29 @@ import net.minecraft.util.StatCollector;
 
 import java.util.List;
 
-public class ItemSandwichable extends ItemBase implements IBoardable
+public class ItemSandwichableBase extends ItemBase implements ISandwichable
 {
 	private int healOnEaten = 1;
 	public double modelHeight = 0.7;
     public boolean showSandwichableInformation = true;
-    public boolean isBread = false;
+    protected boolean isBread = false;
 	public ModelBase model;
 	
-	public ItemSandwichable(String name, String textureName, boolean useCreativeTab, int healAmount)
+	public ItemSandwichableBase(String name, String textureName, boolean useCreativeTab, int healAmount)
 	{
-		super(name, textureName, useCreativeTab);
+		super(name, textureName, false);
 		
 		this.healOnEaten = healAmount;
+		if (useCreativeTab)
+			this.setCreativeTab(Kitchen.instance.sandwichable_tab);
 	}
 	
-	public ItemSandwichable(String name, boolean useCreativeTab, int healAmount)
+	public ItemSandwichableBase(String name, boolean useCreativeTab, int healAmount)
 	{
 		this(name, ModInfo.modid + ":" + name, useCreativeTab, healAmount);
 	}
 
-    public ItemSandwichable disableInformation()
+    public ItemSandwichableBase disableInformation()
     {
         this.showSandwichableInformation = false;
         return this;
@@ -51,12 +54,19 @@ public class ItemSandwichable extends ItemBase implements IBoardable
         }
     }
 
+	@Override
     public int getHealAmount()
 	{
 		return this.healOnEaten;
 	}
-	
-	public ItemSandwichable setModel(ModelBase model, int modelHeight)
+
+	@Override
+	public boolean isBread()
+	{
+		return this.isBread;
+	}
+
+	public ItemSandwichableBase setModel(ModelBase model, int modelHeight)
 	{
 		this.model = model;
 		this.modelHeight = modelHeight;
@@ -64,7 +74,7 @@ public class ItemSandwichable extends ItemBase implements IBoardable
 		return this;
 	}
 
-    public ItemSandwichable setIsBread()
+    public ItemSandwichableBase setIsBread()
     {
         this.isBread = true;
         return this;

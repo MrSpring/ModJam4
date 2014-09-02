@@ -3,7 +3,7 @@ package dk.mrspring.kitchen.item;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.combo.SandwichCombo;
-import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichable;
+import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichableBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemFood;
@@ -76,7 +76,7 @@ public class ItemSandwich extends ItemFood
 				for (int i = 0; i < layersList.tagCount(); ++i)
 				{
 					NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
-					healAmount += ((ItemSandwichable) ItemStack.loadItemStackFromNBT(layerCompound).getItem()).getHealAmount();
+					healAmount += ((ItemSandwichableBase) ItemStack.loadItemStackFromNBT(layerCompound).getItem()).getHealAmount();
 				}
 
 				byte combo = item.getTagCompound().getCompoundTag("Combo").getByte("Id");

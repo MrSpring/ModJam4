@@ -71,7 +71,7 @@ public class BlockBoard extends BlockContainer
                 {
                     world.markBlockForUpdate(x, y, z);
                     return false;
-                }
+                } else return false;
 			} else
 			{
 				if (entity.canRemoveTopMostItem())
@@ -84,7 +84,7 @@ public class BlockBoard extends BlockContainer
 					}
 					world.markBlockForUpdate(x, y, z);
 					return true;
-				}
+				} else return false;
 			}
         } else
 		{
@@ -95,10 +95,9 @@ public class BlockBoard extends BlockContainer
 				world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, finishedItem));
 				entity.resetBoard();
 				world.markBlockForUpdate(x, y, z);
-			}
+				return true;
+			} else return false;
 		}
-
-        return true;
 
 		/*if (!world.isRemote)
 		{
@@ -106,9 +105,9 @@ public class BlockBoard extends BlockContainer
 			{
 				if (activator.getCurrentEquippedItem() != null)
 				{
-					if (activator.getCurrentEquippedItem().getItem() instanceof ItemSandwichable)
+					if (activator.getCurrentEquippedItem().getItem() instanceof ItemSandwichableBase)
 					{
-						if (entity.addLayer((ItemSandwichable) activator.getCurrentEquippedItem().getItem()))
+						if (entity.addLayer((ItemSandwichableBase) activator.getCurrentEquippedItem().getItem()))
 						{
 							--activator.getCurrentEquippedItem().stackSize;
 							world.markBlockForUpdate(x, y, z);

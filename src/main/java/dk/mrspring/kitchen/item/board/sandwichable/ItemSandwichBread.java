@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.List;
 
-public class ItemSandwichBread extends ItemSandwichable
+public class ItemSandwichBread extends ItemSandwichableBase
 {
 	ModelBase bottomModel;
 	ModelBase topModel;

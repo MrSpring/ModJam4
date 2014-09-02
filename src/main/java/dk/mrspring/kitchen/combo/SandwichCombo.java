@@ -1,12 +1,12 @@
 package dk.mrspring.kitchen.combo;
 
-import dk.mrspring.kitchen.event.sandwich.CreeperSandwichEvent;
-import dk.mrspring.kitchen.event.sandwich.OnSandwichEatenEvent;
+import dk.mrspring.kitchen.event.sandwich.IOnEatenEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
@@ -20,7 +20,7 @@ public class SandwichCombo
     protected String name = "default";
     protected EnumRarity rarity = EnumRarity.common;
     protected int extraHeal = 0;
-    protected OnSandwichEatenEvent onSandwichEatenEvent = new OnSandwichEatenEvent("DEFAULT");
+    protected IOnEatenEvent onSandwichEatenEvent;
 	public int id;
 
     public static SandwichCombo[] combos = new SandwichCombo[16];
@@ -43,6 +43,7 @@ public class SandwichCombo
     public static SandwichCombo smart_chicken;
     public static SandwichCombo veggie;
     public static SandwichCombo creeper;
+	public static SandwichCombo only_toast;
 
     public static void load()
     {
@@ -52,7 +53,23 @@ public class SandwichCombo
         retro_roast_beef = new SandwichCombo(4, "rrb", EnumRarity.uncommon).setComboLayers(new String[] { "bread_slice", "roast_beef", "roast_beef", "tomato_slice", "lettuce_leaf", "bread_slice" }).setExtraHeal(3);
         smart_chicken = new SandwichCombo(5, "smart_chicken", EnumRarity.uncommon).setComboLayers(new String[] { "toast", "chicken_fillet_cooked", "tomato_slice", "lettuce_leaf", "toast" });
         veggie = new SandwichCombo(6, "veggie", EnumRarity.rare).setComboLayers(new String[] { "bread_slice", "carrot_slice", "lettuce_leaf", "tomato_slice", "cheese_slice", "bread_slice" });
-        creeper = new SandwichCombo(7, "creeper", EnumRarity.epic).setComboLayers(new String[] { "bread_slice", "bread_slice", "lettuce_leaf", "lettuce_leaf", "creeper_slice" }).registerOnEatenEvent(new CreeperSandwichEvent());
+        creeper = new SandwichCombo(7, "creeper", EnumRarity.epic).setComboLayers(new String[] { "bread_slice", "bread_slice", "lettuce_leaf", "lettuce_leaf", "creeper_slice" }).registerOnEatenEvent(new IOnEatenEvent()
+		{
+			@Override
+			public String getName()
+			{
+				return "ON_EATEN:CREEPER";
+			}
+
+			@Override
+			public void onEaten(ItemStack item, World world, EntityPlayer entityPlayer)
+			{
+				entityPlayer.addPotionEffect(new PotionEffect(11, 10, 6, false));
+				if (!world.isRemote)
+					world.createExplosion(entityPlayer, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, 1.5F, world.getGameRules().getGameRuleBooleanValue("mobGriefing"));
+			}
+		});
+		only_toast = new SandwichCombo(8, "only_bread", EnumRarity.common).setComboLayers(new String[] { "toast", "toast" });
     }
 
     public SandwichCombo setName(String name)
@@ -98,7 +115,7 @@ public class SandwichCombo
 
     public void onFoodEaten(ItemStack itemStack, World world, EntityPlayer player)
     {
-        this.onSandwichEatenEvent.onFoodEaten(itemStack, world, player);
+        this.onSandwichEatenEvent.onEaten(itemStack, world, player);
     }
 
     public SandwichCombo setExtraHeal(int extraHeal)
@@ -107,7 +124,7 @@ public class SandwichCombo
         return this;
     }
 
-    public SandwichCombo registerOnEatenEvent(OnSandwichEatenEvent event)
+    public SandwichCombo registerOnEatenEvent(IOnEatenEvent event)
     {
         this.onSandwichEatenEvent = event;
         return this;

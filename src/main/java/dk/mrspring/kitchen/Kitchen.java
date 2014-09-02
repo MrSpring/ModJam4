@@ -39,6 +39,7 @@ public class Kitchen
 	public static CommonProxy proxy;
 	
 	public CreativeTabs tab;
+	public CreativeTabs sandwichable_tab;
 
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event)
@@ -52,6 +53,15 @@ public class Kitchen
 			@Override
 			public Item getTabIconItem()
 				{ return KitchenItems.basic_sandwich.getItem(); }
+		};
+
+		instance.sandwichable_tab = new CreativeTabs("tabSandwichable")
+		{
+			@Override
+			public Item getTabIconItem()
+			{
+				return KitchenItems.bread_slice;
+			}
 		};
 
 		// Registering Tile Entities

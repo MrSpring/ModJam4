@@ -1,12 +1,11 @@
 package dk.mrspring.kitchen.tileentity;
 
 import dk.mrspring.kitchen.KitchenItems;
-import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.item.board.IBoardable;
+import dk.mrspring.kitchen.item.board.ISandwichable;
 import dk.mrspring.kitchen.item.board.cakeable.ItemCakeable;
 import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichBread;
-import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -172,7 +171,7 @@ public class TileEntityBoard extends TileEntity
 	{
 		if (this.boardItemStacks.size() < 2)
 			return null;
-		if (!(this.boardItemStacks.get(0).getItem() instanceof ItemSandwichBread && this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem() instanceof ItemSandwichBread))
+		if (!(((ISandwichable) this.boardItemStacks.get(0).getItem()).isBread() && ((ISandwichable) this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem()).isBread()))
 			return null;
 
 		ItemStack sandwich = KitchenItems.basic_sandwich.copy();
@@ -279,7 +278,7 @@ public class TileEntityBoard extends TileEntity
         {
             if (itemStack.getItem() != null)
             {
-                if (itemStack.getItem() instanceof ItemSandwichable)
+                if (itemStack.getItem() instanceof ISandwichable)
                     return Type.SANDWICH;
                 else if (itemStack.getItem() instanceof ItemCakeable)
                     return Type.CAKE;
@@ -364,7 +363,7 @@ public class TileEntityBoard extends TileEntity
 		this.layerIndex = 0;
 	}
 	
-	public boolean addLayer(ItemSandwichable par1)
+	public boolean addLayer(ItemSandwichableBase par1)
 	{
 		if (this.layerIndex + 1 <= 10)
 		{
@@ -424,7 +423,7 @@ public class TileEntityBoard extends TileEntity
 		{
 			NBTTagCompound layerCompound = list.getCompoundTagAt(i);
 			
-			this.addLayer((ItemSandwichable) ItemStack.loadItemStackFromNBT(layerCompound).getItem());
+			this.addLayer((ItemSandwichableBase) ItemStack.loadItemStackFromNBT(layerCompound).getItem());
 		}
 	}
 	
