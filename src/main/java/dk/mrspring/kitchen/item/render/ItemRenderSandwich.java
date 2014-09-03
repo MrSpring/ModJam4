@@ -68,20 +68,17 @@ public class ItemRenderSandwich implements IItemRenderer
                     {
                         if (!((EntityPlayer) data[1] == Minecraft.getMinecraft().renderViewEntity && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && !((Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative) && RenderManager.instance.playerViewY == 180.0F)))
                         {
-							System.out.println(" Rendering First!");
                             GL11.glRotatef(180, -0.15F, 1.0F, -0.6F);
-                            GL11.glTranslatef(-0.5F, 0.0F, -0.3F);
+                            GL11.glTranslatef(-1.1F, -0.4F, -0.9F);
                             GL11.glScalef(1.4F, 1.4F, 1.4F);
                         } else
                         {
-							System.out.println(" Rendering Second!");
                             GL11.glRotatef(180, 0.5F, 0.15F, 0.0F);
                             GL11.glTranslatef(1.0F, -1.0F, 1.0F);
                             GL11.glScalef(0.6F, 0.6F, 0.6F);
                         }
                     } else
 					{
-						System.out.println(" Rendering Third!");
                         GL11.glRotatef(180, 0.5F, 1.0F, 0.0F);
                         GL11.glTranslatef(0.0F, 0.7F, -0.2F);
                     }
@@ -111,11 +108,18 @@ public class ItemRenderSandwich implements IItemRenderer
 						}
 
                         GL11.glPushMatrix();
-
-                        GL11.glRotatef(180, 0.65F, 0.12F, 0.6F);
-                        GL11.glTranslatef(-0.3F, -0.5F, 0.3F);
-                        GL11.glScalef(0.8F, 0.8F, 0.8F);
-
+                        
+                        if (((EntityPlayer) data[1]).isUsingItem())
+                        {
+                        	GL11.glRotatef(180, 0.6F, 0.2F, 0.6F);
+	                        GL11.glTranslatef(-0.5F, -0.6F, 1.1F);
+	                        GL11.glScalef(0.8F, 0.8F, 0.8F);
+                        } else
+                        {
+	                        GL11.glRotatef(180, 0.6F, 0.2F, 0.5F);
+	                        GL11.glTranslatef(-0.7F, -0.5F, 0.7F);
+	                        GL11.glScalef(0.8F, 0.8F, 0.8F);
+                        }
                         GL11.glRotatef(180F, 1.0F, 0.0F, 0.0F);
 
                         ItemRenderHelper.renderSandwich(items, null);
@@ -129,10 +133,10 @@ public class ItemRenderSandwich implements IItemRenderer
 		}
 	}
 	
-	private void renderItemEntity(ItemStack item, double xOffset, double yOffset, double zOffset, int i)
+	/*private void renderItemEntity(ItemStack item, double xOffset, double yOffset, double zOffset, int i)
 	{
 		GL11.glPushMatrix();
-		
+
 		GL11.glTranslated(xOffset, yOffset, zOffset);
 
 		if (item != null)
@@ -146,7 +150,7 @@ public class ItemRenderSandwich implements IItemRenderer
 				GL11.glRotatef(180, 0, 1, 1);
 				RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 				RenderItem.renderInFrame = false;
-			}
+			}*/
 			
 			/*if (((ISandwichable) this.items[i].getItem()).hasCustomModel)
 				if (i + 1 < this.items.length)
@@ -166,6 +170,6 @@ public class ItemRenderSandwich implements IItemRenderer
 				RenderItem.renderInFrame = false;
 			}*/
 			
-		GL11.glPopMatrix();
-	}
+		/*GL11.glPopMatrix();
+	}*/
 }
