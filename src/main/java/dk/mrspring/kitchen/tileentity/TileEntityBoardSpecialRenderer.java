@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.tileentity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.item.board.IBoardable;
+import dk.mrspring.kitchen.item.render.ItemRenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -32,7 +33,9 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 
         List<ItemStack> layers = tileEntity.getAllItems();
 
-        for (int i = 0; i < layers.size(); i++)
+		ItemRenderHelper.renderSandwich(layers, tileEntity.getSpecialTagInfo());
+
+        /*for (int i = 0; i < layers.size(); i++)
         {
             ItemStack itemStack = layers.get(i);
             if (itemStack != null)
@@ -45,7 +48,7 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
                     this.renderItem(itemStack, .5, .145 + ((yItemOffset * 0.0625) * .7), .33D, i, layers, specialCompound);
                     yItemOffset += ((IBoardable) itemStack.getItem()).getRenderHeight(null, i, itemStack, layers);
                 }
-        }
+        }*/
 
 		/*for (int i = 0; i < this.layers.size(); ++i)
 		{
