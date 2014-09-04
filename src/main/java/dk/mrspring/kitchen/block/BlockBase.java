@@ -26,6 +26,11 @@ public class BlockBase extends Block
 	{
 		this(mat, name, ModInfo.modid + ":" + name, useCreativeTab);
 	}
+
+    public BlockBase (Material mat, String name)
+    {
+        this(mat, name, true);
+    }
 	
 	public static void load()
 	{
@@ -38,6 +43,5 @@ public class BlockBase extends Block
 		registerBlock(KitchenBlocks.oven);
 		registerBlock(KitchenBlocks.plate, ItemBlockPlate.class, "plate");
         registerBlock(KitchenBlocks.kitchen_cabinet);
-        registerBlock(KitchenBlocks.text_test);
 	}
 }

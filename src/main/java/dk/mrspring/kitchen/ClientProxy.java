@@ -18,7 +18,6 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOven.class, new TileEntityOvenSpecialRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPlate.class, new TileEntityPlateSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityKitchenCabinet.class, new TileEntityKitchenCabinetSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTextTest.class, new TileEntityTextTestRenderer());
 
         RenderingRegistry.registerEntityRenderingHandler(EntityCup.class, new RenderCup());
 

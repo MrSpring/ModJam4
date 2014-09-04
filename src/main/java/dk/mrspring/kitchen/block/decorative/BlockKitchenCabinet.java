@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.block;
+package dk.mrspring.kitchen.block.decorative;
 
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
