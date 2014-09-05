@@ -2,16 +2,9 @@ package dk.mrspring.kitchen.tileentity;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import dk.mrspring.kitchen.item.board.IBoardable;
 import dk.mrspring.kitchen.item.render.ItemRenderHelper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import org.lwjgl.opengl.GL11;
 
@@ -27,9 +20,15 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
 		
 		GL11.glTranslated(x, y, z);
 		TileEntityBoard tileEntity = (TileEntityBoard) var1;
-        List<ItemStack> layers = tileEntity.getAllItems();
-		ItemRenderHelper.renderSandwich(layers, tileEntity.getSpecialTagInfo());
-		
+        List<ItemStack> items = tileEntity.getAllItems();
+
+        switch (tileEntity.getCurrentType())
+        {
+            case SANDWICH: ItemRenderHelper.renderSandwich(items, tileEntity.getSpecialTagInfo()); break;
+            case CAKE: break;
+            case CUTTING: ItemRenderHelper.renderCutting(items, tileEntity.getSpecialTagInfo(), tileEntity.getBlockMetadata()); break;
+        }
+
 		GL11.glPopMatrix();
 	}
 }

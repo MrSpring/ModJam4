@@ -1,6 +1,7 @@
-package dk.mrspring.kitchen.item.board;
+package dk.mrspring.kitchen.recipe;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  * Created by Konrad on 02-09-2014.
  */
-public class CuttingRegistry
+public class CuttingRecipes
 {
     private static List<ItemStack> inputStacks = new ArrayList<ItemStack>();
     private static List<ItemStack> outputStacks = new ArrayList<ItemStack>();
@@ -24,9 +25,9 @@ public class CuttingRegistry
         ItemStack temp = input.copy();
         temp.stackSize = 1;
 
-        if (inputStacks.contains(temp))
+        if (hasOutput(input))
         {
-            int index = inputStacks.indexOf(temp);
+            int index = getIndex(temp);
             return outputStacks.get(index);
         } else return null;
     }
@@ -34,7 +35,26 @@ public class CuttingRegistry
     public static boolean hasOutput(ItemStack item)
     {
         ItemStack temp = item.copy();
-        temp.stackSize = 1;
+
+        for (ItemStack input : inputStacks)
+        {
+            if (OreDictionary.itemMatches(temp, input, false))
+                return true;
+        }
         return inputStacks.contains(temp);
+    }
+
+    private static int getIndex(ItemStack itemStack)
+    {
+        ItemStack temp = itemStack.copy();
+        temp.stackSize = 1;
+
+        for (int i = 0; i < inputStacks.size(); i++) {
+            ItemStack input = inputStacks.get(i);
+            if (OreDictionary.itemMatches(temp, input, false))
+                return i;
+        }
+
+        return inputStacks.indexOf(temp);
     }
 }

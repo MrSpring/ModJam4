@@ -12,6 +12,8 @@ import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.entity.EntityCup;
 import dk.mrspring.kitchen.item.ItemBase;
+import dk.mrspring.kitchen.recipe.CuttingRecipes;
+import dk.mrspring.kitchen.recipe.OvenRecipes;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import dk.mrspring.kitchen.tileentity.TileEntityKitchenCabinet;
 import dk.mrspring.kitchen.tileentity.TileEntityOven;
@@ -80,6 +82,8 @@ public class Kitchen
 		BlockBase.load();
 		ItemBase.load();
 
+
+
 		// Registering renderers
 		proxy.registerRenderers();
 
@@ -112,13 +116,24 @@ public class Kitchen
 		// Tile recipe
         GameRegistry.addRecipe(new ItemStack(KitchenBlocks.tiles, 2), "IB", "CC", "CC", valueOf('I'), new ItemStack(Items.dye, 1, 0), valueOf('B'), new ItemStack(Items.dye, 1, 15), valueOf('C'), Items.clay_ball);
 
-        // Basic knife ItemStack to allow the recipe to be used with a knife, no matter the damage value
-        ItemStack knife_stack = new ItemStack(KitchenItems.knife, 1, Short.MAX_VALUE);
+        System.out.println(" Knife Icon Name: " + KitchenItems.knife.getIcon(new ItemStack(KitchenItems.knife), 0).getIconName());
 
 		/**
-		 * Knife recipes
+		 * Cutting Board recipes
 		 */
-        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.raw_bacon, 3), knife_stack, new ItemStack(Items.porkchop));
+        CuttingRecipes.registerCuttingRecipe(new ItemStack(Items.porkchop), new ItemStack(KitchenItems.raw_bacon, 3));
+        CuttingRecipes.registerCuttingRecipe(new ItemStack(KitchenItems.tomato), new ItemStack(KitchenItems.tomato_slice, 4));
+        CuttingRecipes.registerCuttingRecipe(new ItemStack(KitchenItems.lettuce), new ItemStack(KitchenItems.lettuce_leaf, 2));
+        CuttingRecipes.registerCuttingRecipe(new ItemStack(Items.carrot), new ItemStack(KitchenItems.carrot_slice, 2));
+        CuttingRecipes.registerCuttingRecipe(new ItemStack(Items.potato), new ItemStack(KitchenItems.potato_slice, 3));
+        CuttingRecipes.registerCuttingRecipe(new ItemStack(Items.bread), new ItemStack(KitchenItems.bread_slice, 3));
+        CuttingRecipes.registerCuttingRecipe(new ItemStack(Items.beef), new ItemStack(KitchenItems.raw_roast_beef, 2));
+        CuttingRecipes.registerCuttingRecipe(new ItemStack(Items.chicken), new ItemStack(KitchenItems.raw_chicken_fillet, 3));
+        CuttingRecipes.registerCuttingRecipe(new ItemStack(Items.cooked_chicken), new ItemStack(KitchenItems.chicken_leg, 2));
+        CuttingRecipes.registerCuttingRecipe(new ItemStack(KitchenItems.cheese), new ItemStack(KitchenItems.cheese_slice, 2));
+        CuttingRecipes.registerCuttingRecipe(new ItemStack(Items.skull, 1, 4), new ItemStack(KitchenItems.sliced_creeper, 1));
+
+        /*GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.raw_bacon, 3), knife_stack, new ItemStack(Items.porkchop));
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.tomato_slice, 4), knife_stack, new ItemStack(KitchenItems.tomato));
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.lettuce_leaf, 2), knife_stack, new ItemStack(KitchenItems.lettuce));
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.carrot_slice, 2), knife_stack, new ItemStack(Items.carrot));
@@ -128,7 +143,7 @@ public class Kitchen
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.raw_chicken_fillet, 4), knife_stack, new ItemStack(Items.chicken));
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.chicken_leg, 2), knife_stack, new ItemStack(Items.cooked_chicken));
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.cheese_slice, 2), knife_stack, new ItemStack(KitchenItems.cheese));
-        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.sliced_creeper, 1), knife_stack, new ItemStack(Items.skull, 1, 4));
+        GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.sliced_creeper, 1), knife_stack, new ItemStack(Items.skull, 1, 4));*/
 
         // Cheese recipe
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.cheese, 2), new ItemStack(Items.milk_bucket));

@@ -1,12 +1,12 @@
 package dk.mrspring.kitchen.item.render;
 
 import dk.mrspring.kitchen.item.board.IBoardable;
+import dk.mrspring.kitchen.model.ModelCutting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import org.lwjgl.opengl.GL11;
@@ -18,6 +18,8 @@ import java.util.List;
  */
 public class ItemRenderHelper
 {
+	static ModelCutting cuttingModel;
+	
 	public static void renderSandwich(List<ItemStack> layers, NBTTagCompound specialTagInfo)
 	{
 		double yItemOffset = 0D;
@@ -38,6 +40,28 @@ public class ItemRenderHelper
 		}
 	}
 
+    public static void renderCutting(List<ItemStack> layers, NBTTagCompound specialTagInfo, int metadata)
+    {
+    	if (cuttingModel == null)
+    		cuttingModel = new ModelCutting();
+    	
+        float rotation = metadata * 90;
+
+        GL11.glPushMatrix();
+
+        System.out.println(" Rendering!");
+
+        GL11.glRotatef(rotation, 0F, 1F, 0F);
+
+        GL11.glPushMatrix();
+
+        cuttingModel.render(Minecraft.getMinecraft().renderViewEntity, 0F, 0F, 0F, 0F, 0F, 0.0625F, layers.get(0), specialTagInfo.getInteger("CutAmount"));
+
+        GL11.glPopMatrix();
+
+        GL11.glPopMatrix();
+    }
+
 	public static void renderItem(ItemStack item, double xOffset, double yOffset, double zOffset, List<ItemStack> items, int indexInList, NBTTagCompound specialTagInfo)
 	{
 		GL11.glPushMatrix();
@@ -53,15 +77,18 @@ public class ItemRenderHelper
 			if (model != null)
 				model.render(Minecraft.getMinecraft().renderViewEntity, 0F, 0F, 0F, 0F, 0F, 0.0625F);
 			else
-			{
-				EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
-				itemEntity.hoverStart = 0.0F;
-				RenderItem.renderInFrame = true;
-				GL11.glRotatef(180, 0, 1, 1);
-				RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
-				RenderItem.renderInFrame = false;
-			}
+				renderSimpleItem(item, xOffset, yOffset, zOffset);
 
 		GL11.glPopMatrix();
+	}
+	
+	public static void renderSimpleItem(ItemStack item, double xOffset, double yOffset, double zOffset)
+	{
+		EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
+		itemEntity.hoverStart = 0.0F;
+		RenderItem.renderInFrame = true;
+		GL11.glRotatef(180, 0, 1, 1);
+		RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+		RenderItem.renderInFrame = false;
 	}
 }

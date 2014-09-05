@@ -67,7 +67,7 @@ public class BlockBoard extends BlockContainer
         {
             if (activator.getCurrentEquippedItem() != null)
 			{
-                if (entity.addItem(activator.getCurrentEquippedItem()))
+                if (entity.onRightClicked(activator))
                 {
                     world.markBlockForUpdate(x, y, z);
                     return false;
