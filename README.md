@@ -6,4 +6,5 @@ My entry in the 4th Mod Jam
 Download
 ========
 The mod is now available for download!
-Download here: http://www.minecraftforum.net/topic/2716088-
+The mod can be found on Minecraft Forum (http://bit.ly/TheKitchenModMCF) and Planet Minecraft (http://bit.ly/TheKitchenModPMC).
+
