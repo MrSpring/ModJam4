@@ -4,8 +4,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.item.ItemBlockJamJar;
 import dk.mrspring.kitchen.item.ItemBlockPlate;
-import dk.mrspring.kitchen.item.ItemJamJar;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
@@ -40,7 +40,6 @@ public class BlockBase extends Block
 		registerBlock(KitchenBlocks.oven);
 		registerBlock(KitchenBlocks.plate, ItemBlockPlate.class, "plate");
         registerBlock(KitchenBlocks.kitchen_cabinet);
-        registerBlock(KitchenBlocks.text_test);
-		GameRegistry.registerBlock(KitchenBlocks.jam_jar_block, ItemJamJar.class, KitchenBlocks.jam_jar_block.getUnlocalizedName().replace("tile.", ""));
+		GameRegistry.registerBlock(KitchenBlocks.jam_jar, ItemBlockJamJar.class, KitchenBlocks.jam_jar.getUnlocalizedName().replace("tile.", ""));
 	}
 }

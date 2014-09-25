@@ -1,7 +1,7 @@
-package dk.mrspring.kitchen.item.board.sandwichable;
+package dk.mrspring.kitchen.item.boardable.sandwichable;
 
 import dk.mrspring.kitchen.KitchenItems;
-import dk.mrspring.kitchen.item.board.ISandwichable;
+import dk.mrspring.kitchen.item.boardable.ISandwichable;
 import dk.mrspring.kitchen.model.butter.ModelButter0;
 import dk.mrspring.kitchen.model.butter.ModelButter1;
 import dk.mrspring.kitchen.model.butter.ModelButter2;

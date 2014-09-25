@@ -12,7 +12,6 @@ import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.entity.EntityCup;
 import dk.mrspring.kitchen.item.ItemBase;
-import dk.mrspring.kitchen.item.jam.ItemJam;
 import dk.mrspring.kitchen.item.jam.Jam;
 import dk.mrspring.kitchen.recipe.OvenRecipes;
 import dk.mrspring.kitchen.tileentity.*;
@@ -28,7 +27,6 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static java.lang.Character.valueOf;
 
@@ -70,7 +68,7 @@ public class Kitchen
 			}
 		};
 
-		instance.jam_tab = new CreativeTabs("tebJam")
+		instance.jam_tab = new CreativeTabs("tabJam")
 		{
 			@Override
 			public Item getTabIconItem()
@@ -84,15 +82,10 @@ public class Kitchen
 		GameRegistry.registerTileEntity(TileEntityOven.class, "tileEntityOven");
 		GameRegistry.registerTileEntity(TileEntityPlate.class, "tileEntityPlate");
         GameRegistry.registerTileEntity(TileEntityKitchenCabinet.class, "tileEntityKitchenCabinet");
-        GameRegistry.registerTileEntity(TileEntityTextTest.class, "tilEntityTextTest");
 		GameRegistry.registerTileEntity(TileEntityJamJar.class, "tileEntityJamJar");
 
         EntityRegistry.registerGlobalEntityID(EntityCup.class, "entityCup", EntityRegistry.findGlobalUniqueEntityId());
         EntityRegistry.registerModEntity(EntityCup.class, "entityCup", 1, instance, 250, 1, true);
-
-		registerJamRecipe(KitchenItems.strawberry_jam);
-		registerJamRecipe(KitchenItems.apple_jam);
-
 
 		// Loading Blocks and Items
 		BlockBase.load();
@@ -104,14 +97,6 @@ public class Kitchen
         // Registers the Plant generator
         GameRegistry.registerWorldGenerator(new WorldGenWildPlant(), 1);
     }
-
-	private static void registerJamRecipe(ItemJam jamInput, Object... extraStuff)
-	{
-		ItemStack output = new ItemStack(KitchenBlocks.jam_jar_block, 1, 1);
-		Jam jam = jamInput.getJam();
-		output.getTagCompound().setString("JamType", jam.name());
-		GameRegistry.addShapelessRecipe(output, new ItemStack(KitchenBlocks.jam_jar_block, 1, 0), new ItemStack(jamInput, 1), extraStuff);
-	}
 	
 	@EventHandler
 	public static void init(FMLInitializationEvent event)
@@ -199,23 +184,48 @@ public class Kitchen
 				break;
 			}
             // Registers the Basic recipe if the number is higher than 3, or lower than 0
-            default: GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "I ", " S", valueOf('S'), "stickWood", valueOf('I'), Items.iron_ingot)); break;	// Default recipe
-        }																																							//
-																																									//
-		GameRegistry.addRecipe(new ItemStack(KitchenBlocks.plate, 1, 0), "CBC", " C ", valueOf('C'), Items.clay_ball, valueOf('B'), new ItemStack(Items.dye, 1, 15));// Plate recipe
-																																									//
+            default: GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "I ", " S", valueOf('S'), "stickWood", valueOf('I'), Items.iron_ingot)); break;
+        }
+
+		GameRegistry.addRecipe(new ItemStack(KitchenBlocks.plate, 1, 0), "CBC", " C ", valueOf('C'), Items.clay_ball, valueOf('B'), new ItemStack(Items.dye, 1, 15));
+
 		/**
 		 * Mortar and Pestle recipes
 		 */
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.flour, 1), "W", "M", valueOf('M'), KitchenItems.mortar_and_pestle, valueOf('W'), Items.wheat);			// Flour recipe
-		GameRegistry.addRecipe(new ItemStack(KitchenItems.flour, 3), "B", "M", valueOf('M'), KitchenItems.mortar_and_pestle, valueOf('B'), Items.bread);			// Flour recipe
-																																									//
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.flour, 1), "W", "M", valueOf('M'), KitchenItems.mortar_and_pestle, valueOf('W'), Items.wheat);
+		GameRegistry.addRecipe(new ItemStack(KitchenItems.flour, 3), "B", "M", valueOf('M'), KitchenItems.mortar_and_pestle, valueOf('B'), Items.bread);
+
 		/**
 		 * Smelting recipes
 		 */
-		GameRegistry.addSmelting(KitchenItems.raw_bacon, new ItemStack(KitchenItems.bacon, 1, 0), 3.0F);															// Cooked Bacon recipe
-		GameRegistry.addSmelting(KitchenItems.flour, new ItemStack(KitchenItems.toast, 2, 0), 3.0F);																// Toast recipe
-		GameRegistry.addSmelting(KitchenItems.raw_chicken_fillet, new ItemStack(KitchenItems.chicken_fillet, 1, 0), 3.0F);											// Cooked Chicken Fillet recipe
-		GameRegistry.addSmelting(KitchenItems.raw_roast_beef, new ItemStack(KitchenItems.roast_beef, 1, 0), 3.0F);													// Roast Beef recipe
+		GameRegistry.addSmelting(KitchenItems.raw_bacon, new ItemStack(KitchenItems.bacon, 1, 0), 3.0F);
+		GameRegistry.addSmelting(KitchenItems.flour, new ItemStack(KitchenItems.toast, 2, 0), 3.0F);
+		GameRegistry.addSmelting(KitchenItems.raw_chicken_fillet, new ItemStack(KitchenItems.chicken_fillet, 1, 0), 3.0F);
+		GameRegistry.addSmelting(KitchenItems.raw_roast_beef, new ItemStack(KitchenItems.roast_beef, 1, 0), 3.0F);
+
+        /**
+         * Jam recipes
+         */
+        GameRegistry.addShapelessRecipe(getJamItemStack(Jam.STRAWBERRY, 6), new ItemStack(KitchenItems.strawberry_jam), new ItemStack(Items.sugar), new ItemStack(KitchenBlocks.jam_jar, 1, 0));
 	}
+
+    private static ItemStack getJamItemStack(Jam jam, int usesLeft)
+    {
+        ItemStack jamStack = new ItemStack(KitchenBlocks.jam_jar, 1, 1);
+
+        if (jam == Jam.EMPTY)
+        {
+            jamStack.setItemDamage(0);
+            return jamStack;
+        } else
+        {
+            String jamName = jam.name();
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setString("JamType", jamName);
+            compound.setInteger("UsesLeft", usesLeft);
+
+            jamStack.setTagInfo("JamInfo", compound);
+            return jamStack;
+        }
+    }
 }

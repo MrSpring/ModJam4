@@ -3,12 +3,10 @@ package dk.mrspring.kitchen.tileentity;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModLogger;
 import dk.mrspring.kitchen.combo.SandwichCombo;
-import dk.mrspring.kitchen.item.board.IBoardable;
-import dk.mrspring.kitchen.item.board.ISandwichable;
-import dk.mrspring.kitchen.item.board.cakeable.ItemCakeable;
+import dk.mrspring.kitchen.item.boardable.IBoardable;
+import dk.mrspring.kitchen.item.boardable.ISandwichable;
+import dk.mrspring.kitchen.item.boardable.cakeable.ItemCakeable;
 import dk.mrspring.kitchen.recipe.CuttingRecipes;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -45,9 +43,9 @@ public class TileEntityBoard extends TileEntity
 	 * @param item The ItemStack to add.
 	 * @return Returns true if the ItemStack was successfully added, false if not.
 	 */
-	public boolean addItem(ItemStack item)
+	public boolean rightClicked(ItemStack item)
 	{
-		return this.addItem(item, true);
+		return this.rightClicked(item, true);
 	}
 
     /***
@@ -57,7 +55,7 @@ public class TileEntityBoard extends TileEntity
 	 * @param callEvents Whether to call the onRightClicked- and the onAddedToBoardEvent of the items. False when loaded from NBTData.
      * @return Returns true if the ItemStack was successfully added, false if not.
      */
-    public boolean addItem(ItemStack item, boolean callEvents)
+    public boolean rightClicked(ItemStack item, boolean callEvents)
     {
         if (this.boardItemStacks.size() != 0 && callEvents)
             if (((IBoardable) this.boardItemStacks.get(this.boardItemStacks.size() - 1).getItem()).hasSpecialRightClick(this.getSpecialTagInfo()))
@@ -75,7 +73,7 @@ public class TileEntityBoard extends TileEntity
 
         Type itemStackType = this.identifyType(item);
 
-		if (itemStackType == this.currentType || this.currentType == Type.EMPTY && itemStackType != Type.CUTTING)
+		if (itemStackType == this.currentType || this.currentType == Type.EMPTY)
 		{
             if (!(item.getItem() instanceof IBoardable))
                 return false;
@@ -93,40 +91,9 @@ public class TileEntityBoard extends TileEntity
 				return true;
 			}
 			return false;
-		} else if (itemStackType == Type.CUTTING)
-        {
-            if (this.currentType == Type.EMPTY)
-            {
-                ItemStack temp = item.copy();
-                temp.stackSize = 1;
-                --item.stackSize;
-                this.currentType = Type.CUTTING;
-                this.boardItemStacks.add(temp);
-
-            }
-        }
+		}
 
         return false;
-    }
-
-    public boolean onRightClicked(Entity player)
-    {
-        System.out.println(" Board was right-clicked");
-
-        Type itemStackType = Type.UNKNOWN;
-        if (((EntityPlayer) player).getCurrentEquippedItem() != null)
-            itemStackType = this.identifyType(((EntityPlayer) player).getCurrentEquippedItem());
-
-        if (itemStackType == Type.KNIFE && this.currentType == Type.CUTTING)
-        {
-            if (!this.getSpecialTagInfo().hasKey("CutAmount"))
-                this.specialTagInfo.setInteger("CutAmount", 0);
-
-            if (this.getSpecialTagInfo().getInteger("CutAmount") <= 7)
-                this.specialTagInfo.setInteger("CutAmount", this.getSpecialTagInfo().getInteger("CutAmount") + 1);
-
-            return true;
-        } else return this.addItem(((EntityPlayer) player).getCurrentEquippedItem());
     }
 
 	/***
@@ -139,7 +106,6 @@ public class TileEntityBoard extends TileEntity
 			case EMPTY: return null;
 			case SANDWICH: return this.finishSandwich();
 			case CAKE: return this.finishCake();
-            case CUTTING: return this.finishCutting();
 		}
 		return null;
 	}
@@ -279,10 +245,6 @@ public class TileEntityBoard extends TileEntity
                     return Type.SANDWICH;
                 else if (itemStack.getItem() instanceof ItemCakeable)
                     return Type.CAKE;
-                else if (CuttingRecipes.hasOutput(itemStack))
-                    return Type.CUTTING;
-                else if (itemStack.getItem() == KitchenItems.knife)
-                    return Type.KNIFE;
             } else return Type.EMPTY;
         } else return Type.EMPTY;
 
@@ -311,6 +273,8 @@ public class TileEntityBoard extends TileEntity
     {
         super.readFromNBT(p_145839_1_);
 
+        System.out.println("Reading from NBT");
+
         this.boardItemStacks = new ArrayList<ItemStack>();
         this.currentType = Type.EMPTY;
 
@@ -321,7 +285,7 @@ public class TileEntityBoard extends TileEntity
             {
                 NBTTagCompound itemCompound = list.getCompoundTagAt(i);
                 ItemStack item = ItemStack.loadItemStackFromNBT(itemCompound);
-                this.addItem(item, false);
+                this.rightClicked(item, false);
             }
 
         this.specialTagInfo = p_145839_1_.getCompoundTag("SpecialTag");
@@ -349,8 +313,6 @@ public class TileEntityBoard extends TileEntity
         UNKNOWN,
         EMPTY,
         SANDWICH,
-        CAKE,
-        CUTTING,
-        KNIFE
+        CAKE
     }
 }

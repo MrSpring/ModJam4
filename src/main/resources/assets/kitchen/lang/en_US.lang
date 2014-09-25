@@ -35,6 +35,10 @@ item.cheese_slice.name=Cheese Slice
 item.burnt_meat.name=Burnt Meat
 item.creeper_slice.name=Creeper Slice
 item.butter.name=Butter
+item.jam_jar.filled.name=filled Jar
+item.jam_jar.empty.name=Empty Jar
+item.strawberry_jam.name=Strawberry Jam
+item.strawberry.name=Strawberry
 
 combo.big_mac.name=There is Only One!
 combo.blt.name=The Good ol' BLT
@@ -43,6 +47,8 @@ combo.rrb.name=Retro Roastbeef
 combo.smart_chicken.name=7-Smart Chicken
 combo.veggie.name=Veggie Sandwich
 combo.creeper.name=SssSSSssssSSs...
+
+jam.strawberry.name=Strawberry Jam
 
 item_info.sandwichable=Sandwichable
 item_info.heal_amount=Heal Amount

@@ -5,8 +5,10 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import dk.mrspring.kitchen.entity.EntityCup;
 import dk.mrspring.kitchen.entity.RenderCup;
 import dk.mrspring.kitchen.item.render.ItemRenderHandBook;
+import dk.mrspring.kitchen.item.render.ItemRenderJamJar;
 import dk.mrspring.kitchen.item.render.ItemRenderSandwich;
 import dk.mrspring.kitchen.tileentity.*;
+import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 public class ClientProxy extends CommonProxy
@@ -18,12 +20,12 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOven.class, new TileEntityOvenSpecialRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPlate.class, new TileEntityPlateSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityKitchenCabinet.class, new TileEntityKitchenCabinetSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTextTest.class, new TileEntityTextTestRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityJamJar.class, new TileEntityJamJarSpecialRenderer());
 
         RenderingRegistry.registerEntityRenderingHandler(EntityCup.class, new RenderCup());
 
 		MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("sandwich"), new ItemRenderSandwich());
         MinecraftForgeClient.registerItemRenderer(KitchenItems.hand_book, new ItemRenderHandBook());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(KitchenBlocks.jam_jar), new ItemRenderJamJar());
 	}
 }

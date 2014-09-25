@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.item.board;
+package dk.mrspring.kitchen.item.boardable;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.ItemStack;

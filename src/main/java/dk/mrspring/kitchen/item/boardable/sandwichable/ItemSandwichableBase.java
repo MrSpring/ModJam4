@@ -1,10 +1,10 @@
-package dk.mrspring.kitchen.item.board.sandwichable;
+package dk.mrspring.kitchen.item.boardable.sandwichable;
 
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.item.ItemBase;
-import dk.mrspring.kitchen.item.board.ISandwichable;
+import dk.mrspring.kitchen.item.boardable.ISandwichable;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

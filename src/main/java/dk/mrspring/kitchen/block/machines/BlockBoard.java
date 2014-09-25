@@ -1,8 +1,8 @@
 package dk.mrspring.kitchen.block.machines;
 
 import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.item.board.IBoardable;
-import dk.mrspring.kitchen.item.board.ItemBoardAnalyzer;
+import dk.mrspring.kitchen.item.boardable.IBoardable;
+import dk.mrspring.kitchen.item.boardable.ItemBoardAnalyzer;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -67,7 +67,7 @@ public class BlockBoard extends BlockContainer
         {
             if (activator.getCurrentEquippedItem() != null)
 			{
-                if (entity.onRightClicked(activator))
+                if (entity.rightClicked(activator.getCurrentEquippedItem()))
                 {
                     world.markBlockForUpdate(x, y, z);
                     return false;

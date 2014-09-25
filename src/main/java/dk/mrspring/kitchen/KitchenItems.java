@@ -2,10 +2,10 @@ package dk.mrspring.kitchen;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.item.*;
-import dk.mrspring.kitchen.item.board.ItemBoardAnalyzer;
-import dk.mrspring.kitchen.item.board.sandwichable.ItemButter;
-import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichBread;
-import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichableBase;
+import dk.mrspring.kitchen.item.boardable.ItemBoardAnalyzer;
+import dk.mrspring.kitchen.item.boardable.sandwichable.ItemButter;
+import dk.mrspring.kitchen.item.boardable.sandwichable.ItemSandwichBread;
+import dk.mrspring.kitchen.item.boardable.sandwichable.ItemSandwichableBase;
 import dk.mrspring.kitchen.item.jam.ItemJam;
 import dk.mrspring.kitchen.item.jam.Jam;
 import dk.mrspring.kitchen.model.ModelBaconCooked;

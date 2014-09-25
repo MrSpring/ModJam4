@@ -26,7 +26,6 @@ public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
         {
             case SANDWICH: ItemRenderHelper.renderSandwich(items, tileEntity.getSpecialTagInfo()); break;
             case CAKE: break;
-            case CUTTING: ItemRenderHelper.renderCutting(items, tileEntity.getSpecialTagInfo(), tileEntity.getBlockMetadata()); break;
         }
 
 		GL11.glPopMatrix();

@@ -3,7 +3,7 @@ package dk.mrspring.kitchen.item;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.combo.SandwichCombo;
-import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichableBase;
+import dk.mrspring.kitchen.item.boardable.sandwichable.ItemSandwichableBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemFood;

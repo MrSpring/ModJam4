@@ -1,8 +1,8 @@
-package dk.mrspring.kitchen.item.board.cakeable;
+package dk.mrspring.kitchen.item.boardable.cakeable;
 
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.item.ItemBase;
-import dk.mrspring.kitchen.item.board.IBoardable;
+import dk.mrspring.kitchen.item.boardable.IBoardable;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.item.board.sandwichable;
+package dk.mrspring.kitchen.item.boardable.sandwichable;
 
 import dk.mrspring.kitchen.model.ModelBreadSliceBottom;
 import dk.mrspring.kitchen.model.ModelBreadSliceTop;

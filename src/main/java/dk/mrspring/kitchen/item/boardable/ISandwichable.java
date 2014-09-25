@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.item.board;
+package dk.mrspring.kitchen.item.boardable;
 
 /**
  * Created by MrSpring on 02-09-14 for The Kitchen Mod.

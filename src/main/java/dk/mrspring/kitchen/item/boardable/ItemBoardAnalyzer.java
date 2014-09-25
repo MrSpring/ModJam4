@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.item.board;
+package dk.mrspring.kitchen.item.boardable;
 
 import dk.mrspring.kitchen.item.ItemBase;
 

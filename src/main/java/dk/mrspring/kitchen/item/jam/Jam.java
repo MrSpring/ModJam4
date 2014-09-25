@@ -5,6 +5,7 @@ package dk.mrspring.kitchen.item.jam;
  */
 public enum Jam
 {
+    EMPTY(0,0,0),
 	STRAWBERRY(247, 35, 12),
 	APPLE(219, 247, 170);
 
@@ -17,8 +18,25 @@ public enum Jam
 		this.b = blue;
 	}
 
-	Jam(int r, int g, int b)
+    public float getRed()
+    {
+        return r;
+    }
+
+    public float getGreen()
+    {
+        return g;
+    }
+
+    public float getBlue()
+    {
+        return b;
+    }
+
+    Jam(int r, int g, int b)
 	{
 		this(((float) r) / 255, ((float) g / 255), ((float) b) / 255);
 	}
+
+
 }

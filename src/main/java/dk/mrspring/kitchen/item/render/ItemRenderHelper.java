@@ -1,6 +1,6 @@
 package dk.mrspring.kitchen.item.render;
 
-import dk.mrspring.kitchen.item.board.IBoardable;
+import dk.mrspring.kitchen.item.boardable.IBoardable;
 import dk.mrspring.kitchen.model.ModelCutting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -39,28 +39,6 @@ public class ItemRenderHelper
 				}
 		}
 	}
-
-    public static void renderCutting(List<ItemStack> layers, NBTTagCompound specialTagInfo, int metadata)
-    {
-    	if (cuttingModel == null)
-    		cuttingModel = new ModelCutting();
-    	
-        float rotation = metadata * 90;
-
-        GL11.glPushMatrix();
-
-        System.out.println(" Rendering!");
-
-        GL11.glRotatef(rotation, 0F, 1F, 0F);
-
-        GL11.glPushMatrix();
-
-        cuttingModel.render(Minecraft.getMinecraft().renderViewEntity, 0F, 0F, 0F, 0F, 0F, 0.0625F, layers.get(0), specialTagInfo.getInteger("CutAmount"));
-
-        GL11.glPopMatrix();
-
-        GL11.glPopMatrix();
-    }
 
 	public static void renderItem(ItemStack item, double xOffset, double yOffset, double zOffset, List<ItemStack> items, int indexInList, NBTTagCompound specialTagInfo)
 	{
