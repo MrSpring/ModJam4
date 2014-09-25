@@ -14,6 +14,7 @@ import dk.mrspring.kitchen.entity.EntityCup;
 import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.item.jam.ItemJam;
 import dk.mrspring.kitchen.item.jam.Jam;
+import dk.mrspring.kitchen.recipe.OvenRecipes;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlant;
 import net.minecraft.creativetab.CreativeTabs;
