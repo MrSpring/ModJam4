@@ -70,7 +70,7 @@ public class ItemRenderHandBook implements IItemRenderer
 					
 					GL11.glPushMatrix();
 					
-					GL11.glRotatef(90, 0.2F, 0.5F, 0.2F);
+					GL11.glRotatef(-45, -1F, .5F, 0F);
 
 					Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.modid, "textures/models/book.png"));
 

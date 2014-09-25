@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.block;
+package dk.mrspring.kitchen.block.machines;
 
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.item.board.IBoardable;
@@ -67,7 +67,7 @@ public class BlockBoard extends BlockContainer
         {
             if (activator.getCurrentEquippedItem() != null)
 			{
-                if (entity.addItem(activator.getCurrentEquippedItem()))
+                if (entity.onRightClicked(activator))
                 {
                     world.markBlockForUpdate(x, y, z);
                     return false;
