@@ -58,5 +58,9 @@ public class ItemBase extends Item
         registerItem(KitchenItems.board_analyzer);
         registerItem(KitchenItems.butter);
         registerItem(KitchenItems.hand_book);
+		registerItem(KitchenItems.strawberry);
+		registerItem(KitchenItems.strawberry_jam);
+		registerItem(KitchenItems.apple_jam);
+		//registerItem(KitchenItems.jam_jar);
 	}
 }

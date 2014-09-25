@@ -17,4 +17,5 @@ public class KitchenBlocks
 	public static final Block plate = new BlockPlate();
     public static final Block kitchen_cabinet = new BlockKitchenCabinet();
     public static final Block text_test = new BlockTextRenderTest();
+	public static final Block jam_jar_block = new BlockJamJar("jam_jar_block");
 }

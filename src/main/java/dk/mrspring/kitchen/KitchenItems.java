@@ -6,6 +6,8 @@ import dk.mrspring.kitchen.item.board.ItemBoardAnalyzer;
 import dk.mrspring.kitchen.item.board.sandwichable.ItemButter;
 import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichBread;
 import dk.mrspring.kitchen.item.board.sandwichable.ItemSandwichableBase;
+import dk.mrspring.kitchen.item.jam.ItemJam;
+import dk.mrspring.kitchen.item.jam.Jam;
 import dk.mrspring.kitchen.model.ModelBaconCooked;
 import dk.mrspring.kitchen.model.ModelBaconRaw;
 import net.minecraft.item.Item;
@@ -47,6 +49,9 @@ public class KitchenItems
     public static final Item board_analyzer = new ItemBoardAnalyzer();
     public static final Item butter = new ItemButter("butter");
     public static final Item hand_book = new ItemHandBook("hand_book", true);
+	public static final Item strawberry = new ItemFoodBase("strawberry", 2);
+	public static final ItemJam strawberry_jam = new ItemJam(Jam.STRAWBERRY, "strawberry");
+	public static final ItemJam apple_jam = new ItemJam(Jam.APPLE, "apple");
 
 	// Pre-loads the sandwich ItemStack with some NBT-Data.
 	private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)

@@ -12,6 +12,8 @@ import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.entity.EntityCup;
 import dk.mrspring.kitchen.item.ItemBase;
+import dk.mrspring.kitchen.item.jam.ItemJam;
+import dk.mrspring.kitchen.item.jam.Jam;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlant;
 import net.minecraft.creativetab.CreativeTabs;
@@ -19,11 +21,13 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Character.valueOf;
 
@@ -40,6 +44,7 @@ public class Kitchen
 	
 	public CreativeTabs tab;
 	public CreativeTabs sandwichable_tab;
+	public CreativeTabs jam_tab;
 
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event)
@@ -64,15 +69,29 @@ public class Kitchen
 			}
 		};
 
+		instance.jam_tab = new CreativeTabs("tebJam")
+		{
+			@Override
+			public Item getTabIconItem()
+			{
+				return KitchenItems.strawberry_jam;
+			}
+		};
+
 		// Registering Tile Entities
 		GameRegistry.registerTileEntity(TileEntityBoard.class, "tileEntityBoard");
 		GameRegistry.registerTileEntity(TileEntityOven.class, "tileEntityOven");
 		GameRegistry.registerTileEntity(TileEntityPlate.class, "tileEntityPlate");
         GameRegistry.registerTileEntity(TileEntityKitchenCabinet.class, "tileEntityKitchenCabinet");
         GameRegistry.registerTileEntity(TileEntityTextTest.class, "tilEntityTextTest");
+		GameRegistry.registerTileEntity(TileEntityJamJar.class, "tileEntityJamJar");
 
         EntityRegistry.registerGlobalEntityID(EntityCup.class, "entityCup", EntityRegistry.findGlobalUniqueEntityId());
         EntityRegistry.registerModEntity(EntityCup.class, "entityCup", 1, instance, 250, 1, true);
+
+		registerJamRecipe(KitchenItems.strawberry_jam);
+		registerJamRecipe(KitchenItems.apple_jam);
+
 
 		// Loading Blocks and Items
 		BlockBase.load();
@@ -84,6 +103,14 @@ public class Kitchen
         // Registers the Plant generator
         GameRegistry.registerWorldGenerator(new WorldGenWildPlant(), 1);
     }
+
+	private static void registerJamRecipe(ItemJam jamInput, Object... extraStuff)
+	{
+		ItemStack output = new ItemStack(KitchenBlocks.jam_jar_block, 1, 1);
+		Jam jam = jamInput.getJam();
+		output.getTagCompound().setString("JamType", jam.name());
+		GameRegistry.addShapelessRecipe(output, new ItemStack(KitchenBlocks.jam_jar_block, 1, 0), new ItemStack(jamInput, 1), extraStuff);
+	}
 	
 	@EventHandler
 	public static void init(FMLInitializationEvent event)
