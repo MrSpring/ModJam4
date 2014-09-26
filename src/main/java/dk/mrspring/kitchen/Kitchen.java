@@ -209,7 +209,7 @@ public class Kitchen
         GameRegistry.addShapelessRecipe(getJamItemStack(Jam.STRAWBERRY, 6), new ItemStack(KitchenItems.strawberry_jam), new ItemStack(Items.sugar), new ItemStack(KitchenBlocks.jam_jar, 1, 0));
 	}
 
-    private static ItemStack getJamItemStack(Jam jam, int usesLeft)
+    public static ItemStack getJamItemStack(Jam jam, int usesLeft)
     {
         ItemStack jamStack = new ItemStack(KitchenBlocks.jam_jar, 1, 1);
 

@@ -1,7 +1,6 @@
 package dk.mrspring.kitchen.item.render;
 
 import dk.mrspring.kitchen.item.boardable.IBoardable;
-import dk.mrspring.kitchen.model.ModelCutting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -18,8 +17,6 @@ import java.util.List;
  */
 public class ItemRenderHelper
 {
-	static ModelCutting cuttingModel;
-	
 	public static void renderSandwich(List<ItemStack> layers, NBTTagCompound specialTagInfo)
 	{
 		double yItemOffset = 0D;

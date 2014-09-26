@@ -23,8 +23,10 @@ public class TileEntityJamJarSpecialRenderer extends TileEntitySpecialRenderer
 
         GL11.glPushMatrix();
 
-        GL11.glTranslatef(0.5F + (float) var2, 1.5F + (float) var4, 0.5F + (float) var6);
+        GL11.glTranslatef(0.5F + (float) var2, 1.8F + (float) var4, 0.5F + (float) var6);
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
+		float scale = 1.2F;
+		GL11.glScalef(scale,scale,scale);
 
         Minecraft.getMinecraft().renderEngine.bindTexture(this.texture);
 
