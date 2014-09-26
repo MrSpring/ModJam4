@@ -5,38 +5,20 @@ package dk.mrspring.kitchen.item.jam;
  */
 public enum Jam
 {
-    EMPTY(0,0,0),
-	STRAWBERRY(247, 35, 12),
-	APPLE(219, 247, 170);
+    EMPTY(000000),
+	STRAWBERRY(16196364),
+	APPLE(14415786);
 
-	final float r, g, b;
+	final int color;
 
-	Jam(float red, float green, float blue)
+    public int getColor()
+    {
+        return color;
+    }
+
+    Jam(int color)
 	{
-		this.r = red;
-		this.g = green;
-		this.b = blue;
+		this.color = color;
 	}
-
-    public float getRed()
-    {
-        return r;
-    }
-
-    public float getGreen()
-    {
-        return g;
-    }
-
-    public float getBlue()
-    {
-        return b;
-    }
-
-    Jam(int r, int g, int b)
-	{
-		this(((float) r) / 255, ((float) g / 255), ((float) b) / 255);
-	}
-
 
 }

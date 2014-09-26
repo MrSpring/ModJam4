@@ -72,7 +72,7 @@ public class ModelJar extends ModelBase
         setRotation(top, 0F, 0F, 0F);
     }
 
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, boolean isEmpty, float jamR, float jamG, float jamB, int jamHeight)
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, boolean isEmpty, int color, int jamHeight)
     {
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
@@ -92,7 +92,10 @@ public class ModelJar extends ModelBase
             jam.mirror = true;
             setRotation(jam, 0F, 0F, 0F);
             Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.modid, "textures/models/jam.png"));
-            GL11.glColor4f(jamR, jamG, jamB, 1F);
+            float red = ((color >> 16) & 0xFF);
+            float green = ((color >> 8) & 0xFF);
+            float blue = (color & 0xFF);
+            GL11.glColor4f(red / 255, green / 255, blue / 255, 1);
             jam.render(f5);
         }
     }

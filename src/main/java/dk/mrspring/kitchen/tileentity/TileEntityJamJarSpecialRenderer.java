@@ -31,7 +31,7 @@ public class TileEntityJamJarSpecialRenderer extends TileEntitySpecialRenderer
         Minecraft.getMinecraft().renderEngine.bindTexture(this.texture);
 
         GL11.glPushMatrix();
-        model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, var1.getBlockMetadata() == 0, tileEntityJamJar.getJam().getRed(), tileEntityJamJar.getJam().getGreen(), tileEntityJamJar.getJam().getBlue(), tileEntityJamJar.getUsesLeft());
+        model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, var1.getBlockMetadata() == 0, tileEntityJamJar.getJam().getColor(), tileEntityJamJar.getUsesLeft());
 
         GL11.glPopMatrix();
 

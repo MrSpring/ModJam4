@@ -73,7 +73,7 @@ public class ItemRenderJamJar implements IItemRenderer
                     }
                 }
 
-                model.render((Entity) data[1], 0F, 0F, 0F, 0F, 0F, 0.0625F, metadata == 0, jam.getRed(), jam.getGreen(), jam.getBlue(), jamHeight);
+                model.render((Entity) data[1], 0F, 0F, 0F, 0F, 0F, 0.0625F, metadata == 0, jam.getColor(), jamHeight);
 
                 GL11.glPopMatrix();
 
@@ -110,7 +110,7 @@ public class ItemRenderJamJar implements IItemRenderer
 
                 Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.modid, "textures/models/jar.png"));
 
-                model.render((Entity) data[1], 0F, 0F, 0F, 0F, 0F, 0.0625F, metadata == 0, jam.getRed(), jam.getGreen(), jam.getBlue(), jamHeight);
+                model.render((Entity) data[1], 0F, 0F, 0F, 0F, 0F, 0.0625F, metadata == 0, jam.getColor(), jamHeight);
 
                 GL11.glPopMatrix();
 

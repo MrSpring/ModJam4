@@ -37,6 +37,7 @@ item.creeper_slice.name=Creeper Slice
 item.butter.name=Butter
 item.jam_jar.filled.name=filled Jar
 item.jam_jar.empty.name=Empty Jar
+item.jam_jar.uses_left_msg=Uses Left
 item.strawberry_jam.name=Strawberry Jam
 item.strawberry.name=Strawberry
 

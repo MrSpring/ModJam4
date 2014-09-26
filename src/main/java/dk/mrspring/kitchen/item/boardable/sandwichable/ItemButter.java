@@ -75,9 +75,10 @@ public class ItemButter extends ItemSandwichableBase implements ISandwichable
     @Override
     public ModelBase getModel(NBTTagCompound specialTagInfo, int itemIndex, ItemStack item, List<ItemStack> itemStacks)
     {
-        if (specialTagInfo.hasKey("RightClickCount"))
-            if (specialTagInfo.getInteger("RightClickCount") < this.models.length)
-                return this.models[specialTagInfo.getInteger("RightClickCount")];
+        if (specialTagInfo!=null)
+            if (specialTagInfo.hasKey("RightClickCount"))
+                if (specialTagInfo.getInteger("RightClickCount") < this.models.length)
+                    return this.models[specialTagInfo.getInteger("RightClickCount")];
 
         return this.models[0];
     }
